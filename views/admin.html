@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - طلبات السيرة الذاتية</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+          .admin-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .admin-actions {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        
+        .btn-reset {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn-reset:active {
+            transform: translateY(0);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .submissions-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .submission-card {
+            border-bottom: 1px solid #eee;
+            padding: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .submission-card:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .submission-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .profile-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3498db;
+        }
+        
+        .profile-placeholder {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .submission-basic-info {
+            flex: 1;
+        }
+        
+        .client-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .client-profession {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .submission-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .submission-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-view {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background: #2980b9;
+        }
+        
+        .btn-email {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-email:hover {
+            background: #229954;
+        }
+        
+        /* Detailed View Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .close:hover {
+            opacity: 0.7;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .client-profile-section {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .client-image-section {
+            text-align: center;
+        }
+        
+        .client-profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .client-info-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-right: 4px solid #3498db;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .file-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #ddd;
+            transition: all 0.3s;
+        }
+        
+        .file-item:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+        
+        .file-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .file-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            word-break: break-word;
+        }
+        
+        .file-actions {
+            margin-top: 10px;
+        }
+        
+        .btn-download {
+            background: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-download:hover {
+            background: #2980b9;
+        }
+        
+        .website-goals {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .goal-tag {
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #e74c3c;
+            background: #fdf2f2;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .table-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .submission-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr auto;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .submission-item:last-child {
+            border-bottom: none;
+        }
+        
+        .submission-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .submission-email {
+            color: #666;
+        }
+        
+        .submission-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .view-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .view-btn:hover {
+            background: #2980b9;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #e74c3c;
+            background: #fdf2f2;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">        <div class="admin-header">
+            <h1>لوحة التحكم</h1>
+            <p>إدارة طلبات تحويل السيرة الذاتية</p>
+            <div class="admin-actions">
+                <button class="btn-reset" onclick="resetDatabase()" title="مسح جميع البيانات والملفات">
+                    🗑️ إعادة تعيين النظام
+                </button>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalSubmissions">-</div>
+                <div>إجمالي الطلبات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="todaySubmissions">-</div>
+                <div>طلبات اليوم</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="weekSubmissions">-</div>
+                <div>طلبات الأسبوع</div>
+            </div>
+        </div>
+          <div class="submissions-container">
+            <div class="table-header">
+                <h2>الطلبات الأخيرة</h2>
+            </div>
+            <div id="submissionsContainer">
+                <div class="loading">جاري تحميل البيانات...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed View Modal -->
+    <div id="clientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">تفاصيل العميل</h2>
+                <button class="close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Client details will be loaded here -->
+            </div>
+        </div>
+    </div>    <script>
+        // Load submissions data
+        async function loadSubmissions() {
+            try {
+                const response = await fetch('/admin/submissions');
+                const result = await response.json();
+                
+                if (result.success) {
+                    displaySubmissions(result.data);
+                    updateStats(result.data);
+                } else {
+                    showError('فشل في تحميل البيانات');
+                }
+            } catch (error) {
+                console.error('Error loading submissions:', error);
+                showError('حدث خطأ في تحميل البيانات');
+            }
+        }
+        
+        // Display submissions in card format
+        function displaySubmissions(submissions) {
+            const container = document.getElementById('submissionsContainer');
+            
+            if (submissions.length === 0) {
+                container.innerHTML = '<div class="loading">لا توجد طلبات حتى الآن</div>';
+                return;
+            }
+            
+            container.innerHTML = submissions.map(submission => `
+                <div class="submission-card">
+                    <div class="submission-header">
+                        ${submission.profile_image 
+                            ? `<img src="/uploads/${submission.profile_image}" alt="صورة ${submission.full_name}" class="profile-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`
+                            : ''
+                        }
+                        <div class="profile-placeholder" style="${submission.profile_image ? 'display: none;' : ''}">
+                            ${submission.full_name.charAt(0)}
+                        </div>
+                        <div class="submission-basic-info">
+                            <div class="client-name">${submission.full_name}</div>
+                            <div class="client-profession">${submission.profession}</div>
+                            <div class="submission-date">
+                                ${new Date(submission.submission_date).toLocaleDateString('ar-SA', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}
+                            </div>
+                        </div>
+                        <div class="submission-actions">
+                            <button class="btn btn-view" onclick="viewClientDetails(${submission.id})">
+                                عرض التفاصيل
+                            </button>
+                            <button class="btn btn-email" onclick="contactClient('${submission.email}')">
+                                التواصل
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // View client details in modal
+        async function viewClientDetails(submissionId) {
+            try {
+                const response = await fetch(`/submission/${submissionId}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    showClientModal(result.data);
+                } else {
+                    alert('فشل في تحميل تفاصيل العميل');
+                }
+            } catch (error) {
+                console.error('Error loading client details:', error);
+                alert('حدث خطأ في تحميل التفاصيل');
+            }
+        }
+        
+        // Show client details in modal
+        function showClientModal(client) {
+            const modal = document.getElementById('clientModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalTitle.textContent = `تفاصيل العميل: ${client.full_name}`;
+            
+            // Parse JSON fields safely
+            let socialMedia = {};
+            let websiteGoals = [];
+            
+            try {
+                if (client.social_media) {
+                    socialMedia = typeof client.social_media === 'string' 
+                        ? JSON.parse(client.social_media) 
+                        : client.social_media;
+                }
+                if (client.website_goals) {
+                    websiteGoals = typeof client.website_goals === 'string' 
+                        ? JSON.parse(client.website_goals) 
+                        : client.website_goals;
+                }
+            } catch (e) {
+                console.error('Error parsing JSON fields:', e);
+            }
+            
+            modalBody.innerHTML = `
+                <div class="client-profile-section">
+                    <div class="client-image-section">
+                        ${client.profile_image 
+                            ? `<img src="/uploads/${client.profile_image}" alt="صورة ${client.full_name}" class="client-profile-image">`
+                            : `<div class="client-profile-image" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #3498db, #2980b9); color: white; font-size: 3rem; font-weight: bold;">
+                                ${client.full_name.charAt(0)}
+                               </div>`
+                        }
+                        <div style="font-weight: bold; margin-top: 10px;">${client.full_name}</div>
+                        <div style="color: #3498db;">${client.profession}</div>
+                    </div>
+                    
+                    <div class="client-info-grid">
+                        <div class="info-item">
+                            <div class="info-label">البريد الإلكتروني</div>
+                            <div class="info-value">${client.email}</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">رقم الهاتف</div>
+                            <div class="info-value">${client.phone || 'غير محدد'}</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">تاريخ التسجيل</div>
+                            <div class="info-value">
+                                ${new Date(client.submission_date).toLocaleDateString('ar-SA', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">تفضيل النطاق</div>
+                            <div class="info-value">${client.domain_preference || 'غير محدد'}</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">استضافة البريد</div>
+                            <div class="info-value">${client.email_hosting_preference || 'غير محدد'}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                ${client.bio ? `
+                    <div class="section-title">نبذة شخصية</div>
+                    <div class="info-value" style="background: #f8f9fa; padding: 15px; border-radius: 10px; line-height: 1.6;">
+                        ${client.bio}
+                    </div>
+                ` : ''}
+                
+                ${client.education ? `
+                    <div class="section-title">التعليم</div>
+                    <div class="info-value" style="background: #f8f9fa; padding: 15px; border-radius: 10px; line-height: 1.6;">
+                        ${client.education}
+                    </div>
+                ` : ''}
+                
+                ${client.experience ? `
+                    <div class="section-title">الخبرة العملية</div>
+                    <div class="info-value" style="background: #f8f9fa; padding: 15px; border-radius: 10px; line-height: 1.6;">
+                        ${client.experience}
+                    </div>
+                ` : ''}
+                
+                ${client.skills ? `
+                    <div class="section-title">المهارات</div>
+                    <div class="info-value" style="background: #f8f9fa; padding: 15px; border-radius: 10px; line-height: 1.6;">
+                        ${client.skills}
+                    </div>
+                ` : ''}
+                
+                ${client.languages ? `
+                    <div class="section-title">اللغات</div>
+                    <div class="info-value" style="background: #f8f9fa; padding: 15px; border-radius: 10px; line-height: 1.6;">
+                        ${client.languages}
+                    </div>
+                ` : ''}
+                
+                ${websiteGoals.length > 0 ? `
+                    <div class="section-title">أهداف الموقع</div>
+                    <div class="website-goals">
+                        ${websiteGoals.map(goal => `<span class="goal-tag">${goal}</span>`).join('')}
+                    </div>
+                ` : ''}
+                
+                ${client.portfolio_links ? `
+                    <div class="section-title">روابط أعمال سابقة</div>
+                    <div class="info-value" style="background: #f8f9fa; padding: 15px; border-radius: 10px; line-height: 1.6;">
+                        ${client.portfolio_links}
+                    </div>
+                ` : ''}
+                
+                ${(client.portfolio_files || client.testimonial_files) ? `
+                    <div class="section-title">الملفات المرفقة</div>
+                    <div class="files-grid">
+                        ${client.portfolio_files ? client.portfolio_files.split(',').map(file => `
+                            <div class="file-item">
+                                <div class="file-icon">${getFileIcon(file)}</div>
+                                <div class="file-name">ملف المعرض: ${file}</div>
+                                <div class="file-actions">
+                                    <a href="/uploads/${file}" class="btn-download" target="_blank">تحميل</a>
+                                </div>
+                            </div>
+                        `).join('') : ''}
+                        
+                        ${client.testimonial_files ? client.testimonial_files.split(',').map(file => `
+                            <div class="file-item">
+                                <div class="file-icon">${getFileIcon(file)}</div>
+                                <div class="file-name">ملف التوصيات: ${file}</div>
+                                <div class="file-actions">
+                                    <a href="/uploads/${file}" class="btn-download" target="_blank">تحميل</a>
+                                </div>
+                            </div>
+                        `).join('') : ''}
+                    </div>
+                ` : ''}
+                
+                ${client.testimonials ? `
+                    <div class="section-title">التوصيات</div>
+                    <div class="info-value" style="background: #f8f9fa; padding: 15px; border-radius: 10px; line-height: 1.6;">
+                        ${client.testimonials}
+                    </div>
+                ` : ''}
+                
+                <div class="section-title">معلومات تقنية</div>
+                <div class="client-info-grid">
+                    <div class="info-item">
+                        <div class="info-label">عنوان IP</div>
+                        <div class="info-value">${client.ip_address || 'غير متوفر'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">متصفح المستخدم</div>
+                        <div class="info-value" style="font-size: 0.8rem;">${client.user_agent || 'غير متوفر'}</div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+        }
+        
+        // Helper function to get file icon
+        function getFileIcon(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            switch(ext) {
+                case 'pdf': return '📄';
+                case 'doc':
+                case 'docx': return '📝';
+                case 'jpg':
+                case 'jpeg':
+                case 'png':
+                case 'gif': return '🖼️';
+                case 'xls':
+                case 'xlsx': return '📊';
+                case 'ppt':
+                case 'pptx': return '📽️';
+                default: return '📁';
+            }
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('clientModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('clientModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Contact client via email
+        function contactClient(email) {
+            window.location.href = `mailto:${email}`;
+        }
+        
+        // Update statistics
+        function updateStats(submissions) {
+            const total = submissions.length;
+            const today = new Date().toDateString();
+            const thisWeek = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+            
+            const todayCount = submissions.filter(s => 
+                new Date(s.submission_date).toDateString() === today
+            ).length;
+            
+            const weekCount = submissions.filter(s => 
+                new Date(s.submission_date) >= thisWeek
+            ).length;
+            
+            document.getElementById('totalSubmissions').textContent = total;
+            document.getElementById('todaySubmissions').textContent = todayCount;
+            document.getElementById('weekSubmissions').textContent = weekCount;
+        }
+        
+        // Show error message
+        function showError(message) {
+            document.getElementById('submissionsContainer').innerHTML = 
+                `<div class="error">${message}</div>`;
+        }
+        
+        // Reset database function
+        async function resetDatabase() {
+            const confirmed = confirm('⚠️ هل أنت متأكد من إعادة تعيين قاعدة البيانات؟\n\nسيتم حذف جميع الطلبات والملفات المرفوعة نهائياً!\n\nهذا الإجراء لا يمكن التراجع عنه.');
+            
+            if (!confirmed) return;
+            
+            try {
+                // Show loading state
+                const resetBtn = document.querySelector('.btn-reset');
+                const originalText = resetBtn.innerHTML;
+                resetBtn.innerHTML = '⏳ جاري المسح...';
+                resetBtn.disabled = true;
+                
+                const response = await fetch('/admin/reset-database', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('✅ تم إعادة تعيين قاعدة البيانات بنجاح!');
+                    // Reload the submissions to show empty state
+                    loadSubmissions();
+                } else {
+                    alert('❌ فشل في إعادة تعيين قاعدة البيانات: ' + result.message);
+                }
+                
+                // Restore button
+                resetBtn.innerHTML = originalText;
+                resetBtn.disabled = false;
+                
+            } catch (error) {
+                console.error('Error resetting database:', error);
+                alert('❌ حدث خطأ أثناء إعادة تعيين قاعدة البيانات');
+                
+                // Restore button
+                const resetBtn = document.querySelector('.btn-reset');
+                resetBtn.innerHTML = '🗑️ إعادة تعيين النظام';
+                resetBtn.disabled = false;
+            }
+        }
+        
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadSubmissions);
+        
+        // Refresh data every 30 seconds
+        setInterval(loadSubmissions, 30000);
+    </script>
+</body>
+</html>
