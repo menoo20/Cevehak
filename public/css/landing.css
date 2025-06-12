@@ -162,6 +162,7 @@ body {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
+    animation: cv-float 6s ease-in-out infinite;
 }
 
 .cv-display:hover {
@@ -351,6 +352,15 @@ body {
     }
     50% {
         box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+}
+
+@keyframes cv-float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
     }
 }
 
@@ -969,8 +979,7 @@ body {
         gap: 1.5rem;
         justify-content: center;
         flex-wrap: wrap;
-    }
-      /* Hero Section */
+    }    /* Hero Section */
     .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
@@ -978,13 +987,27 @@ body {
     }
     
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.3;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
     }
     
     .hero-features {
         justify-content: center;
         align-items: center;
-    }    /* Sophisticated CV Showcase Mobile */
+    }
+    
+    .feature {
+        font-size: 0.9rem;
+    }
+    
+    .feature-icon {
+        font-size: 1.2rem;
+    }/* Sophisticated CV Showcase Mobile */
     .cv-showcase {
         max-width: 350px;
         margin: 0 auto;
@@ -1266,5 +1289,129 @@ body {
     .contact-btn {
         text-align: center;
         margin: 0 auto;
+    }
+    
+    /* Section Headers Mobile */
+    .section-header h2 {
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .section-header p {
+        font-size: 1rem;
+    }
+    
+    /* Services Section Mobile */
+    .service-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    .service-card p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .price {
+        font-size: 2rem;
+    }
+    
+    .price-period {
+        font-size: 0.8rem;
+    }
+    
+    /* Process Section Mobile */
+    .step h3 {
+        font-size: 1.2rem;
+    }
+    
+    .step p {
+        font-size: 0.85rem;
+    }
+    
+    .step-number {
+        font-size: 1.2rem;
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Contact Section Mobile */
+    .contact-item h4 {
+        font-size: 1.1rem;
+    }
+    
+    .contact-item p {
+        font-size: 0.85rem;
+    }
+    
+    /* Navigation Mobile */
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Extra Small Mobile Devices */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .section-header p {
+        font-size: 0.9rem;
+    }
+    
+    .service-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .price {
+        font-size: 1.8rem;
+    }
+    
+    .step h3 {
+        font-size: 1rem;
+    }
+    
+    .step p {
+        font-size: 0.8rem;
+    }
+    
+    .contact-item h4 {
+        font-size: 1rem;
+    }
+    
+    .nav-link {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+    
+    .quality-badge {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .badge-number {
+        font-size: 1rem;
+    }
+    
+    .badge-text {
+        font-size: 0.4rem;
     }
 }
