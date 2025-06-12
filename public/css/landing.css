@@ -38,13 +38,66 @@ body {
     color: #2563eb;
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 0.25rem;
+    margin: 0;
 }
 
-.tagline {
-    color: #64748b;
-    font-size: 0.9rem;
+/* Logo link styling */
+.logo-link {
+    text-decoration: none;
+    color: inherit;
     display: block;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin: -0.5rem;
+}
+
+.logo-link:hover {
+    transform: scale(1.05);
+}
+
+.logo-link h1 {
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.logo-link:hover h1 {
+    color: #1d4ed8;
+}
+
+/* Navigation Menu */
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #2563eb;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #2563eb;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
 }
 
 /* Hero Section */
@@ -94,88 +147,78 @@ body {
     font-size: 1.5rem;
 }
 
-/* CV Preview Mockup */
+/* CV Preview with Actual Image */
 .cv-preview {
     position: relative;
     max-width: 400px;
     margin: 0 auto;
 }
 
-.cv-mockup {
+.cv-actual {
     background: white;
     border-radius: 12px;
-    padding: 2rem;
+    padding: 1rem;
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    color: #333;
+    position: relative;
+    overflow: hidden;
 }
 
-.cv-header {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
+.cv-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
-.cv-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #667eea, #764ba2);
-}
-
-.cv-info {
-    flex: 1;
-}
-
-.cv-name {
-    height: 20px;
-    background: #e2e8f0;
-    border-radius: 4px;
-    margin-bottom: 0.5rem;
-    width: 70%;
-}
-
-.cv-title {
-    height: 16px;
-    background: #cbd5e1;
-    border-radius: 4px;
-    width: 50%;
-}
-
-.cv-section {
-    height: 12px;
-    background: #f1f5f9;
-    border-radius: 4px;
-    margin-bottom: 0.75rem;
-}
-
-.cv-section:nth-child(2) {
-    width: 90%;
-}
-
-.cv-section:nth-child(3) {
-    width: 75%;
+.cv-actual:hover .cv-image {
+    transform: scale(1.02);
 }
 
 .quality-badge {
     position: absolute;
-    top: -10px;
-    right: -10px;
-    background: #10b981;
+    top: -15px;
+    right: -15px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
-    padding: 0.75rem;
+    padding: 1rem 1.2rem;
     border-radius: 50%;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+    transform: rotate(-15deg);
+    transition: all 0.3s ease;
+    border: 3px solid white;
+    animation: pulse 2s infinite;
+}
+
+.quality-badge:hover {
+    transform: rotate(0deg) scale(1.1);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
 }
 
 .badge-number {
     display: block;
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .badge-text {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    opacity: 0.95;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+    }
+    50% {
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
 }
 
 /* Services Section */
@@ -326,6 +369,184 @@ body {
     background: #f8fafc;
 }
 
+/* Services Overview Section */
+.services-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.service-overview-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 2px solid #f1f5f9;
+    transition: all 0.3s ease;
+}
+
+.service-overview-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    border-color: #3b82f6;
+}
+
+.service-overview-card .service-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.service-overview-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1e293b;
+}
+
+.service-overview-card p {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* Pricing Section */
+.pricing {
+    padding: 5rem 0;
+    background: white;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.pricing-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 2px solid #f1f5f9;
+    transition: all 0.3s ease;
+    position: relative;
+    text-align: center;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+.pricing-card.popular {
+    border-color: #3b82f6;
+    transform: scale(1.02);
+}
+
+.pricing-card.premium {
+    border-color: #8b5cf6;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.pricing-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.premium-badge {
+    background: #8b5cf6;
+}
+
+.pricing-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.pricing-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: inherit;
+}
+
+.pricing-card.premium .pricing-title {
+    color: white;
+}
+
+.pricing-description {
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.pricing-features {
+    text-align: right;
+    margin-bottom: 2rem;
+}
+
+.pricing-features .feature {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.pricing-features .feature:last-child {
+    border-bottom: none;
+}
+
+.pricing-price {
+    margin-bottom: 2rem;
+}
+
+.pricing-price .price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+.pricing-card.premium .pricing-price .price {
+    color: white;
+}
+
+.pricing-price .price-period {
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+.pricing-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.pricing-btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+.premium-btn {
+    background: white;
+    color: #8b5cf6;
+}
+
+.premium-btn:hover {
+    background: #f8fafc;
+}
+
 /* Process Section */
 .process {
     padding: 5rem 0;
@@ -431,27 +652,390 @@ body {
     text-align: left;
 }
 
+/* Contact Section */
+.contact {
+    padding: 5rem 0;
+    background: #f8fafc;
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-2px);
+}
+
+.contact-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.contact-item h4 {
+    color: #1e293b;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.contact-item p {
+    color: #64748b;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Phone number specific styling */
+.contact-item p[dir="ltr"] {
+    direction: ltr;
+    text-align: left;
+    unicode-bidi: embed;
+}
+
+.contact-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h3 {
+    color: #1e293b;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Cairo', sans-serif;
+    transition: border-color 0.3s ease;
+    background: #f8fafc;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: white;
+}
+
+.contact-btn {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* WhatsApp link styling */
+.whatsapp-contact {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.whatsapp-contact:hover {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-contact:hover .contact-icon {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.whatsapp-contact:hover h4,
+.whatsapp-contact:hover p {
+    color: white;
+}
+
+/* Email link styling */
+.email-contact {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.email-contact:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+}
+
+.email-contact:hover .contact-icon {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.email-contact:hover h4,
+.email-contact:hover p {
+    color: white;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Navigation */
+    .nav {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .nav-menu {
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+      /* Hero Section */
     .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 2rem;
     }
     
     .hero-title {
         font-size: 2rem;
     }
     
-    .services-grid {
-        grid-template-columns: 1fr;
+    .hero-features {
+        justify-content: center;
+        align-items: center;
+    }
+      /* CV Image */
+    .cv-preview {
+        max-width: 300px;
+        margin: 0 auto;
     }
     
+    .cv-actual {
+        padding: 0.75rem;
+    }
+    
+    /* Quality Badge Mobile */
+    .quality-badge {
+        top: -10px;
+        right: -10px;
+        padding: 0.8rem 1rem;
+        transform: rotate(-10deg);
+    }
+    
+    .badge-number {
+        font-size: 1.2rem;
+    }
+    
+    .badge-text {
+        font-size: 0.6rem;
+    }
+    
+    /* Services Overview */
+    .services-overview {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .service-overview-card {
+        text-align: center;
+    }
+    
+    /* Process Steps */
     .process-steps {
         grid-template-columns: 1fr;
+        text-align: center;
     }
     
+    .step {
+        text-align: center;
+    }
+    
+    /* Pricing Grid */
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .pricing-card {
+        text-align: center;
+    }
+    
+    /* Contact Section */
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .contact-info {
+        align-items: center;
+    }
+    
+    .contact-item {
+        padding: 1rem;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .contact-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .contact-form {
+        padding: 1.5rem;
+        text-align: center;
+    }
+      /* Footer */
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
+    }
+    
+    .footer-info {
+        text-align: center;
+    }
+    
+    /* CTA Section */
+    .cta {
+        text-align: center;
+    }
+    
+    .cta-content {
+        text-align: center;
+    }
+    
+    /* Section Headers */
+    .section-header {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Logo */
+    .logo h1 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    
+    /* Navigation */
+    .nav-menu {
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+    }
+      /* Hero */
+    .hero-title {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+    
+    .hero-subtitle {
+        text-align: center;
+    }
+      /* CV Image Mobile */
+    .cv-preview {
+        max-width: 250px;
+    }
+    
+    .cv-actual {
+        padding: 0.5rem;
+    }
+    
+    /* Quality Badge Small Mobile */
+    .quality-badge {
+        top: -8px;
+        right: -8px;
+        padding: 0.7rem 0.9rem;
+        transform: rotate(-8deg);
+    }
+    
+    .badge-number {
+        font-size: 1.1rem;
+    }
+    
+    .badge-text {
+        font-size: 0.55rem;
+    }
+    
+    /* Services and Pricing */
+    .service-overview-card,
+    .pricing-card {
+        margin: 0 auto;
+        max-width: 350px;
+        text-align: center;
+    }
+    
+    /* Contact */
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .contact-item div {
+        text-align: center;
+    }
+    
+    /* Buttons */
+    .pricing-btn,
+    .service-btn,
+    .cta-btn,
+    .contact-btn {
+        text-align: center;
+        margin: 0 auto;
     }
 }

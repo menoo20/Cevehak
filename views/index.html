@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="top">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +10,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header/Navigation -->
-    <header class="header">
-        <div class="container">
-            <div class="nav">
-                <div class="logo">
-                    <h1>Cevehak</h1>
-                    <span class="tagline">خدمات السير الذاتية والمواقع المهنية</span>
+    <!-- Header/Navigation -->    <header class="header">
+        <div class="container">            <div class="nav">
+                <nav class="nav-menu">
+                    <a href="#services" class="nav-link">الخدمات</a>
+                    <a href="#process" class="nav-link">كيف نعمل</a>
+                    <a href="#pricing" class="nav-link">الأسعار</a>
+                    <a href="#contact" class="nav-link">تواصل معنا</a>
+                </nav>                <div class="logo">
+                    <a href="#top" class="logo-link">
+                        <h1>Cevehak</h1>
+                    </a>
                 </div>
             </div>
         </div>
@@ -45,22 +49,12 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="hero-image">
+                  <div class="hero-image">
                     <div class="cv-preview">
-                        <div class="cv-mockup">
-                            <div class="cv-header">
-                                <div class="cv-avatar"></div>
-                                <div class="cv-info">
-                                    <div class="cv-name"></div>
-                                    <div class="cv-title"></div>
-                                </div>
-                            </div>
-                            <div class="cv-content">
-                                <div class="cv-section"></div>
-                                <div class="cv-section"></div>
-                                <div class="cv-section"></div>
-                            </div>
+                        <div class="cv-actual">
+                            <img src="/images/سيرة ذاتية أسود وأبيض احترافي بتصميم حديث مدير تسويق.png" 
+                                 alt="سيرة ذاتية احترافية - عينة من أعمالنا" 
+                                 class="cv-image">
                         </div>
                         <div class="quality-badge">
                             <span class="badge-number">96</span>
@@ -70,94 +64,36 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services">
+    </section>    <!-- Services Section -->
+    <section id="services" class="services">
         <div class="container">
             <div class="section-header">
-                <h2>اختر الخدمة المناسبة لك</h2>
+                <h2>خدماتنا</h2>
                 <p>نقدم ثلاث خدمات مختلفة لتناسب احتياجاتك</p>
             </div>
 
-            <div class="services-grid">
-                <!-- Service 1: CV to Website -->
-                <div class="service-card popular">
-                    <div class="service-badge">الأكثر طلباً</div>
+            <div class="services-overview">
+                <div class="service-overview-card">
                     <div class="service-icon">🌐</div>
-                    <h3 class="service-title">حول سيرتك الذاتية إلى موقع ويب احترافي</h3>
-                    <p class="service-description">لديك سيرة ذاتية جاهزة؟ سنحولها إلى موقع ويب احترافي ومتجاوب</p>
-                    
-                    <div class="service-features">
-                        <div class="feature">✅ رفع السيرة الذاتية الحالية</div>
-                        <div class="feature">✅ تصميم موقع ويب احترافي</div>
-                        <div class="feature">✅ تحسين المحتوى والتنسيق</div>
-                        <div class="feature">✅ تسليم خلال 3-5 أيام</div>
-                    </div>
-
-                    <div class="service-pricing">
-                        <span class="price">75 ريال</span>
-                        <span class="price-period">فقط</span>
-                    </div>
-
-                    <button class="service-btn" onclick="selectService('cv-to-website')">
-                        ابدأ الآن
-                    </button>
+                    <h3>تحويل السيرة الذاتية إلى موقع ويب</h3>
+                    <p>لديك سيرة ذاتية جاهزة؟ سنحولها إلى موقع ويب احترافي ومتجاوب</p>
                 </div>
 
-                <!-- Service 2: Full Package -->
-                <div class="service-card premium">
-                    <div class="service-badge premium-badge">الباقة الكاملة</div>
+                <div class="service-overview-card">
                     <div class="service-icon">🚀</div>
-                    <h3 class="service-title">إنشاء سيرة ذاتية احترافية وتحويلها إلى موقع ويب</h3>
-                    <p class="service-description">خدمة شاملة: إنشاء سيرة ذاتية من الصفر + موقع ويب احترافي</p>
-                    
-                    <div class="service-features">
-                        <div class="feature">✅ إنشاء سيرة ذاتية احترافية</div>
-                        <div class="feature">✅ صياغة المحتوى والنصوص</div>
-                        <div class="feature">✅ تصميم موقع ويب متكامل</div>
-                        <div class="feature">✅ استشارة مهنية مجانية</div>
-                        <div class="feature">✅ تسليم خلال 3-5 أيام</div>
-                    </div>
-
-                    <div class="service-pricing">
-                        <span class="price">100 ريال</span>
-                        <span class="price-period">فقط</span>
-                    </div>
-
-                    <button class="service-btn premium-btn" onclick="selectService('full-package')">
-                        ابدأ الآن
-                    </button>
+                    <h3>الباقة الكاملة</h3>
+                    <p>خدمة شاملة: إنشاء سيرة ذاتية من الصفر + موقع ويب احترافي</p>
                 </div>
 
-                <!-- Service 3: CV Only -->
-                <div class="service-card">
+                <div class="service-overview-card">
                     <div class="service-icon">📄</div>
-                    <h3 class="service-title">إنشاء سيرة ذاتية احترافية</h3>
-                    <p class="service-description">تحتاج سيرة ذاتية احترافية فقط؟ سننشئها لك بأعلى جودة</p>
-                    
-                    <div class="service-features">
-                        <div class="feature">✅ سيرة ذاتية احترافية</div>
-                        <div class="feature">✅ صياغة محترفة للمحتوى</div>
-                        <div class="feature">✅ تصميم أنيق وجذاب</div>
-                        <div class="feature">✅ تسليم خلال 3 أيام</div>
-                    </div>
-
-                    <div class="service-pricing">
-                        <span class="price">25 ريال</span>
-                        <span class="price-period">فقط</span>
-                    </div>
-
-                    <button class="service-btn" onclick="selectService('cv-only')">
-                        ابدأ الآن
-                    </button>
+                    <h3>إنشاء سيرة ذاتية فقط</h3>
+                    <p>تحتاج سيرة ذاتية احترافية فقط؟ سننشئها لك بأعلى جودة</p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Process Section -->
-    <section class="process">
+    </section><!-- Process Section -->
+    <section id="process" class="process">
         <div class="container">
             <div class="section-header">
                 <h2>كيف نعمل؟</h2>
@@ -185,13 +121,96 @@
                         <h3>نبدأ العمل</h3>
                         <p>فريقنا يعمل على تنفيذ طلبك باحترافية</p>
                     </div>
-                </div>
-                <div class="step">
+                </div>                <div class="step">
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h3>استلم النتيجة</h3>
                         <p>احصل على موقعك الاحترافي خلال 3-5 أيام</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>أسعارنا</h2>
+                <p>اختر الباقة المناسبة لاحتياجاتك وميزانيتك</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Pricing 1: CV to Website -->
+                <div class="pricing-card popular">
+                    <div class="pricing-badge">الأكثر طلباً</div>
+                    <div class="pricing-icon">🌐</div>
+                    <h3 class="pricing-title">تحويل السيرة الذاتية إلى موقع ويب</h3>
+                    <p class="pricing-description">لديك سيرة ذاتية جاهزة؟ سنحولها إلى موقع ويب احترافي</p>
+                    
+                    <div class="pricing-features">
+                        <div class="feature">✅ رفع السيرة الذاتية الحالية</div>
+                        <div class="feature">✅ تصميم موقع ويب احترافي</div>
+                        <div class="feature">✅ تحسين المحتوى والتنسيق</div>
+                        <div class="feature">✅ تسليم خلال 3-5 أيام</div>
+                    </div>
+
+                    <div class="pricing-price">
+                        <span class="price">75 ريال</span>
+                        <span class="price-period">فقط</span>
+                    </div>
+
+                    <button class="pricing-btn" onclick="selectService('cv-to-website')">
+                        اطلب الآن
+                    </button>
+                </div>
+
+                <!-- Pricing 2: Full Package -->
+                <div class="pricing-card premium">
+                    <div class="pricing-badge premium-badge">الباقة الكاملة</div>
+                    <div class="pricing-icon">🚀</div>
+                    <h3 class="pricing-title">إنشاء سيرة ذاتية + موقع ويب</h3>
+                    <p class="pricing-description">خدمة شاملة من الصفر حتى الإطلاق</p>
+                    
+                    <div class="pricing-features">
+                        <div class="feature">✅ إنشاء سيرة ذاتية احترافية</div>
+                        <div class="feature">✅ صياغة المحتوى والنصوص</div>
+                        <div class="feature">✅ تصميم موقع ويب متكامل</div>
+                        <div class="feature">✅ استشارة مهنية مجانية</div>
+                        <div class="feature">✅ تسليم خلال 3-5 أيام</div>
+                    </div>
+
+                    <div class="pricing-price">
+                        <span class="price">100 ريال</span>
+                        <span class="price-period">فقط</span>
+                    </div>
+
+                    <button class="pricing-btn premium-btn" onclick="selectService('full-package')">
+                        اطلب الآن
+                    </button>
+                </div>
+
+                <!-- Pricing 3: CV Only -->
+                <div class="pricing-card">
+                    <div class="pricing-icon">📄</div>
+                    <h3 class="pricing-title">إنشاء سيرة ذاتية فقط</h3>
+                    <p class="pricing-description">سيرة ذاتية احترافية بأعلى جودة</p>
+                    
+                    <div class="pricing-features">
+                        <div class="feature">✅ سيرة ذاتية احترافية</div>
+                        <div class="feature">✅ صياغة محترفة للمحتوى</div>
+                        <div class="feature">✅ تصميم أنيق وجذاب</div>
+                        <div class="feature">✅ تسليم خلال 3 أيام</div>
+                    </div>
+
+                    <div class="pricing-price">
+                        <span class="price">25 ريال</span>
+                        <span class="price-period">فقط</span>
+                    </div>
+
+                    <button class="pricing-btn" onclick="selectService('cv-only')">
+                        اطلب الآن
+                    </button>
                 </div>
             </div>
         </div>
@@ -206,6 +225,39 @@
                 <button class="cta-btn" onclick="selectService('full-package')">
                     ابدأ مشروعك الآن
                 </button>
+            </div>        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>تواصل معنا</h2>
+                <p>هل لديك أسئلة؟ نحن هنا لمساعدتك</p>
+            </div>            <div class="contact-content">                <div class="contact-info">
+                    <a href="mailto:menooteaching@gmail.com" class="contact-item email-contact">
+                        <span class="contact-icon">📧</span>
+                        <div>
+                            <h4>البريد الإلكتروني</h4>
+                            <p>menooteaching@gmail.com</p>
+                        </div>
+                    </a>                    <a href="https://wa.me/966575172805" target="_blank" class="contact-item whatsapp-contact">
+                        <span class="contact-icon">📱</span>
+                        <div>
+                            <h4>واتساب</h4>
+                            <p dir="ltr">+966575172805</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="contact-form">
+                    <h3>أرسل لنا رسالة</h3>
+                    <form>
+                        <input type="text" placeholder="الاسم" required>
+                        <input type="email" placeholder="البريد الإلكتروني" required>
+                        <textarea placeholder="الرسالة" rows="5" required></textarea>
+                        <button type="submit" class="contact-btn">إرسال الرسالة</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
