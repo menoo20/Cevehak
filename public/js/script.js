@@ -1,13 +1,17 @@
-// DOM Elements
-const form = document.getElementById('cvForm');
+// DOM Elements - Handle different form IDs
+const form = document.getElementById('cvForm') || 
+             document.getElementById('uploadCvForm') || 
+             document.getElementById('cvOnlyForm');
 const submitBtn = document.getElementById('submitBtn');
 const messageContainer = document.getElementById('messageContainer');
 const message = document.getElementById('message');
 
-// File upload elements
+// File upload elements - Handle different forms
 const profileImageInput = document.getElementById('profile_image');
 const portfolioFilesInput = document.getElementById('portfolio_files');
 const testimonialFilesInput = document.getElementById('testimonial_files');
+const cvFileInput = document.getElementById('cv_file');              // For upload-cv form
+const additionalFilesInput = document.getElementById('additional_files'); // For additional files
 
 // Other goal checkbox
 const otherGoalCheckbox = document.getElementById('other_goal_checkbox');
@@ -16,25 +20,42 @@ const otherGoalInput = document.getElementById('other_goal_input');
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Script loaded and DOM ready');
+    console.log('📄 Detected form type:', getFormType());
+    console.log('🔧 Initializing form functionality...');
     
     initializeForm();
     setupFileUploads();
     setupOtherGoalToggle();
     setupFormValidation();
+    
+    console.log('✅ Form initialization complete');
 });
+
+// Get current form type for better logging
+function getFormType() {
+    if (document.getElementById('cvForm')) return 'Full Package Form (create-from-scratch)';
+    if (document.getElementById('uploadCvForm')) return 'CV-to-Website Form (upload-cv)';
+    if (document.getElementById('cvOnlyForm')) return 'CV-Only Form (create-cv-only)';
+    return 'Unknown Form Type';
+}
 
 // Initialize form functionality
 function initializeForm() {
+    console.log('🔍 Looking for form elements...');
+    
     // Add form submit event listener
     if (form) {
+        console.log('✅ Form found:', form.id);
         form.addEventListener('submit', handleFormSubmit);
     } else {
-        console.error('❌ Form element not found!');
+        console.error('❌ Form element not found! Expected one of: cvForm, uploadCvForm, cvOnlyForm');
+        return;
     }
     
     // Add real-time validation
     const inputs = form?.querySelectorAll('input[required], textarea[required]');
     if (inputs) {
+        console.log(`📝 Setting up validation for ${inputs.length} required fields`);
         inputs.forEach(input => {
             input.addEventListener('blur', validateField);
             input.addEventListener('input', clearFieldError);
@@ -44,19 +65,47 @@ function initializeForm() {
 
 // Setup file upload functionality
 function setupFileUploads() {
-    setupFileUpload(profileImageInput, 'profile_preview', false);
-    setupFileUpload(portfolioFilesInput, 'portfolio_preview', true);
-    setupFileUpload(testimonialFilesInput, 'testimonial_preview', true);
+    console.log('📁 Setting up file upload handlers...');
+    
+    const fileInputs = [
+        { input: profileImageInput, previewId: 'profile_preview', multiple: false, name: 'Profile Image' },
+        { input: portfolioFilesInput, previewId: 'portfolio_preview', multiple: true, name: 'Portfolio Files' },
+        { input: testimonialFilesInput, previewId: 'testimonial_preview', multiple: true, name: 'Testimonial Files' },
+        { input: cvFileInput, previewId: 'cv_preview', multiple: false, name: 'CV File' },
+        { input: additionalFilesInput, previewId: 'additional_preview', multiple: true, name: 'Additional Files' }
+    ];
+    
+    let setupCount = 0;
+    fileInputs.forEach(({ input, previewId, multiple, name }) => {
+        if (setupFileUpload(input, previewId, multiple, name)) {
+            setupCount++;
+        }
+    });
+    
+    console.log(`✅ File upload setup complete: ${setupCount}/${fileInputs.length} handlers active`);
 }
 
 // Setup individual file upload
-function setupFileUpload(input, previewId, multiple) {
+function setupFileUpload(input, previewId, multiple, inputName = 'Unknown') {
+    // Check if input element exists
+    if (!input) {
+        console.log(`ℹ️  ${inputName} input not found (${previewId}) - skipping setup (normal for this form type)`);
+        return false;
+    }    console.log(`✅ ${inputName} upload handler configured (multiple: ${multiple})`);
+    
     const previewContainer = document.getElementById(previewId);
     const uploadArea = input.parentNode.querySelector('.file-upload-area');
     
+    // Check if required elements exist
+    if (!previewContainer || !uploadArea) {
+        console.log(`⚠️  Preview container or upload area not found for: ${inputName} (${previewId})`);
+        return false;
+    }
+    
     // File input change event
     input.addEventListener('change', function() {
-        handleFileSelect(this.files, previewContainer, multiple);
+        console.log(`📤 ${inputName} files selected:`, this.files.length);
+        handleFileSelect(this.files, previewContainer, multiple, inputName);
     });
     
     // Drag and drop events
@@ -71,34 +120,43 @@ function setupFileUpload(input, previewId, multiple) {
         this.style.borderColor = '#ddd';
         this.style.background = '#fafafa';
     });
-    
-    uploadArea.addEventListener('drop', function(e) {
+      uploadArea.addEventListener('drop', function(e) {
         e.preventDefault();
         this.style.borderColor = '#ddd';
         this.style.background = '#fafafa';
         
         const files = e.dataTransfer.files;
-        handleFileSelect(files, previewContainer, multiple);
+        console.log(`🎯 ${inputName} files dropped:`, files.length);
+        handleFileSelect(files, previewContainer, multiple, inputName);
         
         // Update the input
         input.files = files;
     });
+    
+    return true;
 }
 
 // Handle file selection
-function handleFileSelect(files, previewContainer, multiple) {
+function handleFileSelect(files, previewContainer, multiple, inputName = 'Unknown') {
+    console.log(`🔍 Processing ${files.length} files for ${inputName}...`);
     previewContainer.innerHTML = '';
     
     if (!multiple && files.length > 1) {
+        console.warn(`⚠️  ${inputName} accepts only one file, but ${files.length} were selected`);
         showMessage('يمكنك رفع ملف واحد فقط لهذا القسم', 'error');
         return;
     }
     
+    let validFiles = 0;
     Array.from(files).forEach((file, index) => {
+        console.log(`📄 Validating file ${index + 1}: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
         if (validateFile(file)) {
             createFilePreview(file, previewContainer);
+            validFiles++;
         }
     });
+    
+    console.log(`✅ ${inputName}: ${validFiles}/${files.length} files validated and previewed`);
 }
 
 // Validate file
@@ -176,13 +234,26 @@ function formatFileSize(bytes) {
 
 // Setup other goal toggle
 function setupOtherGoalToggle() {
+    console.log('🎯 Setting up website goals functionality...');
+    
+    // Check if elements exist (only on forms that have website goals)
+    if (!otherGoalCheckbox || !otherGoalInput) {
+        console.log('ℹ️  Website goal elements not found - skipping setup (normal for CV-only forms)');
+        return;
+    }
+    
+    console.log('✅ Website goals "Other" toggle configured');
+    
     otherGoalCheckbox.addEventListener('change', function() {
+        console.log('🔄 Website goal "Other" toggled:', this.checked);
         if (this.checked) {
             otherGoalInput.style.display = 'block';
             otherGoalInput.querySelector('input').focus();
+            console.log('📝 Custom website goal input activated');
         } else {
             otherGoalInput.style.display = 'none';
             otherGoalInput.querySelector('input').value = '';
+            console.log('❌ Custom website goal input hidden');
         }
     });
 }
@@ -192,8 +263,13 @@ function setupFormValidation() {
     const emailInput = document.getElementById('email');
     const phoneInput = document.getElementById('phone');
     
-    emailInput.addEventListener('blur', validateEmail);
-    phoneInput.addEventListener('blur', validatePhone);
+    if (emailInput) {
+        emailInput.addEventListener('blur', validateEmail);
+    }
+    
+    if (phoneInput) {
+        phoneInput.addEventListener('blur', validatePhone);
+    }
 }
 
 // Validate individual field
@@ -284,25 +360,37 @@ function clearFieldError(e) {
 // Handle form submission
 async function handleFormSubmit(e) {
     e.preventDefault();
+    console.log('📤 Form submission initiated');
     
     // Validate form
+    console.log('🔍 Validating form data...');
     if (!validateForm()) {
+        console.warn('❌ Form validation failed');
         showMessage('يرجى تصحيح الأخطاء قبل الإرسال', 'error');
         return;
     }
+    console.log('✅ Form validation passed');
     
     // Show loading state
     setSubmitButtonLoading(true);
+    console.log('⏳ Submit button set to loading state');
     
     try {
+        console.log('📋 Preparing form data...');
         const formData = new FormData(form);
         
+        // Log basic form info
+        const serviceType = formData.get('service_type') || 'Not specified';
+        const fullName = formData.get('full_name') || 'Anonymous';
+        console.log(`👤 Submitting ${serviceType} for: ${fullName}`);
+        
         // Handle website goals
+        console.log('🎯 Processing website goals...');
         const websiteGoals = [];
         const goalCheckboxes = form.querySelectorAll('input[name="website_goals"]:checked');
         goalCheckboxes.forEach(checkbox => {
             if (checkbox.value === 'أخرى') {
-                const otherGoalText = form.querySelector('input[name="other_goal_text"]').value.trim();
+                const otherGoalText = form.querySelector('input[name="other_goal_text"]')?.value.trim();
                 if (otherGoalText) {
                     websiteGoals.push(`أخرى: ${otherGoalText}`);
                 }
@@ -311,6 +399,8 @@ async function handleFormSubmit(e) {
             }
         });
         
+        console.log(`🎯 Website goals processed: ${websiteGoals.length} goals selected`);
+        
         // Update form data with processed goals
         formData.delete('website_goals');
         formData.delete('other_goal_text');
@@ -318,34 +408,61 @@ async function handleFormSubmit(e) {
             formData.append('website_goals', goal);
         });
         
+        // Log file uploads
+        const fileFields = ['profile_image', 'cv_file', 'portfolio_files', 'testimonial_files', 'additional_files'];
+        let totalFiles = 0;
+        fileFields.forEach(fieldName => {
+            const files = formData.getAll(fieldName);
+            if (files.length > 0 && files[0].name) {
+                totalFiles += files.length;
+                console.log(`📁 ${fieldName}: ${files.length} file(s)`);
+            }
+        });
+        console.log(`📎 Total files being uploaded: ${totalFiles}`);
+        
         // Submit form
+        console.log('🌐 Sending request to server...');
         const response = await fetch('/submit', {
             method: 'POST',
             body: formData
         });
         
         const result = await response.json();
-        
-        if (result.success) {
+          if (result.success) {
+            console.log('🎉 Form submitted successfully!');
+            console.log(`📋 Service: ${result.service_type}`);
+            console.log(`💰 Price: ${result.price} SAR`);
+            console.log(`🆔 Submission ID: ${result.submissionId}`);
+            
             showMessage(result.message, 'success');
+            
+            // Reset form after successful submission
+            console.log('🔄 Resetting form...');
             form.reset();
             clearAllPreviews();
             scrollToTop();
+            console.log('✅ Form reset complete');
+            
         } else {
+            console.error('❌ Server responded with error:', response.status);
+            console.error('Error details:', result);
+            
             showMessage(result.message || 'حدث خطأ أثناء الإرسال', 'error');
             
             // Show field-specific errors if available
             if (result.errors) {
-                result.errors.forEach(error => {
-                    console.error('Validation error:', error);
+                console.error('📋 Validation errors:');
+                result.errors.forEach((error, index) => {
+                    console.error(`  ${index + 1}. ${error}`);
                 });
             }
         }
     } catch (error) {
-        console.error('Submit error:', error);
+        console.error('💥 Network/Submit error:', error);
         showMessage('حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'error');
     } finally {
         setSubmitButtonLoading(false);
+        console.log('🔓 Submit button loading state cleared');
     }
 }
 
@@ -410,18 +527,42 @@ function showMessage(text, type) {
 
 // Clear all file previews
 function clearAllPreviews() {
-    document.getElementById('profile_preview').innerHTML = '';
-    document.getElementById('portfolio_preview').innerHTML = '';
-    document.getElementById('testimonial_preview').innerHTML = '';
+    console.log('🧹 Clearing all previews...');
     
-    // Hide other goal input
-    otherGoalInput.style.display = 'none';
+    // List of possible preview elements
+    const previewElements = [
+        'profile_preview',
+        'portfolio_preview', 
+        'testimonial_preview',
+        'cv_preview'
+    ];
+    
+    // Clear each preview element if it exists
+    previewElements.forEach(elementId => {
+        const element = document.getElementById(elementId);
+        if (element) {
+            console.log(`🗑️ Clearing ${elementId}`);
+            element.innerHTML = '';
+        }
+    });
+    
+    // Hide other goal input if it exists
+    const otherGoalInput = document.getElementById('other_goal_input');
+    if (otherGoalInput) {
+        console.log('🔍 Hiding other goal input');
+        otherGoalInput.style.display = 'none';
+    }
     
     // Clear all form group states
-    const formGroups = form.querySelectorAll('.form-group');
-    formGroups.forEach(group => {
-        group.classList.remove('error', 'success');
-    });
+    if (form) {
+        const formGroups = form.querySelectorAll('.form-group');
+        console.log(`🎨 Clearing ${formGroups.length} form group states`);
+        formGroups.forEach(group => {
+            group.classList.remove('error', 'success');
+        });
+    }
+    
+    console.log('✅ All previews cleared successfully');
     
     // Clear all error messages
     const errorMessages = form.querySelectorAll('.error-message');

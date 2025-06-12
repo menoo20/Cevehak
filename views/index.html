@@ -3,249 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحويل السيرة الذاتية إلى موقع ويب</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Cevehak - خدمات السير الذاتية والمواقع المهنية</title>
+    <link rel="stylesheet" href="/css/landing.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <h1>تحويل السيرة الذاتية إلى موقع ويب احترافي</h1>
-                <p class="subtitle">احصل على موقع ويب شخصي احترافي يعرض مهاراتك وخبراتك بأفضل طريقة</p>
-            </div>        </header>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <h1>Cevehak</h1>
+                    <span class="tagline">خدمات السير الذاتية والمواقع المهنية</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
-        <!-- Main Form -->
-        <main class="main-content">
-            <form id="cvForm" class="cv-form" enctype="multipart/form-data">
-                <!-- Personal Information Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">👤</span>
-                        البيانات الشخصية
-                    </h2>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">نحول خبراتك إلى موقع ويب احترافي يميزك عن الآخرين</h1>
+                    <p class="hero-subtitle">خدمات متكاملة لإنشاء السير الذاتية الاحترافية وتحويلها إلى مواقع ويب متميزة</p>
                     
-                    <div class="form-group required">
-                        <label for="full_name">الاسم الكامل</label>
-                        <input type="text" id="full_name" name="full_name" required>
-                        <span class="error-message" id="full_name_error"></span>
+                    <div class="hero-features">
+                        <div class="feature">
+                            <span class="feature-icon">⚡</span>
+                            <span>تسليم سريع (3-5 أيام)</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🎨</span>
+                            <span>تصميم احترافي ومتجاوب</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📱</span>
+                            <span>يعمل على جميع الأجهزة</span>
+                        </div>
                     </div>
-
-                    <div class="form-group required">
-                        <label for="profession">التخصص أو الوظيفة</label>
-                        <input type="text" id="profession" name="profession" required>
-                        <span class="error-message" id="profession_error"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bio">نبذة تعريفية (2-5 أسطر)</label>
-                        <textarea id="bio" name="bio" rows="4" placeholder="اكتب نبذة مختصرة عن نفسك ومجال عملك..."></textarea>
-                        <small class="form-hint">يمكننا مساعدتك في صياغتها إذا لم تكن متأكداً</small>
-                    </div>
-                </section>
-
-                <!-- Profile Image Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">🖼️</span>
-                        الصورة الشخصية
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label for="profile_image">ارفع صورة احترافية (JPG/PNG)</label>
-                        <div class="file-upload">
-                            <input type="file" id="profile_image" name="profile_image" accept="image/*">
-                            <div class="file-upload-area">
-                                <div class="upload-icon">📸</div>
-                                <p>اضغط هنا لرفع الصورة أو اسحبها إلى هنا</p>
-                                <small>الحد الأقصى: 5 ميجابايت</small>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="cv-preview">
+                        <div class="cv-mockup">
+                            <div class="cv-header">
+                                <div class="cv-avatar"></div>
+                                <div class="cv-info">
+                                    <div class="cv-name"></div>
+                                    <div class="cv-title"></div>
+                                </div>
                             </div>
-                            <div class="file-preview" id="profile_preview"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Qualifications and Experience Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">🎓</span>
-                        المؤهلات والخبرات
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label for="education">المؤهلات الأكاديمية</label>
-                        <textarea id="education" name="education" rows="4" placeholder="اذكر مؤهلاتك الأكاديمية (الشهادات، الجامعات، سنوات التخرج...)"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="experience">الخبرات العملية (وظائف/مشاريع سابقة)</label>
-                        <textarea id="experience" name="experience" rows="4" placeholder="اذكر خبراتك العملية والوظائف والمشاريع السابقة..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="skills">المهارات الأساسية</label>
-                        <textarea id="skills" name="skills" rows="3" placeholder="اذكر مهاراتك المهنية والتقنية..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="languages">اللغات التي تتقنها</label>
-                        <input type="text" id="languages" name="languages" placeholder="مثال: العربية (اللغة الأم)، الإنجليزية (ممتاز)، الفرنسية (جيد)">
-                    </div>
-                </section>
-
-                <!-- Portfolio Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">🧰</span>
-                        معرض الأعمال (إن وجد)
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label for="portfolio_links">روابط أعمالك أو مشاريعك السابقة</label>
-                        <textarea id="portfolio_links" name="portfolio_links" rows="3" placeholder="ضع روابط أعمالك أو مشاريعك (GitHub, Behance, موقع شخصي، إلخ...)"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="portfolio_files">أو ارفع ملفات لمشاريع سابقة</label>
-                        <div class="file-upload">
-                            <input type="file" id="portfolio_files" name="portfolio_files" multiple accept=".pdf,.doc,.docx,.jpg,.png">
-                            <div class="file-upload-area">
-                                <div class="upload-icon">📁</div>
-                                <p>اضغط هنا لرفع الملفات أو اسحبها إلى هنا</p>
-                                <small>يمكنك رفع عدة ملفات (PDF, DOC, صور)</small>
+                            <div class="cv-content">
+                                <div class="cv-section"></div>
+                                <div class="cv-section"></div>
+                                <div class="cv-section"></div>
                             </div>
-                            <div class="file-preview" id="portfolio_preview"></div>
+                        </div>
+                        <div class="quality-badge">
+                            <span class="badge-number">96</span>
+                            <span class="badge-text">جودة ممتازة</span>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <!-- Testimonials Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">💬</span>
-                        آراء وتوصيات (اختياري)
-                    </h2>
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>اختر الخدمة المناسبة لك</h2>
+                <p>نقدم ثلاث خدمات مختلفة لتناسب احتياجاتك</p>
+            </div>
+
+            <div class="services-grid">
+                <!-- Service 1: CV to Website -->
+                <div class="service-card popular">
+                    <div class="service-badge">الأكثر طلباً</div>
+                    <div class="service-icon">🌐</div>
+                    <h3 class="service-title">حول سيرتك الذاتية إلى موقع ويب احترافي</h3>
+                    <p class="service-description">لديك سيرة ذاتية جاهزة؟ سنحولها إلى موقع ويب احترافي ومتجاوب</p>
                     
-                    <div class="form-group">
-                        <label for="testimonials">آراء أو توصيات من عملاء/مدراء سابقين</label>
-                        <textarea id="testimonials" name="testimonials" rows="4" placeholder="اكتب أي آراء أو توصيات حصلت عليها من عملاء أو مدراء سابقين..."></textarea>
+                    <div class="service-features">
+                        <div class="feature">✅ رفع السيرة الذاتية الحالية</div>
+                        <div class="feature">✅ تصميم موقع ويب احترافي</div>
+                        <div class="feature">✅ تحسين المحتوى والتنسيق</div>
+                        <div class="feature">✅ تسليم خلال 3-5 أيام</div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="testimonial_files">أو ارفع ملفات التوصيات</label>
-                        <div class="file-upload">
-                            <input type="file" id="testimonial_files" name="testimonial_files" multiple accept=".pdf,.doc,.docx,.jpg,.png">
-                            <div class="file-upload-area">
-                                <div class="upload-icon">📄</div>
-                                <p>اضغط هنا لرفع ملفات التوصيات</p>
-                                <small>ملفات PDF أو صور للتوصيات</small>
-                            </div>
-                            <div class="file-preview" id="testimonial_preview"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Contact Information Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">📱</span>
-                        وسائل التواصل
-                    </h2>
-                    
-                    <div class="form-group required">
-                        <label for="email">البريد الإلكتروني</label>
-                        <input type="email" id="email" name="email" required>
-                        <span class="error-message" id="email_error"></span>
+                    <div class="service-pricing">
+                        <span class="price">75 ريال</span>
+                        <span class="price-period">فقط</span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="phone">رقم الجوال (اختياري)</label>
-                        <input type="tel" id="phone" name="phone" placeholder="05xxxxxxxx">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="social_media">روابط وسائل التواصل الاجتماعي</label>
-                        <textarea id="social_media" name="social_media" rows="3" placeholder="LinkedIn: https://linkedin.com/in/yourname&#10;Twitter: https://twitter.com/yourname&#10;Behance: https://behance.net/yourname"></textarea>
-                        <small class="form-hint">مثل LinkedIn، Twitter، Behance، إلخ...</small>
-                    </div>
-                </section>
-
-                <!-- Website Goals Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">🎯</span>
-                        أهداف الموقع
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label>هدفك من الموقع؟ (يمكنك اختيار أكثر من هدف)</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="website_goals" value="تقديم على وظائف">
-                                <span class="checkmark"></span>
-                                تقديم على وظائف
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="website_goals" value="تسويق خدماتك كفريلانسر">
-                                <span class="checkmark"></span>
-                                تسويق خدماتك كفريلانسر
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="website_goals" value="توثيق أعمالك">
-                                <span class="checkmark"></span>
-                                توثيق أعمالك
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="website_goals" value="أخرى" id="other_goal_checkbox">
-                                <span class="checkmark"></span>
-                                أخرى
-                            </label>
-                        </div>
-                        <div class="form-group" id="other_goal_input" style="display: none;">
-                            <input type="text" name="other_goal_text" placeholder="يرجى التوضيح...">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="domain_preference">هل ترغب بحجز نطاق (Domain) باسمك؟</label>
-                        <select id="domain_preference" name="domain_preference">
-                            <option value="">اختر...</option>
-                            <option value="نعم">نعم</option>
-                            <option value="لا">لا</option>
-                            <option value="غير متأكد">غير متأكد</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email_hosting_preference">هل ترغب ببريد رسمي مثل info@yourname.com؟</label>
-                        <select id="email_hosting_preference" name="email_hosting_preference">
-                            <option value="">اختر...</option>
-                            <option value="نعم">نعم</option>
-                            <option value="لا">لا</option>
-                            <option value="مو مهم الآن">مو مهم الآن</option>
-                        </select>
-                    </div>
-                </section>
-
-                <!-- Submit Button -->
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <span class="btn-text">إرسال الطلب</span>
-                        <span class="btn-loading" style="display: none;">جاري الإرسال...</span>
+                    <button class="service-btn" onclick="selectService('cv-to-website')">
+                        ابدأ الآن
                     </button>
                 </div>
-            </form>
-        </main>
 
-        <!-- Success/Error Messages -->
-        <div id="messageContainer" class="message-container" style="display: none;">
-            <div class="message" id="message"></div>
+                <!-- Service 2: Full Package -->
+                <div class="service-card premium">
+                    <div class="service-badge premium-badge">الباقة الكاملة</div>
+                    <div class="service-icon">🚀</div>
+                    <h3 class="service-title">إنشاء سيرة ذاتية احترافية وتحويلها إلى موقع ويب</h3>
+                    <p class="service-description">خدمة شاملة: إنشاء سيرة ذاتية من الصفر + موقع ويب احترافي</p>
+                    
+                    <div class="service-features">
+                        <div class="feature">✅ إنشاء سيرة ذاتية احترافية</div>
+                        <div class="feature">✅ صياغة المحتوى والنصوص</div>
+                        <div class="feature">✅ تصميم موقع ويب متكامل</div>
+                        <div class="feature">✅ استشارة مهنية مجانية</div>
+                        <div class="feature">✅ تسليم خلال 3-5 أيام</div>
+                    </div>
+
+                    <div class="service-pricing">
+                        <span class="price">100 ريال</span>
+                        <span class="price-period">فقط</span>
+                    </div>
+
+                    <button class="service-btn premium-btn" onclick="selectService('full-package')">
+                        ابدأ الآن
+                    </button>
+                </div>
+
+                <!-- Service 3: CV Only -->
+                <div class="service-card">
+                    <div class="service-icon">📄</div>
+                    <h3 class="service-title">إنشاء سيرة ذاتية احترافية</h3>
+                    <p class="service-description">تحتاج سيرة ذاتية احترافية فقط؟ سننشئها لك بأعلى جودة</p>
+                    
+                    <div class="service-features">
+                        <div class="feature">✅ سيرة ذاتية احترافية</div>
+                        <div class="feature">✅ صياغة محترفة للمحتوى</div>
+                        <div class="feature">✅ تصميم أنيق وجذاب</div>
+                        <div class="feature">✅ تسليم خلال 3 أيام</div>
+                    </div>
+
+                    <div class="service-pricing">
+                        <span class="price">25 ريال</span>
+                        <span class="price-period">فقط</span>
+                    </div>
+
+                    <button class="service-btn" onclick="selectService('cv-only')">
+                        ابدأ الآن
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <script src="/js/script.js"></script>
+    <!-- Process Section -->
+    <section class="process">
+        <div class="container">
+            <div class="section-header">
+                <h2>كيف نعمل؟</h2>
+                <p>عملية بسيطة وسريعة للحصول على موقعك الاحترافي</p>
+            </div>
+
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>اختر الخدمة</h3>
+                        <p>حدد الخدمة المناسبة لاحتياجاتك</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>أرسل بياناتك</h3>
+                        <p>املأ الاستمارة أو ارفع سيرتك الذاتية</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>نبدأ العمل</h3>
+                        <p>فريقنا يعمل على تنفيذ طلبك باحترافية</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>استلم النتيجة</h3>
+                        <p>احصل على موقعك الاحترافي خلال 3-5 أيام</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>جاهز لبناء موقعك الاحترافي؟</h2>
+                <p>انضم إلى مئات العملاء الراضين عن خدماتنا</p>
+                <button class="cta-btn" onclick="selectService('full-package')">
+                    ابدأ مشروعك الآن
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Cevehak</h3>
+                    <p>نحول خبراتك إلى موقع ويب احترافي يميزك عن الآخرين</p>
+                </div>
+                <div class="footer-info">
+                    <p>تسليم سريع • جودة عالية • أسعار منافسة</p>
+                </div>
+            </div>
+        </div>
+    </footer>    <script src="/js/landing.js"></script>
 </body>
 </html>

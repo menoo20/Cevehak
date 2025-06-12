@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفع السيرة الذاتية - Cevehak</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="back-link">
+                    <a href="/" class="back-btn">← العودة للرئيسية</a>
+                </div>
+                <h1>تحويل السيرة الذاتية إلى موقع ويب احترافي</h1>
+                <p class="subtitle">ارفع سيرتك الذاتية الحالية وسنحولها إلى موقع ويب احترافي</p>
+                <div class="service-info">
+                    <span class="price-badge">75 ريال</span>
+                    <span class="timeline">التسليم خلال 3-5 أيام</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Form -->
+        <main class="main-content">
+            <form id="uploadCvForm" class="cv-form" enctype="multipart/form-data">
+                <!-- Service Type Hidden Field -->
+                <input type="hidden" name="service_type" value="cv-to-website">
+                
+                <!-- Personal Information Section -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">👤</span>
+                        البيانات الأساسية
+                    </h2>
+                      <div class="form-group required">
+                        <label for="full_name">الاسم الكامل</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                        <span class="error-message" id="full_name_error"></span>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="profession">التخصص أو الوظيفة</label>
+                        <input type="text" id="profession" name="profession" required>
+                        <span class="error-message" id="profession_error"></span>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" name="email" required>
+                        <span class="error-message" id="email_error"></span>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="phone">رقم الجوال</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="05xxxxxxxx">
+                        <span class="error-message" id="phone_error"></span>
+                    </div>
+                </section>
+
+                <!-- CV Upload Section -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📄</span>
+                        ارفع سيرتك الذاتية
+                    </h2>
+                    
+                    <div class="form-group required">
+                        <label for="cv_file">ملف السيرة الذاتية (PDF, DOC, DOCX)</label>
+                        <div class="file-upload">
+                            <input type="file" id="cv_file" name="cv_file" accept=".pdf,.doc,.docx" required>
+                            <div class="file-upload-area">
+                                <div class="upload-icon">📄</div>
+                                <p>اضغط هنا لرفع ملف السيرة الذاتية</p>
+                                <small>يُقبل ملفات PDF, DOC, DOCX - الحد الأقصى 5 ميجابايت</small>
+                            </div>
+                            <div class="file-preview" id="cv_preview"></div>
+                        </div>
+                        <span class="error-message" id="cv_file_error"></span>
+                    </div>
+                </section>
+
+                <!-- Profile Image Section -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🖼️</span>
+                        الصورة الشخصية (اختياري)
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="profile_image">ارفع صورة احترافية (JPG/PNG)</label>
+                        <div class="file-upload">
+                            <input type="file" id="profile_image" name="profile_image" accept="image/*">
+                            <div class="file-upload-area">
+                                <div class="upload-icon">📸</div>
+                                <p>اضغط هنا لرفع الصورة أو اسحبها إلى هنا</p>
+                                <small>الحد الأقصى: 5 ميجابايت</small>
+                            </div>
+                            <div class="file-preview" id="profile_preview"></div>
+                        </div>
+                    </div>
+                </section>                <!-- Portfolio Section -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🧰</span>
+                        معرض الأعمال (إن وجد)
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="portfolio_links">روابط أعمالك أو مشاريعك السابقة</label>
+                        <textarea id="portfolio_links" name="portfolio_links" rows="3" placeholder="ضع روابط أعمالك أو مشاريعك (GitHub, Behance, موقع شخصي، إلخ...)"></textarea>
+                        <small class="form-hint">سيتم عرض هذه الأعمال في معرض احترافي على موقعك</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="portfolio_files">أو ارفع ملفات لمشاريع سابقة</label>
+                        <div class="file-upload">
+                            <input type="file" id="portfolio_files" name="portfolio_files" multiple accept=".pdf,.doc,.docx,.jpg,.png">
+                            <div class="file-upload-area">
+                                <div class="upload-icon">🎨</div>
+                                <p>اضغط هنا لرفع ملفات أعمالك السابقة</p>
+                                <small>يمكنك رفع عدة ملفات (PDF, DOC, صور) - سيتم عرضها في معرض تفاعلي</small>
+                            </div>
+                            <div class="file-preview" id="portfolio_preview"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Additional Files Section -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📁</span>
+                        ملفات إضافية (اختياري)
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="additional_files">شهادات أو مستندات أخرى</label>
+                        <div class="file-upload">
+                            <input type="file" id="additional_files" name="additional_files" multiple accept=".pdf,.doc,.docx,.jpg,.png">
+                            <div class="file-upload-area">
+                                <div class="upload-icon">📄</div>
+                                <p>اضغط هنا لرفع شهادات أو مستندات إضافية</p>
+                                <small>مثل الشهادات، التوصيات، أو أي مستندات أخرى</small>
+                            </div>
+                            <div class="file-preview" id="additional_preview"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Website Preferences Section -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🎨</span>
+                        تفضيلات الموقع
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="website_style">أسلوب التصميم المفضل</label>
+                        <select id="website_style" name="website_style">
+                            <option value="">اختر الأسلوب...</option>
+                            <option value="modern">عصري ومبسط</option>
+                            <option value="professional">مهني وكلاسيكي</option>
+                            <option value="creative">إبداعي وملون</option>
+                            <option value="minimal">بسيط جداً</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="domain_preference">هل ترغب بحجز نطاق (Domain) باسمك؟</label>
+                        <select id="domain_preference" name="domain_preference">
+                            <option value="">اختر...</option>
+                            <option value="نعم">نعم</option>
+                            <option value="لا">لا</option>
+                            <option value="غير متأكد">غير متأكد</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="special_requests">طلبات خاصة أو ملاحظات</label>
+                        <textarea id="special_requests" name="special_requests" rows="3" placeholder="أي طلبات خاصة أو ملاحظات تود إضافتها..."></textarea>
+                    </div>
+                </section>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-text">إرسال الطلب - 75 ريال</span>
+                        <span class="btn-loading" style="display: none;">جاري الإرسال...</span>
+                    </button>
+                    <p class="form-note">سنتواصل معك خلال 24 ساعة لتأكيد الطلب وترتيب الدفع</p>
+                </div>
+            </form>
+        </main>
+
+        <!-- Success/Error Messages -->
+        <div id="messageContainer" class="message-container" style="display: none;">
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
