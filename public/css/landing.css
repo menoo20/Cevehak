@@ -147,69 +147,202 @@ body {
     font-size: 1.5rem;
 }
 
-/* CV Preview with Actual Image */
+/* Clean Single CV Display */
 .cv-preview {
     position: relative;
     max-width: 400px;
     margin: 0 auto;
 }
 
-.cv-actual {
+.cv-display {
     background: white;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 1rem;
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     position: relative;
     overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.cv-display:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
 }
 
 .cv-image {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 12px;
     display: block;
     transition: transform 0.3s ease;
 }
 
-.cv-actual:hover .cv-image {
+.cv-display:hover .cv-image {
     transform: scale(1.02);
+}
+
+/* Front CV - main focus */
+.cv-front {
+    z-index: 3;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateZ(40px) rotateY(-3deg) rotateX(1deg);
+}
+
+.cv-front .cv-container {
+    box-shadow: 
+        0 35px 70px rgba(0, 0, 0, 0.2),
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Middle CV - elegant left tilt */
+.cv-middle {
+    z-index: 2;
+    top: 15px;
+    left: -60px;
+    transform: translateZ(20px) rotateY(-15deg) rotateX(2deg) rotateZ(-2deg);
+    opacity: 0.92;
+}
+
+.cv-middle .cv-container {
+    filter: brightness(0.95) saturate(0.95);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.12),
+        0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Back CV - subtle right tilt */
+.cv-back {
+    z-index: 1;
+    top: 45px;
+    right: -70px;
+    transform: translateZ(5px) rotateY(18deg) rotateX(-1deg) rotateZ(3deg);
+    opacity: 0.85;
+}
+
+.cv-back .cv-container {
+    filter: brightness(0.9) saturate(0.9);
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.1),
+        0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Hover effects */
+.cv-stack:hover .cv-front {
+    transform: translateX(-50%) translateZ(60px) rotateY(-5deg) rotateX(0deg) scale(1.03);
+}
+
+.cv-stack:hover .cv-front .cv-container {
+    box-shadow: 
+        0 45px 90px rgba(0, 0, 0, 0.25),
+        0 25px 50px rgba(0, 0, 0, 0.18),
+        0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.cv-stack:hover .cv-middle {
+    transform: translateZ(35px) rotateY(-18deg) rotateX(1deg) rotateZ(-1deg);
+    opacity: 0.95;
+}
+
+.cv-stack:hover .cv-back {
+    transform: translateZ(20px) rotateY(22deg) rotateX(-0.5deg) rotateZ(2deg);
+    opacity: 0.9;
+}
+
+/* Portfolio badge - elegant orange accent */
+.portfolio-badge {
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    background: linear-gradient(135deg, #ff8a00, #e77100);
+    color: white;
+    padding: 14px 18px;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(255, 138, 0, 0.3);
+    transform: rotate(8deg);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    border: 3px solid white;
+    z-index: 4;
+    animation: gentle-float 4s ease-in-out infinite;
+}
+
+.portfolio-badge:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 138, 0, 0.4);
+}
+
+.portfolio-number {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    opacity: 0.95;
+}
+
+@keyframes gentle-float {
+    0%, 100% { 
+        transform: rotate(8deg) translateY(0px); 
+        box-shadow: 0 10px 30px rgba(255, 138, 0, 0.3);
+    }
+    50% { 
+        transform: rotate(8deg) translateY(-3px); 
+        box-shadow: 0 13px 35px rgba(255, 138, 0, 0.35);
+    }
 }
 
 .quality-badge {
     position: absolute;
-    top: -15px;
-    right: -15px;
+    top: -22px;
+    right: -22px;
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
-    padding: 1rem 1.2rem;
+    padding: 0.7rem 0.9rem;
     border-radius: 50%;
     text-align: center;
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
-    transform: rotate(-15deg);
+    transform: rotate(0deg);
     transition: all 0.3s ease;
-    border: 3px solid white;
+    border: 2px solid white;
     animation: pulse 2s infinite;
+    width: 75px;
+    height: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .quality-badge:hover {
-    transform: rotate(0deg) scale(1.1);
+    transform: rotate(0deg) scale(1.05);
     box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
 }
 
 .badge-number {
     display: block;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 800;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    line-height: 1;
 }
 
 .badge-text {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     text-transform: uppercase;
     opacity: 0.95;
+    line-height: 1;
 }
 
 @keyframes pulse {
@@ -851,15 +984,47 @@ body {
     .hero-features {
         justify-content: center;
         align-items: center;
-    }
-      /* CV Image */
-    .cv-preview {
-        max-width: 300px;
+    }    /* Sophisticated CV Showcase Mobile */
+    .cv-showcase {
+        max-width: 350px;
         margin: 0 auto;
     }
     
-    .cv-actual {
-        padding: 0.75rem;
+    .cv-stack {
+        height: 300px;
+        perspective: 1200px;
+    }
+    
+    .cv-document {
+        width: 220px;
+        height: 280px;
+    }
+    
+    .cv-container {
+        padding: 12px;
+        border-radius: 16px;
+    }
+    
+    .cv-image {
+        border-radius: 8px;
+    }
+    
+    /* Adjusted positioning for mobile */
+    .cv-front {
+        top: 20px;
+        transform: translateX(-50%) translateZ(30px) rotateY(-2deg);
+    }
+    
+    .cv-middle {
+        top: 10px;
+        left: -40px;
+        transform: translateZ(15px) rotateY(-12deg) rotateZ(-1deg);
+    }
+    
+    .cv-back {
+        top: 30px;
+        right: -50px;
+        transform: translateZ(5px) rotateY(15deg) rotateZ(2deg);
     }
     
     /* Quality Badge Mobile */
@@ -876,6 +1041,22 @@ body {
     
     .badge-text {
         font-size: 0.6rem;
+    }
+    
+    /* Portfolio Badge Mobile */
+    .portfolio-badge {
+        bottom: -25px;
+        left: -25px;
+        padding: 12px 14px;
+        transform: rotate(6deg);
+    }
+    
+    .portfolio-number {
+        font-size: 1.2rem;
+    }
+    
+    .portfolio-text {
+        font-size: 0.65rem;
     }
     
     /* Services Overview */
@@ -985,14 +1166,46 @@ body {
     
     .hero-subtitle {
         text-align: center;
-    }
-      /* CV Image Mobile */
-    .cv-preview {
-        max-width: 250px;
+    }    /* Sophisticated CV Showcase Small Mobile */
+    .cv-showcase {
+        max-width: 300px;
     }
     
-    .cv-actual {
-        padding: 0.5rem;
+    .cv-stack {
+        height: 260px;
+        perspective: 1000px;
+    }
+    
+    .cv-document {
+        width: 190px;
+        height: 240px;
+    }
+    
+    .cv-container {
+        padding: 10px;
+        border-radius: 14px;
+    }
+    
+    .cv-image {
+        border-radius: 6px;
+    }
+    
+    /* Further adjusted positioning for small screens */
+    .cv-front {
+        top: 15px;
+        transform: translateX(-50%) translateZ(25px) rotateY(-1deg);
+    }
+    
+    .cv-middle {
+        top: 8px;
+        left: -35px;
+        transform: translateZ(12px) rotateY(-10deg);
+    }
+    
+    .cv-back {
+        top: 25px;
+        right: -40px;
+        transform: translateZ(3px) rotateY(12deg) rotateZ(1deg);
     }
     
     /* Quality Badge Small Mobile */
@@ -1009,6 +1222,22 @@ body {
     
     .badge-text {
         font-size: 0.55rem;
+    }
+    
+    /* Portfolio Badge Small Mobile */
+    .portfolio-badge {
+        bottom: -20px;
+        left: -20px;
+        padding: 10px 12px;
+        transform: rotate(4deg);
+    }
+    
+    .portfolio-number {
+        font-size: 1.1rem;
+    }
+    
+    .portfolio-text {
+        font-size: 0.6rem;
     }
     
     /* Services and Pricing */
