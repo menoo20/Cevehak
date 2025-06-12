@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node flexible-server.js",
     "dev": "nodemon flexible-server.js",
-    "setup-db": "node setup-db.js",
-    "test": "node test-flexible-services.js"
+    "production": "NODE_ENV=production node flexible-server.js",
+    "setup-db": "node setup-db.js"
   },
   "keywords": [],
   "author": "",

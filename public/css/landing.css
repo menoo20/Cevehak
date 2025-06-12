@@ -147,6 +147,59 @@ body {
     font-size: 1.5rem;
 }
 
+/* Guarantee Badges */
+.guarantee-badges {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.guarantee-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 0;
+}
+
+.guarantee-badge:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.badge-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.badge-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.badge-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.badge-subtitle {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.3;
+}
+
 /* Clean Single CV Display */
 .cv-preview {
     position: relative;
@@ -1091,10 +1144,28 @@ body {
         font-size: 1rem;
         margin-bottom: 1.5rem;
     }
-    
-    .hero-features {
+      .hero-features {
         justify-content: center;
         align-items: center;
+    }
+    
+    /* Guarantee Badges - Mobile */
+    .guarantee-badges {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+    
+    .guarantee-badge {
+        padding: 0.875rem 1rem;
+    }
+    
+    .badge-title {
+        font-size: 0.9rem;
+    }
+    
+    .badge-subtitle {
+        font-size: 0.8rem;
     }
     
     .feature {
@@ -1276,16 +1347,40 @@ body {
     
     .nav-link {
         font-size: 0.9rem;
-    }
-      /* Hero */
+    }      /* Hero */
     .hero-title {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         text-align: center;
     }
     
     .hero-subtitle {
+        font-size: 0.9rem;
         text-align: center;
-    }    /* Sophisticated CV Showcase Small Mobile */
+    }
+    
+    /* Guarantee Badges - Extra Small Mobile */
+    .guarantee-badges {
+        margin-top: 1rem;
+        gap: 0.5rem;
+    }
+    
+    .guarantee-badge {
+        padding: 0.75rem 0.875rem;
+        border-radius: 12px;
+    }
+    
+    .badge-icon {
+        font-size: 1.5rem;
+    }
+    
+    .badge-title {
+        font-size: 0.85rem;
+    }
+    
+    .badge-subtitle {
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }/* Sophisticated CV Showcase Small Mobile */
     .cv-showcase {
         max-width: 300px;
     }

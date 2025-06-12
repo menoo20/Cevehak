@@ -208,16 +208,20 @@ app.post('/submit',
             });
 
             // Save to database
-            const result = await CVSubmission.create(submissionData);
-
-            // Send emails (optional - won't fail if not configured)
+            const result = await CVSubmission.create(submissionData);            // Send emails (optional - won't fail if not configured)
             try {
                 const { sendNotificationEmail, sendConfirmationEmail } = require('./config/email');
+                console.log('📧 Attempting to send notification email...');
                 await sendNotificationEmail(submissionData);
+                console.log('📧 Notification email sent successfully');
+                
+                console.log('📧 Attempting to send confirmation email...');
                 await sendConfirmationEmail(submissionData.email, submissionData.full_name);
-                console.log('📧 Emails sent successfully');
+                console.log('📧 Confirmation email sent successfully');
             } catch (emailError) {
-                console.error('📧 Email error (continuing anyway):', emailError.message);
+                console.error('📧 Email error details:', emailError);
+                console.error('📧 Email error message:', emailError.message);
+                console.error('📧 Email error stack:', emailError.stack);
             }
 
             // Success response with service-specific message

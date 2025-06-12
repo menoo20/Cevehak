@@ -917,20 +917,14 @@
                             <div class="meta-item">
                                 <span>📱</span>
                                 <span>${submission.phone || 'غير محدد'}</span>
-                            </div>
-                            <div class="meta-item">
+                            </div>                            <div class="meta-item">
                                 <span>📅</span>
                                 <span>${formattedDate}</span>
                             </div>
                             <div class="meta-item">
                                 <span>💰</span>
                                 <span>${config.price}</span>
-                            </div>                            ${submission.bio ? `
-                            <div class="meta-item" style="grid-column: 1 / -1;">
-                                <span>📝</span>
-                                <span>${submission.bio.substring(0, 150)}${submission.bio.length > 150 ? '...' : ''}</span>
                             </div>
-                            ` : ''}
                         </div>
                     </div>
                 `;
