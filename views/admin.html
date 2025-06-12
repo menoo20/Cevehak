@@ -925,18 +925,12 @@
                             <div class="meta-item">
                                 <span>💰</span>
                                 <span>${config.price}</span>
-                            </div>
-                            ${submission.bio ? `
+                            </div>                            ${submission.bio ? `
                             <div class="meta-item" style="grid-column: 1 / -1;">
                                 <span>📝</span>
                                 <span>${submission.bio.substring(0, 150)}${submission.bio.length > 150 ? '...' : ''}</span>
                             </div>
                             ` : ''}
-                            ${submission.portfolio_links ? `
-                            <div class="meta-item" style="grid-column: 1 / -1;">
-                                <span>🔗</span>
-                                <span>${submission.portfolio_links.substring(0, 100)}${submission.portfolio_links.length > 100 ? '...' : ''}</span>
-                            </div>                            ` : ''}
                         </div>
                     </div>
                 `;
