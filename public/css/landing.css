@@ -775,10 +775,10 @@ body {
 }
 
 .footer-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    gap: 2rem;
 }
 
 .footer-brand h3 {
@@ -966,6 +966,102 @@ body {
     color: white;
 }
 
+/* Mission Statement - Artistic Standalone Section */
+.mission-statement {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+    background-size: 200% 200%;
+    animation: gradient-flow 8s ease-in-out infinite;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.mission-statement::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.mission-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.mission-text {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    line-height: 1.4;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: inline-block;
+    padding: 2rem 3rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: mission-glow 3s ease-in-out infinite alternate;
+}
+
+.mission-text::before {
+    content: '✨';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-size: 1.5rem;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+.mission-text::after {
+    content: '✨';
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    font-size: 1.5rem;
+    animation: sparkle 2s ease-in-out infinite 1s;
+}
+
+@keyframes gradient-flow {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes mission-glow {
+    0% {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        transform: translateY(0px);
+    }
+    100% {
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(180deg);
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     /* Navigation */
@@ -1138,11 +1234,11 @@ body {
     .contact-form {
         padding: 1.5rem;
         text-align: center;
-    }
-      /* Footer */
+    }    /* Footer */
     .footer-content {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         text-align: center;
+        gap: 1.5rem;
     }
     
     .footer-info {
@@ -1402,16 +1498,9 @@ body {
         font-size: 1.3rem;
     }
     
-    .quality-badge {
-        width: 55px;
-        height: 55px;
-    }
-    
-    .badge-number {
-        font-size: 1rem;
-    }
-    
-    .badge-text {
-        font-size: 0.4rem;
+    /* Mission Statement Mobile */
+    .mission-text {
+        font-size: 1.2rem;
+        padding: 1.2rem 1.5rem;
     }
 }
