@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node flexible-server.js",
-    "dev": "nodemon flexible-server.js",
+    "dev": "nodemon flexible-server.js", 
+    "build": "echo 'Build completed'",
+    "vercel-build": "echo 'Vercel build completed'",
     "production": "NODE_ENV=production node flexible-server.js",
     "setup-db": "node setup-db.js"
   },
