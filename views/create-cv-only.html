@@ -16,12 +16,14 @@
             <div class="header-content">
                 <div class="back-link">
                     <a href="/" class="back-btn">← العودة للرئيسية</a>
-                </div>
-                <h1>إنشاء سيرة ذاتية احترافية</h1>
-                <p class="subtitle">املأ البيانات التالية وسننشئ لك سيرة ذاتية احترافية بأعلى جودة</p>
+                </div>                <h1>إنشاء سيرة ذاتية احترافية 📄✨</h1>
+                <p class="subtitle">املأ البيانات الأساسية وسنتواصل معك عبر الواتساب لاستكمال باقي التفاصيل 💬</p>
                 <div class="service-info">
                     <span class="price-badge">25 ريال</span>
                     <span class="timeline">التسليم خلال 3 أيام</span>
+                </div>
+                <div class="whatsapp-notice">
+                    <p>📲 <strong>ملاحظة مهمة:</strong> بعد إرسال الطلب، سنتواصل معك عبر الواتساب لاستكمال المستندات والصور المطلوبة</p>
                 </div>
             </div>
         </header>
@@ -48,107 +50,72 @@
                         <label for="profession">التخصص أو الوظيفة</label>
                         <input type="text" id="profession" name="profession" required>
                         <span class="error-message" id="profession_error"></span>
-                    </div>
-
-                    <div class="form-group required">
+                    </div>                    <div class="form-group required">
                         <label for="email">البريد الإلكتروني</label>
                         <input type="email" id="email" name="email" required>
                         <span class="error-message" id="email_error"></span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="bio">نبذة تعريفية (2-5 أسطر)</label>
-                        <textarea id="bio" name="bio" rows="4" placeholder="اكتب نبذة مختصرة عن نفسك ومجال عملك..."></textarea>
-                        <small class="form-hint">يمكننا مساعدتك في صياغتها إذا لم تكن متأكداً</small>
+                    <div class="form-group required">
+                        <label for="phone">رقم الجوال (للتواصل عبر الواتساب)</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="05xxxxxxxx">
+                        <span class="error-message" id="phone_error"></span>
+                        <small class="form-hint">📱 سنستخدم هذا الرقم للتواصل معك عبر الواتساب</small>
                     </div>
-                </section>
 
-                <!-- Profile Image Section -->
+                    <div class="form-group">
+                        <label for="bio">نبذة تعريفية مختصرة (اختياري)</label>
+                        <textarea id="bio" name="bio" rows="3" placeholder="مثال: مطور مواقع ويب بخبرة 5 سنوات في التقنيات الحديثة..."></textarea>
+                        <small class="form-hint">💡 يمكنك تركها فارغة وسنساعدك في كتابتها لاحقاً</small>
+                    </div>                </section>
+
+                <!-- Optional Profile Image Section -->
                 <section class="form-section">
                     <h2 class="section-title">
-                        <span class="section-icon">🖼️</span>
-                        الصورة الشخصية
+                        <span class="section-icon">�</span>
+                        الصورة الشخصية (اختياري)
                     </h2>
                     
                     <div class="form-group">
-                        <label for="profile_image">ارفع صورة احترافية (JPG/PNG)</label>
+                        <label for="profile_image">ارفع صورة شخصية احترافية</label>
                         <div class="file-upload">
                             <input type="file" id="profile_image" name="profile_image" accept="image/*">
                             <div class="file-upload-area">
                                 <div class="upload-icon">📸</div>
-                                <p>اضغط هنا لرفع الصورة أو اسحبها إلى هنا</p>
-                                <small>الحد الأقصى: 5 ميجابايت</small>
+                                <p>اضغط هنا لرفع صورتك الشخصية (اختياري)</p>
+                                <small>أو يمكنك إرسالها لاحقاً عبر الواتساب - الحد الأقصى: 1.5 ميجابايت</small>
                             </div>
                             <div class="file-preview" id="profile_preview"></div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Qualifications and Experience Section -->
-                <section class="form-section">
+                <!-- WhatsApp Follow-up Info -->
+                <section class="form-section whatsapp-info">
                     <h2 class="section-title">
-                        <span class="section-icon">🎓</span>
-                        المؤهلات والخبرات
+                        <span class="section-icon">💬</span>
+                        ما يحدث بعد الإرسال
                     </h2>
                     
-                    <div class="form-group">
-                        <label for="education">المؤهلات الأكاديمية</label>
-                        <textarea id="education" name="education" rows="4" placeholder="اذكر مؤهلاتك الأكاديمية (الشهادات، الجامعات، سنوات التخرج...)"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="experience">الخبرات العملية (وظائف/مشاريع سابقة)</label>
-                        <textarea id="experience" name="experience" rows="4" placeholder="اذكر خبراتك العملية والوظائف والمشاريع السابقة..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="skills">المهارات الأساسية</label>
-                        <textarea id="skills" name="skills" rows="3" placeholder="اذكر مهاراتك المهنية والتقنية..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="languages">اللغات التي تتقنها</label>
-                        <input type="text" id="languages" name="languages" placeholder="مثال: العربية (اللغة الأم)، الإنجليزية (ممتاز)، الفرنسية (جيد)">
-                    </div>
-                </section>
-
-                <!-- Portfolio Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">🧰</span>
-                        معرض الأعمال (إن وجد)
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label for="portfolio_links">روابط أعمالك أو مشاريعك السابقة</label>
-                        <textarea id="portfolio_links" name="portfolio_links" rows="3" placeholder="ضع روابط أعمالك أو مشاريعك (GitHub, Behance, موقع شخصي، إلخ...)"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="portfolio_files">أو ارفع ملفات لمشاريع سابقة</label>
-                        <div class="file-upload">
-                            <input type="file" id="portfolio_files" name="portfolio_files" multiple accept=".pdf,.doc,.docx,.jpg,.png">
-                            <div class="file-upload-area">
-                                <div class="upload-icon">📁</div>
-                                <p>اضغط هنا لرفع الملفات أو اسحبها إلى هنا</p>
-                                <small>يمكنك رفع عدة ملفات (PDF, DOC, صور)</small>
-                            </div>
-                            <div class="file-preview" id="portfolio_preview"></div>
+                    <div class="info-steps">
+                        <div class="step">
+                            <span class="step-number">1️⃣</span>
+                            <p><strong>تأكيد فوري:</strong> ستصلك رسالة تأكيد على بريدك الإلكتروني</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2️⃣</span>
+                            <p><strong>متابعة واتساب:</strong> سنتواصل معك خلال ساعات قليلة عبر الواتساب</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3️⃣</span>
+                            <p><strong>جمع المعلومات:</strong> سنطلب منك المؤهلات والخبرات والمهارات عبر الواتساب</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">4️⃣</span>
+                            <p><strong>التسليم:</strong> ستحصل على سيرتك الذاتية الاحترافية خلال 3 أيام! 🎉</p>
                         </div>
                     </div>
-                </section>                <!-- Contact Information Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">📱</span>
-                        معلومات إضافية
-                    </h2>
-
-                    <div class="form-group">
-                        <label for="phone">رقم الجوال (اختياري)</label>
-                        <input type="tel" id="phone" name="phone" placeholder="05xxxxxxxx">
-                    </div>
-
-                    <div class="form-group">
+                </section>
                         <label for="social_media">روابط وسائل التواصل الاجتماعي</label>
                         <textarea id="social_media" name="social_media" rows="3" placeholder="LinkedIn: https://linkedin.com/in/yourname&#10;Twitter: https://twitter.com/yourname&#10;Behance: https://behance.net/yourname"></textarea>
                         <small class="form-hint">مثل LinkedIn، Twitter، Behance، إلخ...</small>
@@ -189,25 +156,13 @@
                             </label>
                             <label class="checkbox-label">
                                 <input type="checkbox" name="cv_purpose" value="الدراسات العليا">
-                                <span class="checkmark"></span>
-                                التقديم للدراسات العليا
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="special_requests">طلبات خاصة أو ملاحظات</label>
-                        <textarea id="special_requests" name="special_requests" rows="3" placeholder="أي طلبات خاصة أو ملاحظات تود إضافتها..."></textarea>
-                    </div>
-                </section>
-
-                <!-- Submit Button -->
+                                <span class="checkmark"></span>                <!-- Submit Button -->
                 <div class="form-actions">
                     <button type="submit" class="submit-btn" id="submitBtn">
-                        <span class="btn-text">إرسال الطلب - 25 ريال</span>
-                        <span class="btn-loading" style="display: none;">جاري الإرسال...</span>
+                        <span class="btn-text">إرسال الطلب - 25 ريال 🚀</span>
+                        <span class="btn-loading" style="display: none;">جاري الإرسال... ⏳</span>
                     </button>
-                    <p class="form-note">سنتواصل معك خلال 24 ساعة لتأكيد الطلب وترتيب الدفع</p>
+                    <p class="form-note">✅ ستصلك رسالة تأكيد فورية، ثم سنتواصل معك عبر الواتساب خلال ساعات قليلة</p>
                 </div>
             </form>
         </main>
