@@ -1,13 +1,19 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const pool = new Pool({
+// Check if database environment variables are available
+const dbConfig = process.env.DB_HOST ? {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-});
+} : process.env.POSTGRES_URL ? {
+    connectionString: process.env.POSTGRES_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+} : null;
+
+const pool = dbConfig ? new Pool(dbConfig) : null;
 
 // Create tables if they don't exist
 const createTables = async () => {
@@ -55,6 +61,11 @@ const createTables = async () => {
 
 // Test database connection
 const testConnection = async () => {
+    if (!pool) {
+        console.log('No database configuration found');
+        return false;
+    }
+    
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT NOW()');
