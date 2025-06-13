@@ -230,10 +230,15 @@ app.post('/submit',
                 submissionId: result.id,
                 service_type: req.serviceType,
                 price: req.serviceConfig?.price || 'غير محدد'
-            });
-
-        } catch (error) {
+            });        } catch (error) {
             console.error('❌ Error processing submission:', error);
+            console.error('❌ Error details:', {
+                message: error.message,
+                stack: error.stack,
+                code: error.code,
+                name: error.name
+            });
+            
             res.status(500).json({
                 success: false,
                 message: 'حدث خطأ أثناء معالجة طلبك. يرجى المحاولة مرة أخرى.',

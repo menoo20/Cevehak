@@ -23,16 +23,16 @@ const serviceConfigs = {    'cv-to-website': {
             profession: { required: true },
             bio: { maxLength: 1000 }
         }
-    },
-    'cv-only': {
+    },    'cv-only': {
         name: 'CV Only',
         price: 25,
         timeline: '3 days',
-        requiredFields: ['full_name', 'profession', 'email'],
-        fileFields: ['profile_image', 'portfolio_files'],
+        requiredFields: ['full_name', 'profession', 'email', 'phone'],
+        fileFields: ['profile_image'],
         requiredFiles: [],
         validationRules: {
-            profession: { required: true }
+            profession: { required: true },
+            phone: { required: true }
         }
     }
 };
