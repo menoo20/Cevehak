@@ -419,13 +419,20 @@ async function handleFormSubmit(e) {
             }
         });
         console.log(`📎 Total files being uploaded: ${totalFiles}`);
-        
-        // Submit form
+          // Submit form
         console.log('🌐 Sending request to server...');
         const response = await fetch('/submit', {
             method: 'POST',
             body: formData
         });
+        
+        // Check if response is ok
+        if (!response.ok) {
+            if (response.status === 413) {
+                throw new Error('Request Entity Too Large - حجم الملفات كبير جداً');
+            }
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
         
         const result = await response.json();
           if (result.success) {
@@ -456,10 +463,17 @@ async function handleFormSubmit(e) {
                     console.error(`  ${index + 1}. ${error}`);
                 });
             }
-        }
-    } catch (error) {
+        }    } catch (error) {
         console.error('💥 Network/Submit error:', error);
-        showMessage('حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'error');
+        
+        // Handle specific HTTP status codes
+        if (error.message.includes('413') || error.message.includes('Request Entity Too Large')) {
+            showMessage('حجم الملفات كبير جداً. يرجى تقليل حجم الملفات إلى أقل من 2 ميجابايت لكل ملف.', 'error');
+        } else if (error.message.includes('Request failed') || error.message.includes('Failed to fetch')) {
+            showMessage('فشل في الاتصال بالخادم. يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى.', 'error');
+        } else {
+            showMessage('حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'error');
+        }
     } finally {
         setSubmitButtonLoading(false);
         console.log('🔓 Submit button loading state cleared');

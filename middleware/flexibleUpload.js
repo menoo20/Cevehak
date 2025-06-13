@@ -159,12 +159,12 @@ const createFlexibleUpload = (serviceType) => {
                 { name: 'testimonial_files', maxCount: 5 },
                 { name: 'additional_files', maxCount: 10 }
             ];
-    }
-
-    return multer({        storage: storage,        fileFilter: fileFilter,
+    }    return multer({        storage: storage,        fileFilter: fileFilter,
         limits: {
-            fileSize: 4 * 1024 * 1024, // 4MB per file (Vercel free plan compatible)
-            files: 20 // Maximum files for complete CV submission
+            fileSize: 2 * 1024 * 1024, // 2MB per file (safer for Vercel)
+            files: 20, // Maximum files for complete CV submission
+            fieldSize: 2 * 1024 * 1024, // 2MB field size
+            parts: 30 // Maximum number of parts
         }
     }).fields(fields);
 };
@@ -173,8 +173,10 @@ const createFlexibleUpload = (serviceType) => {
 const upload = multer({    storage: storage,
     fileFilter: fileFilter,
     limits: {
-        fileSize: 4 * 1024 * 1024, // 4MB per file (Vercel free plan compatible)
-        files: 20 // Maximum files for complete CV submission
+        fileSize: 2 * 1024 * 1024, // 2MB per file (safer for Vercel)
+        files: 20, // Maximum files for complete CV submission
+        fieldSize: 2 * 1024 * 1024, // 2MB field size
+        parts: 30 // Maximum number of parts
     }
 });
 
@@ -183,9 +185,8 @@ const handleUploadError = (error, req, res, next) => {
     if (error instanceof multer.MulterError) {
         let message = 'خطأ في تحميل الملف';
         
-        switch(error.code) {
-            case 'LIMIT_FILE_SIZE':
-                message = 'حجم الملف كبير جداً (الحد الأقصى 10 ميجابايت)';
+        switch(error.code) {            case 'LIMIT_FILE_SIZE':
+                message = 'حجم الملف كبير جداً (الحد الأقصى 2 ميجابايت)';
                 break;
             case 'LIMIT_FILE_COUNT':
                 message = 'عدد الملفات أكثر من المسموح';
