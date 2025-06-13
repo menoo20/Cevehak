@@ -335,6 +335,7 @@ function showFieldError(field, errorMessage) {
 // Clear field error
 function clearFieldError(e) {
     const field = e.target;
+    if (!field) return;
     const formGroup = field.closest('.form-group');
     
     if (!formGroup) {
