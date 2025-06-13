@@ -1,7 +1,7 @@
 const { pool } = require('../config/database');
 
-class CVSubmission {
-    static async create(submissionData) {        const {
+class CVSubmission {    static async create(submissionData) {
+        const {
             full_name,
             profession,
             bio,
@@ -22,15 +22,18 @@ class CVSubmission {
             email_hosting_preference,
             service_type,
             ip_address,
-            user_agent
+            user_agent,
+            cv_file,
+            additional_files
         } = submissionData;        const query = `
             INSERT INTO cv_submissions (
                 full_name, profession, bio, profile_image, education, experience,
                 skills, languages, portfolio_links, portfolio_files, testimonials,
                 testimonial_files, email, phone, social_media, website_goals,
-                domain_preference, email_hosting_preference, service_type, ip_address, user_agent
+                domain_preference, email_hosting_preference, service_type, ip_address, user_agent,
+                cv_file, additional_files
             ) VALUES (
-                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23
             ) RETURNING id, submission_date
         `;        const values = [
             full_name,
@@ -53,7 +56,9 @@ class CVSubmission {
             email_hosting_preference || null,
             service_type || 'full-package',
             ip_address || null,
-            user_agent || null
+            user_agent || null,
+            cv_file || null,
+            additional_files || null
         ];
 
         try {

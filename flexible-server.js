@@ -121,9 +121,9 @@ app.post('/submit',
                 { name: 'cv_file', maxCount: 1 },
                 { name: 'portfolio_files', maxCount: 10 },
                 { name: 'testimonial_files', maxCount: 5 },
-                { name: 'additional_files', maxCount: 10 }
-            ]);
-              universalUpload(req, res, (err) => {
+                { name: 'additional_files', maxCount: 10 }            ]);
+            
+            universalUpload(req, res, (err) => {
                 if (err) {
                     console.error('📎 File upload error:', err.message);
                     return handleUploadError(err, req, res, next);
@@ -156,9 +156,9 @@ app.post('/submit',
             const serviceType = req.body.service_type || 'full-package';
             req.serviceType = serviceType;
             next();
-        }
-    },
-      // Input sanitization
+        }    },
+    
+    // Input sanitization
     sanitizeByService,
     
     // Service-specific validation
@@ -166,13 +166,13 @@ app.post('/submit',
     
     // Main submission processing
     async (req, res) => {
-        try {
-            // Prepare submission data
+        try {            // Prepare submission data
             const submissionData = {
                 ...req.body,
                 ip_address: req.ip,
                 user_agent: req.get('User-Agent'),
-                submission_date: new Date()            };
+                submission_date: new Date()
+            };
             
             // Define user folder for file organization
             const userFolder = req.userIdentifier || 'default';
@@ -196,19 +196,14 @@ app.post('/submit',
                     }
                 });
             }
-            
-            console.log(`💾 Processing submission data for ${req.serviceType}...`);
+              console.log(`💾 Processing submission data for ${req.serviceType}...`);
             console.log(`📂 User folder: ${userFolder}`);
-
-            console.log(`✅ ${req.serviceType} submission processed:`, {
-                name: submissionData.full_name,
-                email: submissionData.email,
-                service: req.serviceType,
-                files: req.files ? Object.keys(req.files) : 'none'
-            });
+            console.log('📋 Submission data keys:', Object.keys(submissionData));
 
             // Save to database
-            const result = await CVSubmission.create(submissionData);            // Send emails (optional - won't fail if not configured)
+            console.log('💾 Attempting database save...');
+            const result = await CVSubmission.create(submissionData);
+            console.log('✅ Database save successful:', result.id);// Send emails (optional - won't fail if not configured)
             try {
                 const { sendNotificationEmail, sendConfirmationEmail } = require('./config/email');
                 console.log('📧 Attempting to send notification email...');
