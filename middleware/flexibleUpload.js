@@ -161,12 +161,11 @@ const createFlexibleUpload = (serviceType) => {
             ];
     }
 
-    return multer({
-        storage: storage,
+    return multer({        storage: storage,
         fileFilter: fileFilter,
         limits: {
-            fileSize: 10 * 1024 * 1024, // 10MB per file
-            files: 20 // Max total files
+            fileSize: 4 * 1024 * 1024, // 4MB per file (Vercel limit compatible)
+            files: 10 // Reduced to ensure total stays under 4.5MB
         }
     }).fields(fields);
 };
@@ -176,8 +175,8 @@ const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
     limits: {
-        fileSize: 10 * 1024 * 1024, // 10MB per file
-        files: 20 // Max total files
+        fileSize: 4 * 1024 * 1024, // 4MB per file (Vercel limit compatible)
+        files: 10 // Reduced to ensure total stays under 4.5MB
     }
 });
 
