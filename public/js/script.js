@@ -304,7 +304,8 @@ function validateEmail(e) {
 function validatePhone(e) {
     const phone = e.target.value.trim();
     const phoneRegex = /^(\+966|966|0)?[5][0-9]{8}$/;
-      if (phone && !phoneRegex.test(phone.replace(/\s/g, ''))) {
+    
+    if (phone && !phoneRegex.test(phone.replace(/\s/g, ''))) {
         showFieldError(e.target, 'رقم الجوال غير صحيح');
         return false;
     }
@@ -493,7 +494,8 @@ async function handleFormSubmit(e) {
 function validateForm() {
     console.log('🔍 Starting form validation...');
     let isValid = true;
-      // Check required fields
+    
+    // Check required fields
     const requiredFields = form.querySelectorAll('input[required], textarea[required]');
     console.log(`📋 Checking ${requiredFields.length} required fields...`);
     
@@ -502,6 +504,8 @@ function validateForm() {
             console.log(`❌ Required field empty: ${field.name || field.id}`);
             showFieldError(field, 'هذا الحقل مطلوب');
             isValid = false;
+        } else {
+            console.log(`✅ Required field filled: ${field.name || field.id}`);
         }
     });
 
@@ -519,19 +523,18 @@ function validateForm() {
         console.log('📧 Validating email...');
         const emailValue = email.value.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        if (!emailRegex.test(emailValue)) {
+          if (!emailRegex.test(emailValue)) {
             console.log('❌ Email validation failed');
             showFieldError(email, 'يرجى إدخال بريد إلكتروني صحيح');
-            isValid = false;        } else {
+            isValid = false;
+        } else {
             console.log('✅ Email validation passed');
             clearFieldError({ target: email });
         }
     }
-    
-    // Validate phone if provided
+      // Validate phone if provided
     const phone = document.getElementById('phone');
-    if (phone.value.trim()) {
+    if (phone && phone.value.trim()) {
         console.log('📱 Validating phone...');
         if (!validatePhone({ target: phone })) {
             console.log('❌ Phone validation failed');
@@ -540,7 +543,8 @@ function validateForm() {
             console.log('✅ Phone validation passed');
         }
     }
-      // Check file sizes
+    
+    // Check file sizes
     const fileInputs = form.querySelectorAll('input[type="file"]');
     const maxSize = 1.5 * 1024 * 1024; // 1.5MB in bytes
     
