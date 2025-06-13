@@ -494,73 +494,125 @@ async function handleFormSubmit(e) {
 function validateForm() {
     console.log('🔍 Starting form validation...');
     let isValid = true;
+    const validationErrors = [];
     
     // Check required fields
     const requiredFields = form.querySelectorAll('input[required], textarea[required]');
     console.log(`📋 Checking ${requiredFields.length} required fields...`);
     
     requiredFields.forEach(field => {
-        if (!field.value.trim()) {
-            console.log(`❌ Required field empty: ${field.name || field.id}`);
+        const fieldName = field.name || field.id;
+        const fieldValue = field.value.trim();
+        console.log(`🔍 Checking field: ${fieldName} = "${fieldValue}"`);
+        
+        if (!fieldValue) {
+            console.log(`❌ Required field empty: ${fieldName}`);
             showFieldError(field, 'هذا الحقل مطلوب');
+            validationErrors.push(`${fieldName}: empty`);
             isValid = false;
         } else {
-            console.log(`✅ Required field filled: ${field.name || field.id}`);
+            console.log(`✅ Required field filled: ${fieldName}`);
         }
     });
 
     // Validate email (required for all plans)
     const email = document.getElementById('email');
+    console.log('📧 Email validation check...');
     if (!email) {
         console.log('❌ Email field not found');
         showMessage('حقل البريد الإلكتروني مطلوب ولكنه غير موجود في النموذج', 'error');
+        validationErrors.push('email: field not found');
         isValid = false;
     } else if (!email.value.trim()) {
         console.log('❌ Email field is empty');
         showFieldError(email, 'البريد الإلكتروني مطلوب');
+        validationErrors.push('email: empty');
         isValid = false;
     } else {
-        console.log('📧 Validating email...');
+        console.log(`📧 Validating email value: "${email.value.trim()}"`);
         const emailValue = email.value.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(emailValue)) {
-            console.log('❌ Email validation failed');
+        
+        if (!emailRegex.test(emailValue)) {
+            console.log('❌ Email validation failed - invalid format');
             showFieldError(email, 'يرجى إدخال بريد إلكتروني صحيح');
+            validationErrors.push('email: invalid format');
             isValid = false;
         } else {
             console.log('✅ Email validation passed');
             clearFieldError({ target: email });
         }
     }
-      // Validate phone if provided
+    
+    // Validate phone if provided
     const phone = document.getElementById('phone');
-    if (phone && phone.value.trim()) {
-        console.log('📱 Validating phone...');
-        if (!validatePhone({ target: phone })) {
-            console.log('❌ Phone validation failed');
-            isValid = false;
+    console.log('📱 Phone validation check...');
+    if (phone) {
+        console.log(`📱 Phone field found. Value: "${phone.value.trim()}"`);
+        if (phone.value.trim()) {
+            console.log('📱 Phone has value, validating...');
+            const phoneResult = validatePhone({ target: phone });
+            console.log(`📱 Phone validation result: ${phoneResult}`);
+            if (!phoneResult) {
+                console.log('❌ Phone validation failed');
+                validationErrors.push('phone: invalid format');
+                isValid = false;
+            } else {
+                console.log('✅ Phone validation passed');
+            }
         } else {
-            console.log('✅ Phone validation passed');
+            console.log('📱 Phone field is empty');
+            // Check if phone is required for this service
+            if (phone.hasAttribute('required')) {
+                console.log('❌ Phone is required but empty');
+                showFieldError(phone, 'رقم الجوال مطلوب');
+                validationErrors.push('phone: required but empty');
+                isValid = false;
+            } else {
+                console.log('✅ Phone is optional and empty - OK');
+            }
         }
+    } else {
+        console.log('❌ Phone field not found');
+        validationErrors.push('phone: field not found');
     }
     
     // Check file sizes
+    console.log('📁 File size validation check...');
     const fileInputs = form.querySelectorAll('input[type="file"]');
+    console.log(`📁 Found ${fileInputs.length} file inputs`);
     const maxSize = 1.5 * 1024 * 1024; // 1.5MB in bytes
     
     fileInputs.forEach(input => {
+        const inputName = input.name || input.id;
+        console.log(`📁 Checking file input: ${inputName}`);
         if (input.files && input.files.length > 0) {
+            console.log(`📁 ${inputName} has ${input.files.length} file(s)`);
             Array.from(input.files).forEach((file, index) => {
+                const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+                console.log(`📁 File ${index + 1}: ${file.name} (${sizeInMB}MB)`);
                 if (file.size > maxSize) {
-                    const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+                    console.log(`❌ File too large: ${file.name}`);
                     showMessage(`حجم الملف "${file.name}" كبير جداً (${sizeInMB} ميجابايت). الحد الأقصى المسموح 1.5 ميجابايت.`, 'error');
+                    validationErrors.push(`file: ${file.name} too large`);
                     isValid = false;
+                } else {
+                    console.log(`✅ File size OK: ${file.name}`);
                 }
             });
+        } else {
+            console.log(`� ${inputName} has no files`);
         }
     });
     
-    console.log(`🔍 Form validation result: ${isValid ? 'PASSED' : 'FAILED'}`);
+    console.log('🔍 === VALIDATION SUMMARY ===');
+    console.log(`📊 Total errors: ${validationErrors.length}`);
+    if (validationErrors.length > 0) {
+        console.log('❌ Validation errors:', validationErrors);
+    }
+    console.log(`�🔍 Form validation result: ${isValid ? 'PASSED' : 'FAILED'}`);
+    console.log('🔍 === END VALIDATION ===');
+    
     return isValid;
 }
 
