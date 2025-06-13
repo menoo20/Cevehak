@@ -34,27 +34,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: './views' });
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 app.get('/admin', (req, res) => {
-    res.sendFile('admin.html', { root: './views' });
+    res.sendFile(path.join(__dirname, 'views', 'admin.html'));
 });
 
 app.get('/upload-cv', (req, res) => {
-    res.sendFile('upload-cv.html', { root: './views' });
+    res.sendFile(path.join(__dirname, 'views', 'upload-cv.html'));
 });
 
 app.get('/create-from-scratch', (req, res) => {
-    res.sendFile('create-from-scratch.html', { root: './views' });
+    res.sendFile(path.join(__dirname, 'views', 'create-from-scratch.html'));
 });
 
 app.get('/create-cv-only', (req, res) => {
-    res.sendFile('create-cv-only.html', { root: './views' });
+    res.sendFile(path.join(__dirname, 'views', 'create-cv-only.html'));
 });
 
 // Test endpoint
