@@ -365,9 +365,14 @@ app.use((req, res) => {
 // Start server
 const startServer = async () => {
     try {
-        // Create database tables
-        await createTables();
-        console.log('✅ Database tables created/verified');
+        // Try to create database tables
+        try {
+            await createTables();
+            console.log('✅ Database tables created/verified');
+        } catch (dbError) {
+            console.error('⚠️  Database initialization failed:', dbError.message);
+            console.log('🔄 Server will continue without database functionality');
+        }
 
         app.listen(PORT, () => {
             console.log(`🚀 Flexible CV Service Server running on port ${PORT}`);

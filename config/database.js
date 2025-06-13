@@ -17,6 +17,11 @@ const pool = dbConfig ? new Pool(dbConfig) : null;
 
 // Create tables if they don't exist
 const createTables = async () => {
+    if (!pool) {
+        console.log('⚠️  No database configuration found - skipping table creation');
+        return;
+    }
+    
     try {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS cv_submissions (
@@ -52,10 +57,10 @@ const createTables = async () => {
         await pool.query(`
             CREATE INDEX IF NOT EXISTS idx_cv_submissions_date ON cv_submissions(submission_date);
         `);
-        
-        console.log('Database tables created successfully');
+          console.log('✅ Database tables created successfully');
     } catch (error) {
-        console.error('Error creating tables:', error);
+        console.error('❌ Error creating tables:', error.message);
+        throw error; // Re-throw to be handled by the caller
     }
 };
 
