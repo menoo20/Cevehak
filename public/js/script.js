@@ -465,10 +465,9 @@ async function handleFormSubmit(e) {
             }
         }    } catch (error) {
         console.error('💥 Network/Submit error:', error);
-        
-        // Handle specific HTTP status codes
+          // Handle specific HTTP status codes
         if (error.message.includes('413') || error.message.includes('Request Entity Too Large')) {
-            showMessage('حجم الملفات كبير جداً. يرجى تقليل حجم الملفات إلى أقل من 2 ميجابايت لكل ملف.', 'error');
+            showMessage('حجم الملفات كبير جداً. يرجى تقليل حجم الملفات إلى أقل من 1.5 ميجابايت لكل ملف.', 'error');
         } else if (error.message.includes('Request failed') || error.message.includes('Failed to fetch')) {
             showMessage('فشل في الاتصال بالخادم. يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى.', 'error');
         } else {
@@ -504,6 +503,22 @@ function validateForm() {
     if (phone.value.trim() && !validatePhone({ target: phone })) {
         isValid = false;
     }
+    
+    // Check file sizes
+    const fileInputs = form.querySelectorAll('input[type="file"]');
+    const maxSize = 1.5 * 1024 * 1024; // 1.5MB in bytes
+    
+    fileInputs.forEach(input => {
+        if (input.files && input.files.length > 0) {
+            Array.from(input.files).forEach((file, index) => {
+                if (file.size > maxSize) {
+                    const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+                    showMessage(`حجم الملف "${file.name}" كبير جداً (${sizeInMB} ميجابايت). الحد الأقصى المسموح 1.5 ميجابايت.`, 'error');
+                    isValid = false;
+                }
+            });
+        }
+    });
     
     return isValid;
 }

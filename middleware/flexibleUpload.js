@@ -161,10 +161,11 @@ const createFlexibleUpload = (serviceType) => {
             ];
     }    return multer({        storage: storage,        fileFilter: fileFilter,
         limits: {
-            fileSize: 2 * 1024 * 1024, // 2MB per file (safer for Vercel)
-            files: 20, // Maximum files for complete CV submission
-            fieldSize: 2 * 1024 * 1024, // 2MB field size
-            parts: 30 // Maximum number of parts
+            fileSize: 1.5 * 1024 * 1024, // 1.5MB per file (more conservative)
+            files: 15, // Reduced file count for safety
+            fieldSize: 1.5 * 1024 * 1024, // 1.5MB field size
+            parts: 25, // Maximum number of parts
+            fieldNameSize: 100 // Limit field name size
         }
     }).fields(fields);
 };
@@ -173,20 +174,29 @@ const createFlexibleUpload = (serviceType) => {
 const upload = multer({    storage: storage,
     fileFilter: fileFilter,
     limits: {
-        fileSize: 2 * 1024 * 1024, // 2MB per file (safer for Vercel)
-        files: 20, // Maximum files for complete CV submission
-        fieldSize: 2 * 1024 * 1024, // 2MB field size
-        parts: 30 // Maximum number of parts
+        fileSize: 1.5 * 1024 * 1024, // 1.5MB per file (more conservative)
+        files: 15, // Reduced file count for safety
+        fieldSize: 1.5 * 1024 * 1024, // 1.5MB field size
+        parts: 25, // Maximum number of parts
+        fieldNameSize: 100 // Limit field name size
     }
 });
 
 // Error handling middleware
 const handleUploadError = (error, req, res, next) => {
+    console.error('📎 Upload error details:', {
+        code: error.code,
+        message: error.message,
+        field: error.field,
+        limit: error.limit,
+        value: error.value
+    });
+    
     if (error instanceof multer.MulterError) {
         let message = 'خطأ في تحميل الملف';
         
-        switch(error.code) {            case 'LIMIT_FILE_SIZE':
-                message = 'حجم الملف كبير جداً (الحد الأقصى 2 ميجابايت)';
+        switch(error.code) {case 'LIMIT_FILE_SIZE':
+                message = 'حجم الملف كبير جداً (الحد الأقصى 1.5 ميجابايت)';
                 break;
             case 'LIMIT_FILE_COUNT':
                 message = 'عدد الملفات أكثر من المسموح';
