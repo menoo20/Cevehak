@@ -334,7 +334,16 @@ function showFieldError(field, errorMessage) {
 
 // Clear field error
 function clearFieldError(e) {
-    const field = e.target;
+    let field;
+    if (e && e.target) {
+        field = e.target;
+    } else if (e && e.nodeType) {
+        // Direct element passed
+        field = e;
+    } else {
+        return;
+    }
+    
     if (!field) return;
     const formGroup = field.closest('.form-group');
     
@@ -484,8 +493,7 @@ async function handleFormSubmit(e) {
 function validateForm() {
     console.log('🔍 Starting form validation...');
     let isValid = true;
-    
-    // Check required fields
+      // Check required fields
     const requiredFields = form.querySelectorAll('input[required], textarea[required]');
     console.log(`📋 Checking ${requiredFields.length} required fields...`);
     
@@ -495,7 +503,9 @@ function validateForm() {
             showFieldError(field, 'هذا الحقل مطلوب');
             isValid = false;
         }
-    });    // Validate email (required for all plans)
+    });
+
+    // Validate email (required for all plans)
     const email = document.getElementById('email');
     if (!email) {
         console.log('❌ Email field not found');
@@ -513,10 +523,9 @@ function validateForm() {
         if (!emailRegex.test(emailValue)) {
             console.log('❌ Email validation failed');
             showFieldError(email, 'يرجى إدخال بريد إلكتروني صحيح');
-            isValid = false;
-        } else {
+            isValid = false;        } else {
             console.log('✅ Email validation passed');
-            clearFieldError(email);
+            clearFieldError({ target: email });
         }
     }
     
@@ -531,8 +540,7 @@ function validateForm() {
             console.log('✅ Phone validation passed');
         }
     }
-    
-    // Check file sizes
+      // Check file sizes
     const fileInputs = form.querySelectorAll('input[type="file"]');
     const maxSize = 1.5 * 1024 * 1024; // 1.5MB in bytes
     
@@ -545,7 +553,8 @@ function validateForm() {
                     isValid = false;
                 }
             });
-        }    });
+        }
+    });
     
     console.log(`🔍 Form validation result: ${isValid ? 'PASSED' : 'FAILED'}`);
     return isValid;
