@@ -46,12 +46,16 @@
                         <label for="profession">التخصص أو الوظيفة</label>
                         <input type="text" id="profession" name="profession" required>
                         <span class="error-message" id="profession_error"></span>
-                    </div>
-
-                    <div class="form-group">
+                    </div>                    <div class="form-group">
                         <label for="bio">نبذة تعريفية (2-5 أسطر)</label>
                         <textarea id="bio" name="bio" rows="4" placeholder="اكتب نبذة مختصرة عن نفسك ومجال عملك..."></textarea>
                         <small class="form-hint">يمكننا مساعدتك في صياغتها إذا لم تكن متأكداً</small>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" name="email" required>
+                        <span class="error-message" id="email_error"></span>
                     </div>
                 </section>
 
@@ -156,18 +160,11 @@
                     </div>
                 </section>
 
-                <!-- Contact Information Section -->
-                <section class="form-section">
+                <!-- Contact Information Section -->                <section class="form-section">
                     <h2 class="section-title">
                         <span class="section-icon">📱</span>
-                        وسائل التواصل
+                        معلومات إضافية
                     </h2>
-                    
-                    <div class="form-group required">
-                        <label for="email">البريد الإلكتروني</label>
-                        <input type="email" id="email" name="email" required>
-                        <span class="error-message" id="email_error"></span>
-                    </div>
 
                     <div class="form-group">
                         <label for="phone">رقم الجوال (اختياري)</label>

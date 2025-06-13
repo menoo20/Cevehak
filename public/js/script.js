@@ -481,27 +481,54 @@ async function handleFormSubmit(e) {
 
 // Validate entire form
 function validateForm() {
+    console.log('🔍 Starting form validation...');
     let isValid = true;
     
     // Check required fields
     const requiredFields = form.querySelectorAll('input[required], textarea[required]');
+    console.log(`📋 Checking ${requiredFields.length} required fields...`);
+    
     requiredFields.forEach(field => {
         if (!field.value.trim()) {
+            console.log(`❌ Required field empty: ${field.name || field.id}`);
             showFieldError(field, 'هذا الحقل مطلوب');
             isValid = false;
         }
-    });
-    
-    // Validate email
+    });    // Validate email (required for all plans)
     const email = document.getElementById('email');
-    if (!validateEmail({ target: email })) {
+    if (!email) {
+        console.log('❌ Email field not found');
+        showMessage('حقل البريد الإلكتروني مطلوب ولكنه غير موجود في النموذج', 'error');
         isValid = false;
+    } else if (!email.value.trim()) {
+        console.log('❌ Email field is empty');
+        showFieldError(email, 'البريد الإلكتروني مطلوب');
+        isValid = false;
+    } else {
+        console.log('📧 Validating email...');
+        const emailValue = email.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailRegex.test(emailValue)) {
+            console.log('❌ Email validation failed');
+            showFieldError(email, 'يرجى إدخال بريد إلكتروني صحيح');
+            isValid = false;
+        } else {
+            console.log('✅ Email validation passed');
+            clearFieldError(email);
+        }
     }
     
     // Validate phone if provided
     const phone = document.getElementById('phone');
-    if (phone.value.trim() && !validatePhone({ target: phone })) {
-        isValid = false;
+    if (phone.value.trim()) {
+        console.log('📱 Validating phone...');
+        if (!validatePhone({ target: phone })) {
+            console.log('❌ Phone validation failed');
+            isValid = false;
+        } else {
+            console.log('✅ Phone validation passed');
+        }
     }
     
     // Check file sizes
@@ -517,9 +544,9 @@ function validateForm() {
                     isValid = false;
                 }
             });
-        }
-    });
+        }    });
     
+    console.log(`🔍 Form validation result: ${isValid ? 'PASSED' : 'FAILED'}`);
     return isValid;
 }
 

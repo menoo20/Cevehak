@@ -27,13 +27,13 @@ const validateByService = (req, res, next) => {
             };
             errors.push(`${fieldNames[field] || field} مطلوب`);
         }
-    });
-
-    // Email format validation
-    if (req.body.email) {
+    });    // Email format validation (required for all services)
+    if (!req.body.email || !req.body.email.trim()) {
+        errors.push('البريد الإلكتروني مطلوب');
+    } else {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(req.body.email)) {
-            errors.push('البريد الإلكتروني غير صحيح');
+        if (!emailRegex.test(req.body.email.trim())) {
+            errors.push('يرجى إدخال بريد إلكتروني صحيح');
         }
     }
 
