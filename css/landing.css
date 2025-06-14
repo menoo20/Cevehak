@@ -1794,7 +1794,7 @@ body {
     
     .cv-display {
         min-height: 500px !important;
-        max-height: 600px !important;
+        max-height: 700px !important;
         width: 100% !important;
         padding: 10px !important;
         overflow: visible !important;
@@ -1834,5 +1834,16 @@ body {
         height: auto !important; /* Maintain aspect ratio */
         max-height: 100px !important; /* Ensure it doesn't exceed this height */
         z-index: 10; /* Ensure it stays on top */
+    }
+}
+
+/* iPad Pro Specific Styles */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait),
+       (min-width: 1366px) and (max-width: 1024px) and (orientation: landscape),
+       (width: 1024px) and (height: 1366px),
+       (width: 1366px) and (height: 1024px) {
+    /* Hero Section - iPad Pro */
+    .hero {
+        min-height: 50vh !important;
     }
 }
