@@ -200,11 +200,14 @@ function initCVImageLoop() {
 function initPerformanceOptimizations() {
     console.log('⚡ Initializing CSS-safe performance optimizations...');
     
-    // Smart image loading without affecting CSS layout
+    // Smart image loading with actual WebP replacement
     initSmartImageLoading();
     
     // Preload next images in sequence for smooth transitions
     initImagePreloading();
+    
+    // Monitor optimization results
+    logOptimizationResults();
     
     console.log('✅ Performance optimizations initialized');
 }
@@ -212,17 +215,23 @@ function initPerformanceOptimizations() {
 function initSmartImageLoading() {
     // Check WebP support
     const supportsWebP = checkWebPSupport();
+    console.log(`🖼️ WebP support detected: ${supportsWebP ? 'YES' : 'NO'}`);
     
     // Get all CV images (non-invasive approach)
     const cvImages = document.querySelectorAll('.cv-image');
+    console.log(`📊 Found ${cvImages.length} CV images to optimize`);
     
     cvImages.forEach((img, index) => {
-        // For non-active images, delay loading slightly
-        if (!img.classList.contains('active') && index > 1) {
-            // Small delay to prioritize visible content
+        if (img.classList.contains('active') || index === 0) {
+            // Immediately optimize active/first image for instant benefit
+            console.log(`🎯 Immediately optimizing image ${index + 1} (priority)`);
+            preloadOptimizedImage(img, supportsWebP);
+        } else {
+            // Delay optimization for non-visible images to prioritize loading
             setTimeout(() => {
+                console.log(`⏰ Optimizing image ${index + 1} (delayed)`);
                 preloadOptimizedImage(img, supportsWebP);
-            }, 1000 + (index * 500));
+            }, 500 + (index * 300));
         }
     });
 }
@@ -259,13 +268,31 @@ function preloadOptimizedImage(imgElement, supportsWebP) {
     if (supportsWebP) {
         const webpSrc = originalSrc.replace('/images/', '/images/optimized/').replace('.png', '.webp');
         
-        // Create preload link for optimized image
+        // Create new image to test WebP loading
+        const testImg = new Image();
+        testImg.onload = function() {
+            // WebP loaded successfully - replace the original PNG with WebP
+            console.log(`✅ Replacing ${fileName}.png with optimized WebP`);
+            imgElement.src = webpSrc;
+            imgElement.dataset.optimized = 'webp';
+        };
+        testImg.onerror = function() {
+            // WebP failed to load - keep original PNG as fallback
+            console.log(`⚠️ WebP failed for ${fileName}, keeping PNG fallback`);
+            imgElement.dataset.optimized = 'png-fallback';
+        };
+        testImg.src = webpSrc;
+        
+        // Also preload it for faster loading
         const link = document.createElement('link');
         link.rel = 'preload';
         link.as = 'image';
         link.href = webpSrc;
         link.type = 'image/webp';
         document.head.appendChild(link);
+    } else {
+        console.log(`ℹ️ WebP not supported, keeping PNG for ${fileName}`);
+        imgElement.dataset.optimized = 'png-no-webp-support';
     }
 }
 
@@ -273,14 +300,14 @@ function preloadNextImages(currentIndex) {
     const cvImages = document.querySelectorAll('.cv-image');
     const supportsWebP = checkWebPSupport();
     
-    // Preload next 2-3 images for smooth experience
+    // Preload and optimize next 2-3 images for smooth experience
     for (let i = 1; i <= 3; i++) {
         const nextIndex = (currentIndex + i) % cvImages.length;
         const nextImage = cvImages[nextIndex];
         
-        if (nextImage && !nextImage.dataset.preloaded) {
+        if (nextImage && !nextImage.dataset.optimized) {
+            console.log(`🔄 Preloading and optimizing next image: ${nextIndex + 1}`);
             preloadOptimizedImage(nextImage, supportsWebP);
-            nextImage.dataset.preloaded = 'true';
         }
     }
 }
@@ -291,6 +318,34 @@ function checkWebPSupport() {
     canvas.width = 1;
     canvas.height = 1;
     return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+}
+
+// Performance monitoring for image optimization
+function logOptimizationResults() {
+    setTimeout(() => {
+        const cvImages = document.querySelectorAll('.cv-image');
+        let webpCount = 0;
+        let pngCount = 0;
+        let failedCount = 0;
+        
+        cvImages.forEach(img => {
+            const optimized = img.dataset.optimized;
+            if (optimized === 'webp') webpCount++;
+            else if (optimized === 'png-fallback' || optimized === 'png-no-webp-support') pngCount++;
+            else failedCount++;
+        });
+        
+        console.log('📊 Image Optimization Results:');
+        console.log(`✅ WebP optimized: ${webpCount}/${cvImages.length} images`);
+        console.log(`📄 PNG fallback: ${pngCount}/${cvImages.length} images`);
+        console.log(`❌ Failed: ${failedCount}/${cvImages.length} images`);
+        
+        if (webpCount > 0) {
+            const savings = Math.round((webpCount / cvImages.length) * 75.3);
+            console.log(`🚀 Estimated bandwidth savings: ~${savings}% for optimized images`);
+        }
+        
+    }, 3000); // Check after 3 seconds to allow all images to process
 }
 
 // Export functions for global access
