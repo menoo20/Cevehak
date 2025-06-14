@@ -264,14 +264,13 @@ function initImagePreloading() {
 function preloadOptimizedImage(imgElement, supportsWebP) {
     const originalSrc = imgElement.src;
     const fileName = originalSrc.split('/').pop().replace('.png', '');
-    const isMobile = isMobileDevice();
     
     if (supportsWebP) {
-        // Choose mobile or desktop WebP based on device
-        const webpFileName = isMobile ? `${fileName}-mobile.webp` : `${fileName}.webp`;
+        // Use the same high-quality WebP for both mobile and desktop
+        const webpFileName = `${fileName}.webp`;
         const webpSrc = originalSrc.replace('/images/', '/images/optimized/').replace(`${fileName}.png`, webpFileName);
         
-        console.log(`📱 Device type: ${isMobile ? 'Mobile' : 'Desktop'} - Using: ${webpFileName}`);
+        console.log(`📱 Using high-quality WebP: ${webpFileName} (same for all devices)`);
         
         // Create new image to test WebP loading
         const testImg = new Image();
@@ -280,7 +279,7 @@ function preloadOptimizedImage(imgElement, supportsWebP) {
             console.log(`✅ Replacing ${fileName}.png with optimized ${webpFileName}`);
             imgElement.src = webpSrc;
             imgElement.dataset.optimized = 'webp';
-            imgElement.dataset.version = isMobile ? 'mobile' : 'desktop';
+            imgElement.dataset.version = 'high-quality';
         };
         testImg.onerror = function() {
             // WebP failed to load - keep original PNG as fallback
