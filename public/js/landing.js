@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize CV image fade loop
     initCVImageLoop();
     
+    // Initialize performance optimizations
+    initPerformanceOptimizations();
+    
     console.log('✅ Landing page initialization complete');
 });
 
@@ -191,6 +194,103 @@ function initCVImageLoop() {
     console.log('✅ CV image fade loop initialized');
     console.log(`⏱️ 4 second intervals → Full cycle: ${cvImages.length * 4} seconds`);
     console.log(`🎨 All ${cvImages.length} images are the same size for smooth transitions`);
+}
+
+// CSS-Safe Performance Enhancement
+function initPerformanceOptimizations() {
+    console.log('⚡ Initializing CSS-safe performance optimizations...');
+    
+    // Smart image loading without affecting CSS layout
+    initSmartImageLoading();
+    
+    // Preload next images in sequence for smooth transitions
+    initImagePreloading();
+    
+    console.log('✅ Performance optimizations initialized');
+}
+
+function initSmartImageLoading() {
+    // Check WebP support
+    const supportsWebP = checkWebPSupport();
+    
+    // Get all CV images (non-invasive approach)
+    const cvImages = document.querySelectorAll('.cv-image');
+    
+    cvImages.forEach((img, index) => {
+        // For non-active images, delay loading slightly
+        if (!img.classList.contains('active') && index > 1) {
+            // Small delay to prioritize visible content
+            setTimeout(() => {
+                preloadOptimizedImage(img, supportsWebP);
+            }, 1000 + (index * 500));
+        }
+    });
+}
+
+function initImagePreloading() {
+    const cvImages = document.querySelectorAll('.cv-image');
+    let currentIndex = 0;
+    
+    // Track which image is currently active
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                const target = mutation.target;
+                if (target.classList.contains('active') && target.classList.contains('cv-image')) {
+                    currentIndex = Array.from(cvImages).indexOf(target);
+                    preloadNextImages(currentIndex);
+                }
+            }
+        });
+    });
+    
+    cvImages.forEach(img => {
+        observer.observe(img, { attributes: true, attributeFilter: ['class'] });
+    });
+    
+    // Initial preload of next few images
+    preloadNextImages(0);
+}
+
+function preloadOptimizedImage(imgElement, supportsWebP) {
+    const originalSrc = imgElement.src;
+    const fileName = originalSrc.split('/').pop().replace('.png', '');
+    
+    if (supportsWebP) {
+        const webpSrc = originalSrc.replace('/images/', '/images/optimized/').replace('.png', '.webp');
+        
+        // Create preload link for optimized image
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = webpSrc;
+        link.type = 'image/webp';
+        document.head.appendChild(link);
+    }
+}
+
+function preloadNextImages(currentIndex) {
+    const cvImages = document.querySelectorAll('.cv-image');
+    const supportsWebP = checkWebPSupport();
+    
+    // Preload next 2-3 images for smooth experience
+    for (let i = 1; i <= 3; i++) {
+        const nextIndex = (currentIndex + i) % cvImages.length;
+        const nextImage = cvImages[nextIndex];
+        
+        if (nextImage && !nextImage.dataset.preloaded) {
+            preloadOptimizedImage(nextImage, supportsWebP);
+            nextImage.dataset.preloaded = 'true';
+        }
+    }
+}
+
+function checkWebPSupport() {
+    // Simple WebP support detection
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
 }
 
 // Export functions for global access
