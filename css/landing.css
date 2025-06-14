@@ -1291,6 +1291,18 @@ body {
         padding: 0.875rem 1rem;
     }
     
+    /* Override desktop guarantee badge img styles on mobile */
+    .guarantee-badge img {
+        transform: none ; /* Disable desktop transform */
+        width: 80px ; /* Set specific width */
+        max-width: 80px ; /* Ensure max-width is respected */
+        position: static; /* Change from absolute to normal flow */
+        top: auto ; /* Reset desktop positioning */
+        right: auto ; /* Reset desktop positioning */
+        margin: 0 auto ; /* Center the image */
+        display: block ; /* Ensure block display */
+    }
+    
     .badge-title {
         font-size: 0.9rem;
     }
@@ -1797,5 +1809,21 @@ body {
         border-radius: 12px !important;
         box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important;
         object-fit: contain !important;
+    }
+}
+
+/* iPad and Tablet Responsive Design */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Guarantee Badge - iPad Version */
+    .guarantee-badge img {
+        top: 0 ; /* Reset top position */
+        position: absolute !important; /* Keep it absolute for positioning */
+        left: 0 !important; /* Reset left position */
+        right: auto !important; /* Reset right position */
+        transform: translate(-25px, -30px) !important; /* Disable the desktop transform */
+        width: 100px !important; /* Set specific width */
+        height: auto !important; /* Maintain aspect ratio */
+        max-height: 100px !important; /* Ensure it doesn't exceed this height */
+        z-index: 10; /* Ensure it stays on top */
     }
 }
