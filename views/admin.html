@@ -808,21 +808,49 @@
                 price: '25 ريال سعودي'
             }
         };
-        
-        async function loadSubmissions() {
+          async function loadSubmissions() {
             try {
-                console.log('🔍 Loading submissions...');
-                const response = await fetch('/api/submissions');
-                const result = await response.json();
+                console.log('🔍 Loading submissions (Frontend-only mode with mock data)...');
                 
-                if (result.success) {
-                    console.log(`✅ Loaded ${result.data.length} submissions`);
-                    allSubmissions = result.data;
-                    updateStatistics();
-                    displaySubmissions();
-                } else {
-                    showError('فشل في تحميل البيانات');
-                }
+                // Mock data for frontend-only mode
+                const mockSubmissions = [
+                    {
+                        id: 1,
+                        service_type: 'cv-to-website',
+                        full_name: 'أحمد محمد علي',
+                        phone: '+966501234567',
+                        email: 'ahmed.ali@example.com',
+                        profession: 'مطور واجهات أمامية',
+                        submitted_at: new Date().toISOString(),
+                        status: 'pending'
+                    },
+                    {
+                        id: 2,
+                        service_type: 'full-package',
+                        full_name: 'فاطمة أحمد سالم',
+                        phone: '+966509876543',
+                        email: 'fatima.salem@example.com',
+                        profession: 'مصممة جرافيك',
+                        submitted_at: new Date(Date.now() - 86400000).toISOString(), // Yesterday
+                        status: 'completed'
+                    },
+                    {
+                        id: 3,
+                        service_type: 'cv-only',
+                        full_name: 'محمد سعد الغامدي',
+                        phone: '+966555555555',
+                        email: 'mohammed.ghamdi@example.com',
+                        profession: 'محاسب مالي',
+                        submitted_at: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
+                        status: 'in_progress'
+                    }
+                ];
+                
+                console.log(`✅ Loaded ${mockSubmissions.length} mock submissions`);
+                allSubmissions = mockSubmissions;
+                updateStatistics();
+                displaySubmissions();
+                
             } catch (error) {
                 console.error('❌ Error loading submissions:', error);
                 showError('حدث خطأ في تحميل البيانات');
@@ -1157,39 +1185,37 @@
                 });
             });
         }
-        
-        async function resetDatabase() {
+          async function resetDatabase() {
             if (!confirm('هل أنت متأكد من حذف جميع الطلبات؟ هذا الإجراء لا يمكن التراجع عنه.')) {
                 return;
             }
             
             try {
-                console.log('🗑️ Resetting database...');
-                const response = await fetch('/api/reset-database', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+                console.log('🗑️ Resetting database (Frontend-only mode)...');
                 
-                const result = await response.json();
-                  if (result.success) {
-                    console.log('✅ Database reset successful');
-                    
-                    // Create detailed success message
-                    let message = `تم حذف ${result.deletedCount} طلب بنجاح`;
-                    if (result.deletedFiles || result.deletedFolders) {
-                        message += `\n🧹 تم حذف ${result.deletedFiles || 0} ملف و ${result.deletedFolders || 0} مجلد`;
-                    }
-                    
-                    alert(message);
-                    allSubmissions = [];
-                    updateStatistics();
-                    displaySubmissions();
-                } else {
-                    console.error('❌ Reset failed:', result.message);
-                    alert('فشل في إعادة تعيين قاعدة البيانات: ' + result.message);
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Mock reset response
+                const result = {
+                    success: true,
+                    deletedCount: allSubmissions.length,
+                    deletedFiles: 15,
+                    deletedFolders: 3
+                };
+                
+                console.log('✅ Database reset successful (mock)');
+                
+                // Create detailed success message
+                let message = `تم حذف ${result.deletedCount} طلب بنجاح`;
+                if (result.deletedFiles || result.deletedFolders) {
+                    message += `\n🧹 تم حذف ${result.deletedFiles || 0} ملف و ${result.deletedFolders || 0} مجلد`;
                 }
+                  alert(message);
+                allSubmissions = [];
+                updateStatistics();
+                displaySubmissions();
+                
             } catch (error) {
                 console.error('❌ Error resetting database:', error);
                 alert('حدث خطأ أثناء إعادة تعيين قاعدة البيانات');

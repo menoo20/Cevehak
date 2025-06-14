@@ -136,7 +136,7 @@ function setupFileUpload(input, previewId, multiple, inputName = 'Unknown') {
     return true;
 }
 
-// Handle file selection
+// Handle file selection with real-time validation
 function handleFileSelect(files, previewContainer, multiple, inputName = 'Unknown') {
     console.log(`🔍 Processing ${files.length} files for ${inputName}...`);
     previewContainer.innerHTML = '';
@@ -147,10 +147,39 @@ function handleFileSelect(files, previewContainer, multiple, inputName = 'Unknow
         return;
     }
     
+    // Determine config key based on input name
+    let configKey = 'cover_photo'; // default
+    if (inputName.includes('CV') || inputName.includes('cv')) {
+        configKey = 'cv_file';
+    } else if (inputName.includes('Additional') || inputName.includes('additional')) {
+        configKey = 'raw_cv';
+    }
+    
     let validFiles = 0;
+    
+    Array.from(files).forEach((file, index) => {
+        console.log(`📁 File ${index + 1}: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+        
+        // Validate file immediately
+        const isValid = validateSingleFile(file, configKey);
+        
+        if (isValid) {
+            validFiles++;
+            createFilePreview(file, previewContainer, inputName, true);
+            console.log(`✅ File validated: ${file.name}`);
+        } else {
+            createFilePreview(file, previewContainer, inputName, false);
+            console.log(`❌ File rejected: ${file.name}`);
+        }
+    });
+    
+    if (validFiles > 0) {
+        console.log(`✅ ${validFiles} valid files processed for ${inputName}`);
+    } else {
+        console.log(`❌ No valid files for ${inputName}`);    }
     Array.from(files).forEach((file, index) => {
         console.log(`📄 Validating file ${index + 1}: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
-        if (validateFile(file)) {
+        if (validateFile(file, inputName)) {
             createFilePreview(file, previewContainer);
             validFiles++;
         }
@@ -159,19 +188,42 @@ function handleFileSelect(files, previewContainer, multiple, inputName = 'Unknow
     console.log(`✅ ${inputName}: ${validFiles}/${files.length} files validated and previewed`);
 }
 
-// Validate file
-function validateFile(file) {
-    const maxSize = 5 * 1024 * 1024; // 5MB
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf', 
-                         'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+// Validate file with specific config
+function validateFile(file, inputName = null) {
+    // Determine the file type based on input name or default
+    let config = null;
     
-    if (file.size > maxSize) {
-        showMessage(`الملف "${file.name}" كبير جداً. الحد الأقصى 5 ميجابايت`, 'error');
+    if (inputName) {
+        if (inputName.includes('profile') || inputName.includes('cover')) {
+            config = fileConfig.profile_image;
+        } else if (inputName.includes('cv_file')) {
+            config = fileConfig.cv_file;
+        } else if (inputName.includes('additional')) {
+            config = fileConfig.additional_files;
+        }
+    }
+    
+    // Use default config if no specific config found
+    if (!config) {
+        config = {
+            maxSize: 5 * 1024 * 1024, // 5MB default
+            allowedTypes: ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf', 
+                          'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+            displayTypes: 'صور, PDF, Word',
+            displayMaxSize: '5 ميجابايت'
+        };
+    }
+    
+    // Check file size
+    if (file.size > config.maxSize) {
+        const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+        showMessage(`❌ الملف "${file.name}" كبير جداً (${sizeMB}MB). الحد الأقصى ${config.displayMaxSize}`, 'error');
         return false;
     }
     
-    if (!allowedTypes.includes(file.type)) {
-        showMessage(`نوع الملف "${file.name}" غير مدعوم`, 'error');
+    // Check file type
+    if (!config.allowedTypes.includes(file.type)) {
+        showMessage(`❌ نوع الملف "${file.name}" غير مدعوم. الأنواع المدعومة: ${config.displayTypes}`, 'error');
         return false;
     }
     
@@ -179,9 +231,13 @@ function validateFile(file) {
 }
 
 // Create file preview
-function createFilePreview(file, container) {
+function createFilePreview(file, container, inputName = 'Unknown', isValid = true) {
     const fileItem = document.createElement('div');
-    fileItem.className = 'file-item';
+    fileItem.className = isValid ? 'file-item file-valid' : 'file-item file-invalid';
+    
+    const statusIcon = document.createElement('span');
+    statusIcon.className = 'file-status';
+    statusIcon.textContent = isValid ? '✅' : '❌';
     
     const fileInfo = document.createElement('div');
     fileInfo.className = 'file-info';
@@ -198,18 +254,36 @@ function createFilePreview(file, container) {
     fileSize.className = 'file-size';
     fileSize.textContent = formatFileSize(file.size);
     
+    const fileStatus = document.createElement('div');
+    fileStatus.className = 'file-validation-status';
+    fileStatus.textContent = isValid ? 
+        '✅ الملف صالح للرفع' : 
+        '❌ الملف لا يلبي المتطلبات';
+    fileStatus.style.color = isValid ? '#10b981' : '#ef4444';
+    fileStatus.style.fontSize = '0.85rem';
+    fileStatus.style.marginTop = '4px';
+    
     const removeBtn = document.createElement('button');
     removeBtn.className = 'remove-file';
     removeBtn.textContent = '×';
     removeBtn.type = 'button';
     removeBtn.addEventListener('click', function() {
         fileItem.remove();
+        // Clear any related errors
+        if (!isValid) {
+            const inputElement = document.querySelector(`input[type="file"]`);
+            if (inputElement) {
+                clearFieldError(inputElement.id);
+            }
+        }
     });
     
+    fileInfo.appendChild(statusIcon);
     fileInfo.appendChild(fileIcon);
     fileInfo.appendChild(fileName);
     fileItem.appendChild(fileInfo);
     fileItem.appendChild(fileSize);
+    fileItem.appendChild(fileStatus);
     fileItem.appendChild(removeBtn);
     
     container.appendChild(fileItem);
@@ -372,12 +446,10 @@ function clearFieldError(e) {
 async function handleFormSubmit(e) {
     e.preventDefault();
     console.log('📤 Form submission initiated');
-    
-    // Validate form
+      // Validate form using new user-friendly system
     console.log('🔍 Validating form data...');
-    if (!validateForm()) {
+    if (!validateFormNew()) {
         console.warn('❌ Form validation failed');
-        showMessage('يرجى تصحيح الأخطاء قبل الإرسال', 'error');
         return;
     }
     console.log('✅ Form validation passed');
@@ -429,23 +501,20 @@ async function handleFormSubmit(e) {
                 console.log(`📁 ${fieldName}: ${files.length} file(s)`);
             }
         });
-        console.log(`📎 Total files being uploaded: ${totalFiles}`);
-          // Submit form
-        console.log('🌐 Sending request to server...');
-        const response = await fetch('/submit', {
-            method: 'POST',
-            body: formData
-        });
+        console.log(`📎 Total files being uploaded: ${totalFiles}`);        // Submit form (Mock submission for frontend-only mode)
+        console.log('🌐 Simulating server submission (frontend-only mode)...');
         
-        // Check if response is ok
-        if (!response.ok) {
-            if (response.status === 413) {
-                throw new Error('Request Entity Too Large - حجم الملفات كبير جداً');
-            }
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
+        // Simulate network delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
-        const result = await response.json();
+        // Mock successful response
+        const result = {
+            success: true,
+            message: `🎉 تم إرسال طلبك بنجاح!\n\n📲 سنتواصل معك عبر الواتساب خلال دقائق لاستكمال التفاصيل والمستندات المطلوبة.\n\n✅ رقم الطلب: CV${Date.now()}\n💰 المبلغ: ${getServicePrice(serviceType)} ريال\n⏰ مدة التنفيذ: 3-5 أيام عمل`,
+            service_type: serviceType,
+            price: getServicePrice(serviceType),
+            submissionId: `CV${Date.now()}`
+        };
           if (result.success) {
             console.log('🎉 Form submitted successfully!');
             console.log(`📋 Service: ${result.service_type}`);
@@ -490,128 +559,243 @@ async function handleFormSubmit(e) {
     }
 }
 
-// Validate entire form
-function validateForm() {
-    console.log('🔍 Starting form validation...');
-    let isValid = true;
-    const validationErrors = [];
-    
-    // Check required fields
-    const requiredFields = form.querySelectorAll('input[required], textarea[required]');
-    console.log(`📋 Checking ${requiredFields.length} required fields...`);
-    
-    requiredFields.forEach(field => {
-        const fieldName = field.name || field.id;
-        const fieldValue = field.value.trim();
-        console.log(`🔍 Checking field: ${fieldName} = "${fieldValue}"`);
-        
-        if (!fieldValue) {
-            console.log(`❌ Required field empty: ${fieldName}`);
-            showFieldError(field, 'هذا الحقل مطلوب');
-            validationErrors.push(`${fieldName}: empty`);
-            isValid = false;
-        } else {
-            console.log(`✅ Required field filled: ${fieldName}`);
-        }
-    });
+// Get service price based on service type
+function getServicePrice(serviceType) {
+    const prices = {
+        'cv-to-website': 75,    // تحويل السيرة الذاتية إلى موقع
+        'full-package': 100,    // الباقة الكاملة 
+        'cv-only': 25          // إنشاء سيرة ذاتية فقط
+    };
+    return prices[serviceType] || 100;
+}
 
-    // Validate email (required for all plans)
-    const email = document.getElementById('email');
-    console.log('📧 Email validation check...');
-    if (!email) {
-        console.log('❌ Email field not found');
-        showMessage('حقل البريد الإلكتروني مطلوب ولكنه غير موجود في النموذج', 'error');
-        validationErrors.push('email: field not found');
-        isValid = false;
-    } else if (!email.value.trim()) {
-        console.log('❌ Email field is empty');
-        showFieldError(email, 'البريد الإلكتروني مطلوب');
-        validationErrors.push('email: empty');
-        isValid = false;
-    } else {
-        console.log(`📧 Validating email value: "${email.value.trim()}"`);
-        const emailValue = email.value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        if (!emailRegex.test(emailValue)) {
-            console.log('❌ Email validation failed - invalid format');
-            showFieldError(email, 'يرجى إدخال بريد إلكتروني صحيح');
-            validationErrors.push('email: invalid format');
+// NEW USER-FRIENDLY VALIDATION SYSTEM
+// ====================================
+
+// Clear, helpful error messages in Arabic
+const validationMessages = {
+    required: '⚠️ هذا الحقل مطلوب',
+    email: '📧 يرجى إدخال بريد إلكتروني صحيح',
+    phone: '📱 يرجى إدخال رقم واتساب صحيح (مثال: +966501234567)',
+    fileTooBig: '📁 حجم الملف كبير جداً. الحد الأقصى: {maxSize}',
+    fileWrongType: '🚫 نوع الملف غير مدعوم. الأنواع المسموحة: {allowedTypes}',
+    success: '✅ تم بنجاح!'
+};
+
+// File size limits and allowed types
+const fileConfig = {
+    profile_image: {
+        maxSize: 2 * 1024 * 1024, // 2MB for cover photos
+        allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+        displayTypes: 'JPEG, PNG, WebP',
+        displayMaxSize: '2 ميجابايت'
+    },
+    cv_file: {
+        maxSize: 4 * 1024 * 1024, // 4MB for CV files
+        allowedTypes: ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+        displayTypes: 'PDF, Word, صور',
+        displayMaxSize: '4 ميجابايت'
+    },
+    additional_files: {
+        maxSize: 4 * 1024 * 1024, // 4MB for raw CV/documents
+        allowedTypes: ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'],
+        displayTypes: 'PDF, Word, صور, نص',
+        displayMaxSize: '4 ميجابايت'
+    }
+};
+
+// Show user-friendly error message
+function showFieldError(fieldName, messageKey, params = {}) {
+    const field = document.getElementById(fieldName);
+    const errorElement = document.getElementById(fieldName + '_error');
+    
+    if (!field || !errorElement) return;
+    
+    // Get message template
+    let message = validationMessages[messageKey] || messageKey;
+    
+    // Replace parameters in message
+    Object.keys(params).forEach(key => {
+        message = message.replace(`{${key}}`, params[key]);
+    });
+    
+    // Show error
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+    field.classList.add('error');
+    
+    // Hide error after user starts typing
+    field.addEventListener('input', () => clearFieldError(fieldName), { once: true });
+}
+
+// Clear error message
+function clearFieldError(fieldName) {
+    const field = document.getElementById(fieldName);
+    const errorElement = document.getElementById(fieldName + '_error');
+    
+    if (field) field.classList.remove('error');
+    if (errorElement) {
+        errorElement.style.display = 'none';
+        errorElement.textContent = '';
+    }
+}
+
+// Show success message for field
+function showFieldSuccess(fieldName) {
+    const field = document.getElementById(fieldName);
+    const errorElement = document.getElementById(fieldName + '_error');
+    
+    if (!field || !errorElement) return;
+    
+    errorElement.textContent = validationMessages.success;
+    errorElement.style.display = 'block';
+    errorElement.style.color = '#10b981'; // Green color
+    field.classList.remove('error');
+    field.classList.add('success');
+}
+
+// NEW COMPREHENSIVE FORM VALIDATION
+// ==================================
+
+// Validate required fields based on form type
+function validateRequiredFields() {
+    const formType = getFormType();
+    let isValid = true;
+    
+    // Required fields for all forms
+    const commonRequired = ['full_name', 'profession', 'email', 'phone'];
+    
+    commonRequired.forEach(fieldName => {
+        const field = document.getElementById(fieldName);
+        if (field && !field.value.trim()) {
+            showFieldError(fieldName, 'required');
             isValid = false;
-        } else {
-            console.log('✅ Email validation passed');
-            clearFieldError({ target: email });
-        }
-    }
-    
-    // Validate phone if provided
-    const phone = document.getElementById('phone');
-    console.log('📱 Phone validation check...');
-    if (phone) {
-        console.log(`📱 Phone field found. Value: "${phone.value.trim()}"`);
-        if (phone.value.trim()) {
-            console.log('📱 Phone has value, validating...');
-            const phoneResult = validatePhone({ target: phone });
-            console.log(`📱 Phone validation result: ${phoneResult}`);
-            if (!phoneResult) {
-                console.log('❌ Phone validation failed');
-                validationErrors.push('phone: invalid format');
+        } else if (field && field.value.trim()) {
+            // Validate specific field types
+            if (fieldName === 'email' && !validateEmailFormat(field.value)) {
+                showFieldError(fieldName, 'email');
+                isValid = false;
+            } else if (fieldName === 'phone' && !validatePhoneFormat(field.value)) {
+                showFieldError(fieldName, 'phone');
                 isValid = false;
             } else {
-                console.log('✅ Phone validation passed');
+                showFieldSuccess(fieldName);
             }
-        } else {
-            console.log('📱 Phone field is empty');
-            // Check if phone is required for this service
-            if (phone.hasAttribute('required')) {
-                console.log('❌ Phone is required but empty');
-                showFieldError(phone, 'رقم الجوال مطلوب');
-                validationErrors.push('phone: required but empty');
-                isValid = false;
-            } else {
-                console.log('✅ Phone is optional and empty - OK');
-            }
-        }
-    } else {
-        console.log('❌ Phone field not found');
-        validationErrors.push('phone: field not found');
-    }
-    
-    // Check file sizes
-    console.log('📁 File size validation check...');
-    const fileInputs = form.querySelectorAll('input[type="file"]');
-    console.log(`📁 Found ${fileInputs.length} file inputs`);
-    const maxSize = 1.5 * 1024 * 1024; // 1.5MB in bytes
-    
-    fileInputs.forEach(input => {
-        const inputName = input.name || input.id;
-        console.log(`📁 Checking file input: ${inputName}`);
-        if (input.files && input.files.length > 0) {
-            console.log(`📁 ${inputName} has ${input.files.length} file(s)`);
-            Array.from(input.files).forEach((file, index) => {
-                const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
-                console.log(`📁 File ${index + 1}: ${file.name} (${sizeInMB}MB)`);
-                if (file.size > maxSize) {
-                    console.log(`❌ File too large: ${file.name}`);
-                    showMessage(`حجم الملف "${file.name}" كبير جداً (${sizeInMB} ميجابايت). الحد الأقصى المسموح 1.5 ميجابايت.`, 'error');
-                    validationErrors.push(`file: ${file.name} too large`);
-                    isValid = false;
-                } else {
-                    console.log(`✅ File size OK: ${file.name}`);
-                }
-            });
-        } else {
-            console.log(`� ${inputName} has no files`);
         }
     });
     
-    console.log('🔍 === VALIDATION SUMMARY ===');
-    console.log(`📊 Total errors: ${validationErrors.length}`);
-    if (validationErrors.length > 0) {
-        console.log('❌ Validation errors:', validationErrors);
+    return isValid;
+}
+
+// Validate email format
+function validateEmailFormat(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email.trim());
+}
+
+// Validate phone format
+function validatePhoneFormat(phone) {
+    const phoneRegex = /^(\+966|966|0)?[5][0-9]{8}$/;
+    return phoneRegex.test(phone.replace(/\s/g, ''));
+}
+
+// Validate file uploads
+function validateFileUploads() {
+    const formType = getFormType();
+    let isValid = true;
+    
+    // Check cover photo if uploaded
+    const coverPhoto = document.getElementById('profile_image');
+    if (coverPhoto && coverPhoto.files.length > 0) {
+        if (!validateSingleFile(coverPhoto.files[0], 'cover_photo')) {
+            isValid = false;
+        }
     }
-    console.log(`�🔍 Form validation result: ${isValid ? 'PASSED' : 'FAILED'}`);
-    console.log('🔍 === END VALIDATION ===');
+    
+    // Check CV file for CV-to-Website and CV-Only forms
+    if (formType.includes('CV-to-Website') || formType.includes('CV-Only')) {
+        const cvInput = document.getElementById('cv_file') || document.getElementById('additional_files');
+        if (cvInput && cvInput.files.length > 0) {
+            const configKey = formType.includes('CV-Only') ? 'raw_cv' : 'cv_file';
+            if (!validateSingleFile(cvInput.files[0], configKey)) {
+                isValid = false;
+            }
+        }
+    }
+    
+    return isValid;
+}
+
+// Validate a single file
+function validateSingleFile(file, configKey) {
+    const config = fileConfig[configKey];
+    if (!config) return true;
+    
+    // Check file size
+    if (file.size > config.maxSize) {
+        const fieldName = configKey === 'cover_photo' ? 'profile_image' : 
+                         configKey === 'cv_file' ? 'cv_file' : 'additional_files';
+        showFieldError(fieldName, 'fileTooBig', {
+            maxSize: config.displayMaxSize
+        });
+        return false;
+    }
+    
+    // Check file type
+    if (!config.allowedTypes.includes(file.type)) {
+        const fieldName = configKey === 'cover_photo' ? 'profile_image' : 
+                         configKey === 'cv_file' ? 'cv_file' : 'additional_files';
+        showFieldError(fieldName, 'fileWrongType', {
+            allowedTypes: config.displayTypes
+        });
+        return false;
+    }
+    
+    return true;
+}
+
+// Main validation function
+function validateFormNew() {
+    console.log('🔍 Starting new user-friendly validation...');
+    
+    let isValid = true;
+    
+    // Clear all previous errors
+    const errorElements = document.querySelectorAll('.error-message');
+    errorElements.forEach(el => {
+        el.style.display = 'none';
+        el.textContent = '';
+    });
+    
+    // Remove error classes
+    const fields = document.querySelectorAll('.error, .success');
+    fields.forEach(field => {
+        field.classList.remove('error', 'success');
+    });
+    
+    // Validate required fields
+    if (!validateRequiredFields()) {
+        isValid = false;
+    }
+    
+    // Validate file uploads
+    if (!validateFileUploads()) {
+        isValid = false;
+    }
+    
+    if (isValid) {
+        console.log('✅ All validation passed!');
+        showMessage('✅ جميع البيانات صحيحة! جاري الإرسال...', 'success');
+    } else {
+        console.log('❌ Validation failed - showing user-friendly errors');
+        showMessage('⚠️ يرجى تصحيح الأخطاء المظللة باللون الأحمر', 'error');
+        
+        // Scroll to first error
+        const firstError = document.querySelector('.error');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
     
     return isValid;
 }

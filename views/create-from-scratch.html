@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إنشاء سيرة ذاتية وموقع ويب احترافي - Cevehak</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -14,15 +14,16 @@
         <header class="header">
             <div class="header-content">
                 <div class="back-link">
-                    <a href="/" class="back-btn">← العودة للرئيسية</a>
+                    <a href="index.html" class="back-btn">← العودة للرئيسية</a>
                 </div>
                 <h1>إنشاء سيرة ذاتية احترافية وتحويلها إلى موقع ويب</h1>
-                <p class="subtitle">الباقة الكاملة: سننشئ لك سيرة ذاتية احترافية من الصفر ونحولها إلى موقع ويب متميز</p>
-                <div class="service-info">
-                    <span class="price-badge">100 ريال</span>
+                <p class="subtitle">الباقة الكاملة: سننشئ لك سيرة ذاتية احترافية من الصفر ونحولها إلى موقع ويب متميز</p>                <div class="service-info">
                     <span class="timeline">التسليم خلال 3-5 أيام</span>
                 </div>
-            </div>        </header>
+                <div class="whatsapp-notice">
+                    <p>📲 <strong>ملاحظة مهمة:</strong> بعد إرسال الطلب، سنتواصل معك عبر الواتساب لاستكمال المستندات والصور المطلوبة</p>
+                </div>
+            </div></header>
 
         <!-- Main Form -->
         <main class="main-content">
@@ -39,10 +40,8 @@
                         <label for="full_name">الاسم الكامل</label>
                         <input type="text" id="full_name" name="full_name" required>
                         <span class="error-message" id="full_name_error"></span>
-                    </div>
-
-                    <div class="form-group required">
-                        <label for="profession">التخصص أو الوظيفة</label>
+                    </div>                    <div class="form-group required">
+                        <label for="profession">المسمى الوظيفي</label>
                         <input type="text" id="profession" name="profession" required>
                         <span class="error-message" id="profession_error"></span>
                     </div>
@@ -53,168 +52,38 @@
                         <span class="error-message" id="email_error"></span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="bio">نبذة تعريفية (2-5 أسطر)</label>
-                        <textarea id="bio" name="bio" rows="4" placeholder="اكتب نبذة مختصرة عن نفسك ومجال عملك..."></textarea>
-                        <small class="form-hint">يمكننا مساعدتك في صياغتها إذا لم تكن متأكداً</small>
+                    <div class="form-group required">
+                        <label for="phone">رقم الواتساب</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="05xxxxxxxx">
+                        <span class="error-message" id="phone_error"></span>
                     </div>
-                </section>
-
-                <!-- Profile Image Section -->
+                </section>                <!-- Profile Image Section (Optional) -->
                 <section class="form-section">
                     <h2 class="section-title">
                         <span class="section-icon">🖼️</span>
-                        الصورة الشخصية
+                        الصورة الشخصية (اختياري)
                     </h2>
                     
                     <div class="form-group">
-                        <label for="profile_image">ارفع صورة احترافية (JPG/PNG)</label>
+                        <label for="profile_image">ارفع صورة احترافية</label>
                         <div class="file-upload">
                             <input type="file" id="profile_image" name="profile_image" accept="image/*">
                             <div class="file-upload-area">
                                 <div class="upload-icon">📸</div>
-                                <p>اضغط هنا لرفع الصورة أو اسحبها إلى هنا</p>
-                                <small>الحد الأقصى: 5 ميجابايت</small>
+                                <p>اضغط هنا لرفع صورتك الشخصية (اختياري)</p>
+                                <small>الحد الأقصى: 2 ميجابايت | الأنواع المدعومة: JPEG, PNG, WebP</small>
                             </div>
                             <div class="file-preview" id="profile_preview"></div>
                         </div>
+                        <span class="error-message" id="profile_image_error"></span>
                     </div>
-                </section>
-
-                <!-- Qualifications and Experience Section -->
+                </section>                <!-- Website Preferences Section (Optional) -->
                 <section class="form-section">
                     <h2 class="section-title">
-                        <span class="section-icon">🎓</span>
-                        المؤهلات والخبرات
+                        <span class="section-icon">🎨</span>
+                        تفضيلات الموقع (اختياري)
                     </h2>
                     
-                    <div class="form-group">
-                        <label for="education">المؤهلات الأكاديمية</label>
-                        <textarea id="education" name="education" rows="4" placeholder="اذكر مؤهلاتك الأكاديمية (الشهادات، الجامعات، سنوات التخرج...)"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="experience">الخبرات العملية (وظائف/مشاريع سابقة)</label>
-                        <textarea id="experience" name="experience" rows="4" placeholder="اذكر خبراتك العملية والوظائف والمشاريع السابقة..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="skills">المهارات الأساسية</label>
-                        <textarea id="skills" name="skills" rows="3" placeholder="اذكر مهاراتك المهنية والتقنية..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="languages">اللغات التي تتقنها</label>
-                        <input type="text" id="languages" name="languages" placeholder="مثال: العربية (اللغة الأم)، الإنجليزية (ممتاز)، الفرنسية (جيد)">
-                    </div>
-                </section>
-
-                <!-- Portfolio Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">🧰</span>
-                        معرض الأعمال (إن وجد)
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label for="portfolio_links">روابط أعمالك أو مشاريعك السابقة</label>
-                        <textarea id="portfolio_links" name="portfolio_links" rows="3" placeholder="ضع روابط أعمالك أو مشاريعك (GitHub, Behance, موقع شخصي، إلخ...)"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="portfolio_files">أو ارفع ملفات لمشاريع سابقة</label>
-                        <div class="file-upload">
-                            <input type="file" id="portfolio_files" name="portfolio_files" multiple accept=".pdf,.doc,.docx,.jpg,.png">
-                            <div class="file-upload-area">
-                                <div class="upload-icon">📁</div>
-                                <p>اضغط هنا لرفع الملفات أو اسحبها إلى هنا</p>
-                                <small>يمكنك رفع عدة ملفات (PDF, DOC, صور)</small>
-                            </div>
-                            <div class="file-preview" id="portfolio_preview"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Testimonials Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">💬</span>
-                        آراء وتوصيات (اختياري)
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label for="testimonials">آراء أو توصيات من عملاء/مدراء سابقين</label>
-                        <textarea id="testimonials" name="testimonials" rows="4" placeholder="اكتب أي آراء أو توصيات حصلت عليها من عملاء أو مدراء سابقين..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="testimonial_files">أو ارفع ملفات التوصيات</label>
-                        <div class="file-upload">
-                            <input type="file" id="testimonial_files" name="testimonial_files" multiple accept=".pdf,.doc,.docx,.jpg,.png">
-                            <div class="file-upload-area">
-                                <div class="upload-icon">📄</div>
-                                <p>اضغط هنا لرفع ملفات التوصيات</p>
-                                <small>ملفات PDF أو صور للتوصيات</small>
-                            </div>
-                            <div class="file-preview" id="testimonial_preview"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Contact Information Section -->                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">📱</span>
-                        معلومات إضافية
-                    </h2>
-
-                    <div class="form-group">
-                        <label for="phone">رقم الجوال (اختياري)</label>
-                        <input type="tel" id="phone" name="phone" placeholder="05xxxxxxxx">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="social_media">روابط وسائل التواصل الاجتماعي</label>
-                        <textarea id="social_media" name="social_media" rows="3" placeholder="LinkedIn: https://linkedin.com/in/yourname&#10;Twitter: https://twitter.com/yourname&#10;Behance: https://behance.net/yourname"></textarea>
-                        <small class="form-hint">مثل LinkedIn، Twitter، Behance، إلخ...</small>
-                    </div>
-                </section>
-
-                <!-- Website Goals Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">🎯</span>
-                        أهداف الموقع
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label>هدفك من الموقع؟ (يمكنك اختيار أكثر من هدف)</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="website_goals" value="تقديم على وظائف">
-                                <span class="checkmark"></span>
-                                تقديم على وظائف
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="website_goals" value="تسويق خدماتك كفريلانسر">
-                                <span class="checkmark"></span>
-                                تسويق خدماتك كفريلانسر
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="website_goals" value="توثيق أعمالك">
-                                <span class="checkmark"></span>
-                                توثيق أعمالك
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="website_goals" value="أخرى" id="other_goal_checkbox">
-                                <span class="checkmark"></span>
-                                أخرى
-                            </label>
-                        </div>
-                        <div class="form-group" id="other_goal_input" style="display: none;">
-                            <input type="text" name="other_goal_text" placeholder="يرجى التوضيح...">
-                        </div>
-                    </div>
-
                     <div class="form-group">
                         <label for="domain_preference">هل ترغب بحجز نطاق (Domain) باسمك؟</label>
                         <select id="domain_preference" name="domain_preference">
@@ -226,18 +95,73 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email_hosting_preference">هل ترغب ببريد رسمي مثل info@yourname.com؟</label>
-                        <select id="email_hosting_preference" name="email_hosting_preference">
-                            <option value="">اختر...</option>
-                            <option value="نعم">نعم</option>
-                            <option value="لا">لا</option>
-                            <option value="مو مهم الآن">مو مهم الآن</option>
+                        <label for="website_style">أسلوب التصميم المفضل</label>
+                        <select id="website_style" name="website_style">
+                            <option value="">اختر الأسلوب...</option>
+                            <option value="modern">عصري ومبسط</option>
+                            <option value="professional">مهني وكلاسيكي</option>
+                            <option value="creative">إبداعي وملون</option>
+                            <option value="minimal">بسيط جداً</option>
                         </select>
                     </div>
-                </section>                <!-- Submit Button -->
+
+                    <div class="form-group">
+                        <label for="special_requests">طلبات خاصة أو ملاحظات</label>
+                        <textarea id="special_requests" name="special_requests" rows="3" placeholder="أي طلبات خاصة أو ملاحظات تود إضافتها..."></textarea>
+                    </div>
+                </section>
+                <!-- Raw CV/Documents Section (Optional) -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📄</span>
+                        هل لديك سيرة ذاتية قديمة أو ملف لمعلوماتك؟ ( إختياري )
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="old_cv_files">ارفع سيرتك الذاتية القديمة أو ملف يحتوي على معلوماتك</label>
+                        <div class="file-upload">
+                            <input type="file" id="old_cv_files" name="old_cv_files" accept=".pdf,.doc,.docx,image/*,.txt">
+                            <div class="file-upload-area">
+                                <div class="upload-icon">📎</div>
+                                <p>اضغط هنا لرفع سيرتك الذاتية أو مستند قديم (اختياري)</p>
+                                <small>الحد الأقصى: 4 ميجابايت | الأنواع المدعومة: PDF, Word, صور, ملفات نصية</small>
+                            </div>
+                            <div class="file-preview" id="old_cv_preview"></div>
+                        </div>
+                        <span class="error-message" id="old_cv_files_error"></span>                        <p class="form-help">👋 لا تقلق إذا لم تكن لديك سيرة ذاتية قديمة! سيتواصل معك أحد أفراد فريق العمل قريبًا 🤝 لجمع كل خبراتك ومهاراتك ✨🚀</p>
+                    </div>
+                </section>
+
+                <!-- WhatsApp Follow-up Info -->
+                <section class="form-section whatsapp-info">
+                    <h2 class="section-title">
+                        <span class="section-icon">💬</span>
+                        ما يحدث بعد الإرسال
+                    </h2>
+                    <div class="info-steps">
+                        <div class="step">
+                            <span class="step-number">1️⃣</span>
+                            <p><strong>تأكيد فوري:</strong> ستصلك رسالة تأكيد على بريدك الإلكتروني</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2️⃣</span>
+                            <p><strong>متابعة واتساب:</strong> سنتواصل معك خلال ساعات قليلة عبر الواتساب</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3️⃣</span>
+                            <p><strong>جمع المعلومات:</strong> سنطلب منك المؤهلات والخبرات والمهارات عبر الواتساب</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">4️⃣</span>
+                            <p><strong>التسليم:</strong> ستحصل على سيرتك الذاتية الاحترافية خلال 3 أيام! 🎉</p>
+                        </div>
+                    </div>
+                </section>
+
+<!-- Submit Button -->
                 <div class="form-actions">
                     <button type="submit" class="submit-btn" id="submitBtn">
-                        <span class="btn-text">إرسال الطلب - 100 ريال</span>
+                        <span class="btn-text">إرسال الطلب</span>
                         <span class="btn-loading" style="display: none;">جاري الإرسال...</span>
                     </button>
                     <p class="form-note">سنتواصل معك خلال 24 ساعة لتأكيد الطلب وترتيب الدفع</p>
@@ -251,6 +175,6 @@
         </div>
     </div>
 
-    <script src="/js/script.js"></script>
+    <script src="../public/js/script.js"></script>
 </body>
 </html>

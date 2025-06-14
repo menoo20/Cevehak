@@ -13,18 +13,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add animation on scroll
     addScrollAnimations();
     
+    // Initialize CV image fade loop
+    initCVImageLoop();
+    
     console.log('✅ Landing page initialization complete');
 });
 
 // Service selection functions
 function selectService(serviceType) {
     console.log('🎯 Service selected:', serviceType);
-    
-    // Define service routes
+      // Define service routes (direct file paths for frontend-only)
     const serviceRoutes = {
-        'cv-to-website': '/upload-cv',        // Simple upload form (75 SAR)
-        'full-package': '/create-from-scratch', // Full detailed form (100 SAR)  
-        'cv-only': '/create-cv-only'          // CV-only form (25 SAR)
+        'cv-to-website': './upload-cv.html',        // Simple upload form (75 SAR)
+        'full-package': './create-from-scratch.html', // Full detailed form (100 SAR)  
+        'cv-only': './create-cv-only.html'          // CV-only form (25 SAR)
     };
     
     // Get the route for the selected service
@@ -151,6 +153,45 @@ function addInteractiveEffects() {
 
 // Initialize interactive effects when DOM is loaded
 document.addEventListener('DOMContentLoaded', addInteractiveEffects);
+
+// CV Image Fade Loop
+function initCVImageLoop() {
+    const cvImages = document.querySelectorAll('.cv-fade-image');
+    
+    if (cvImages.length === 0) {
+        console.log('⚠️ No CV images found for fade loop');
+        return;
+    }
+    
+    console.log(`🖼️ Found ${cvImages.length} CV images for fade loop`);
+    console.log('📋 Images loaded:');
+    cvImages.forEach((img, index) => {
+        console.log(`   ${index + 1}. ${img.src.split('/').pop()}`);
+    });
+    
+    let currentIndex = 0;
+    
+    function fadeToNextImage() {
+        // Remove active class from current image
+        cvImages[currentIndex].classList.remove('active');
+        
+        // Move to next image (loop back to 0 if at end)
+        currentIndex = (currentIndex + 1) % cvImages.length;
+        
+        // Add active class to new image
+        cvImages[currentIndex].classList.add('active');
+        
+        const imageName = cvImages[currentIndex].src.split('/').pop();
+        console.log(`🔄 Faded to image ${currentIndex + 1}/${cvImages.length}: ${imageName}`);
+    }
+    
+    // Start the fade loop - with 9 images, 4 seconds each = 36 second full cycle
+    setInterval(fadeToNextImage, 4000);
+    
+    console.log('✅ CV image fade loop initialized');
+    console.log(`⏱️ 4 second intervals → Full cycle: ${cvImages.length * 4} seconds`);
+    console.log(`🎨 All ${cvImages.length} images are the same size for smooth transitions`);
+}
 
 // Export functions for global access
 window.selectService = selectService;

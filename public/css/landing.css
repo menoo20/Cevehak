@@ -166,6 +166,21 @@ body {
     transition: all 0.3s ease;
     flex: 1;
     min-width: 0;
+    position: relative; /* For overlay positioning */
+}
+
+
+.guarantee-badge img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(35px, -33px);
+    width: 80px;
+    height: auto;
+    max-width: 80px;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    transition: all 0.3s ease;
 }
 
 .guarantee-badge:hover {
@@ -208,14 +223,17 @@ body {
 }
 
 .cv-display {
-    background: white;
-    border-radius: 16px;
-    padding: 1rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    background: transparent; /* Remove background since images have their own styling */
+    border-radius: 0; /* Remove border radius since images have their own */
+    padding: 0; /* Remove padding to let images show naturally */
+    box-shadow: none; /* Remove shadow since images have their own */
     position: relative;
-    overflow: hidden;
     transition: all 0.3s ease;
     animation: cv-float 6s ease-in-out infinite;
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    min-height: 400px; /* Ensure proper height for centering */
 }
 
 .cv-display:hover {
@@ -231,8 +249,40 @@ body {
     transition: transform 0.3s ease;
 }
 
-.cv-display:hover .cv-image {
-    transform: scale(1.02);
+/* Override for fade images - natural sizing with rounded corners */
+.cv-image.cv-fade-image {
+    width: auto; /* Natural width */
+    height: auto; /* Natural height */
+    max-width: 400px; /* Reasonable max width */
+    max-height: 550px; /* Reasonable max height */
+    border-radius: 16px; /* Rounded corners */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15); /* Consistent shadow */
+}
+
+/* CV Fade Images for Hero Section */
+.cv-fade-image {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Perfect centering */
+    width: auto; /* Let image use its natural width */
+    height: auto; /* Let image use its natural height */
+    max-width: 400px; /* Reasonable max width */
+    max-height: 500px; /* Reasonable max height */
+    border-radius: 16px; /* Rounded corners */
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out, transform 0.3s ease;
+    z-index: 1;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15); /* Add shadow for depth */
+}
+
+.cv-fade-image.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.cv-display:hover .cv-fade-image {
+    transform: translate(-50%, -50%) scale(1.02); /* Combine centering with scale */
 }
 
 /* Front CV - main focus */
@@ -356,29 +406,29 @@ body {
 
 .quality-badge {
     position: absolute;
-    top: -22px;
-    right: -22px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 0.7rem 0.9rem;
-    border-radius: 50%;
-    text-align: center;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
-    transform: rotate(0deg);
+    top: 20px;
+    right: 20px;
     transition: all 0.3s ease;
-    border: 2px solid white;
-    animation: pulse 2s infinite;
-    width: 75px;
-    height: 75px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    z-index: 15; /* Ensure it's above the images */
 }
 
-.quality-badge:hover {
-    transform: rotate(0deg) scale(1.05);
-    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+.quality-badge-img {
+    width: 70px;
+    height: auto;
+    max-width: 90px;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+    transition: all 0.3s ease;
+}
+
+.quality-badge:hover .quality-badge-img {
+    transform: scale(1.1);
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.3));
+}
+
+.cv-display:hover .quality-badge-img {
+    transform: scale(1.05);
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.25));
 }
 
 .badge-number {
@@ -391,20 +441,22 @@ body {
 }
 
 .badge-text {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     font-weight: 600;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
+    letter-spacing: 0.2px;
     opacity: 0.95;
     line-height: 1;
+    white-space: nowrap;
 }
 
 @keyframes pulse {
     0%, 100% {
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+        transform: scale(1);
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
     }
     50% {
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        transform: scale(1.02);
+        filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.3));
     }
 }
 
@@ -1132,12 +1184,52 @@ body {
     .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 2rem;
+        gap: 1.5rem; /* Reduced gap for mobile */
+    }
+
+    /* CV Preview Mobile Adjustments */
+    .cv-preview {
+        max-width: 300px;
+        margin: 1.5rem auto 0; /* Added top margin to separate from text */
+    }
+
+    .cv-display {
+        min-height: 300px; /* Reduced height for mobile */
+        position: relative; /* Ensure proper stacking */
+    }
+
+    /* Mobile: Change absolute positioning to relative for proper flow */
+    .cv-fade-image {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        display: block;
+        margin: 0 auto;
+        max-width: 280px;
+        max-height: 350px;
+    }
+
+    .cv-fade-image:not(.active) {
+        display: none; /* Hide non-active images on mobile */
+    }
+
+    .quality-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 10;
+    }
+
+    .quality-badge-img {
+        width: 50px; /* Smaller badge on mobile */
+        max-width: 60px;
     }
     
     .hero-title {
         font-size: 1.8rem;
         line-height: 1.3;
+        margin-bottom: 1rem; /* Ensure spacing after title */
     }
     
     .hero-subtitle {
@@ -1347,7 +1439,7 @@ body {
     
     .nav-link {
         font-size: 0.9rem;
-    }      /* Hero */
+    }    /* Hero */
     .hero-title {
         font-size: 1.5rem;
         text-align: center;
@@ -1356,6 +1448,36 @@ body {
     .hero-subtitle {
         font-size: 0.9rem;
         text-align: center;
+    }    /* CV Preview - Extra Small Mobile */
+    .cv-preview {
+        max-width: 250px;
+        margin: 1.5rem auto 0;
+    }
+
+    .cv-display {
+        min-height: 250px; /* Even smaller for very small screens */
+        position: relative;
+    }
+
+    /* Extra small mobile: Ensure proper positioning */
+    .cv-fade-image {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        display: block;
+        margin: 0 auto;
+        max-width: 220px;
+        max-height: 280px;
+    }
+
+    .cv-fade-image:not(.active) {
+        display: none;
+    }
+
+    .quality-badge-img {
+        width: 40px; /* Even smaller badge */
+        max-width: 50px;
     }
     
     /* Guarantee Badges - Extra Small Mobile */
@@ -1598,4 +1720,9 @@ body {
         font-size: 1.2rem;
         padding: 1.2rem 1.5rem;
     }
+}
+
+/* Hero Image Section */
+.hero-image {
+    position: relative; /* Enable absolute positioning for badge */
 }

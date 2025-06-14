@@ -210,7 +210,13 @@ select {
 
 .file-upload-area:hover {
     border-color: #3498db;
-    background: #f0f8ff;
+    background-color: #f8fafc;
+}
+
+.file-upload-area.drag-over {
+    border-color: #10b981 !important;
+    background-color: #f0fdf4 !important;
+    transform: scale(1.02);
 }
 
 .upload-icon {
@@ -336,11 +342,19 @@ select {
 
 /* Error Messages */
 .error-message {
-    display: block;
-    color: #e74c3c;
-    font-size: 0.9rem;
+    display: none;
+    color: #ef4444;
+    font-size: 0.875rem;
     margin-top: 5px;
+    padding: 8px 12px;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
     font-weight: 500;
+}
+
+.error-message:empty {
+    display: none !important;
 }
 
 /* Submit Button */
@@ -420,18 +434,18 @@ select {
 
 /* WhatsApp Follow-up Styles */
 .whatsapp-notice {
-    background: linear-gradient(135deg, #25D366, #128C7E);
+    background: linear-gradient(135deg, #25bf5d, #067769);
     color: white;
-    padding: 20px;
+    padding: 17px;
     border-radius: 15px;
     margin: 20px 0;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    box-shadow: 0 4px 15px rgba(32, 219, 101, 0.3);
     text-align: center;
 }
 
 .whatsapp-notice p {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 500;
 }
 
@@ -439,6 +453,12 @@ select {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     border: 2px solid #25D366;
     border-radius: 15px;
+}
+
+.whatsapp-info .section-title {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 10px !important;
 }
 
 .info-steps {
@@ -479,6 +499,118 @@ select {
 .step strong {
     color: #25D366;
     font-weight: 600;
+}
+
+/* NEW VALIDATION STYLES */
+/* ==================== */
+
+/* Field validation states */
+.form-group input.error,
+.form-group textarea.error,
+.form-group select.error {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-group input.success,
+.form-group textarea.success,
+.form-group select.success {
+    border-color: #10b981 !important;
+    background-color: #f0fdf4;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Error messages */
+.error-message {
+    display: none;
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    padding: 8px 12px;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.error-message:empty {
+    display: none !important;
+}
+
+/* File validation styles */
+.file-item.file-valid {
+    border-left: 4px solid #10b981;
+    background-color: #f0fdf4;
+}
+
+.file-item.file-invalid {
+    border-left: 4px solid #ef4444;
+    background-color: #fef2f2;
+}
+
+.file-status {
+    font-size: 1.2rem;
+    margin-left: 8px;
+}
+
+.file-validation-status {
+    font-size: 0.85rem;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* Enhanced file upload area */
+.file-upload-area {
+    transition: all 0.3s ease;
+}
+
+.file-upload-area:hover {
+    border-color: #3498db;
+    background-color: #f8fafc;
+}
+
+.file-upload-area.drag-over {
+    border-color: #10b981 !important;
+    background-color: #f0fdf4 !important;
+    transform: scale(1.02);
+}
+
+/* Form section enhancements */
+.form-section {
+    transition: all 0.3s ease;
+}
+
+.form-section.has-errors {
+    border-left: 4px solid #ef4444;
+    padding-left: 16px;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.form-section.all-valid {
+    border-left: 4px solid #10b981;
+    padding-left: 16px;
+    background-color: rgba(16, 185, 129, 0.05);
+}
+
+/* Validation summary */
+.validation-summary {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.validation-summary.error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+}
+
+.validation-summary.success {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #059669;
 }
 
 /* Responsive Design */
