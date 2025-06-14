@@ -264,21 +264,27 @@ function initImagePreloading() {
 function preloadOptimizedImage(imgElement, supportsWebP) {
     const originalSrc = imgElement.src;
     const fileName = originalSrc.split('/').pop().replace('.png', '');
+    const isMobile = isMobileDevice();
     
     if (supportsWebP) {
-        const webpSrc = originalSrc.replace('/images/', '/images/optimized/').replace('.png', '.webp');
+        // Choose mobile or desktop WebP based on device
+        const webpFileName = isMobile ? `${fileName}-mobile.webp` : `${fileName}.webp`;
+        const webpSrc = originalSrc.replace('/images/', '/images/optimized/').replace(`${fileName}.png`, webpFileName);
+        
+        console.log(`📱 Device type: ${isMobile ? 'Mobile' : 'Desktop'} - Using: ${webpFileName}`);
         
         // Create new image to test WebP loading
         const testImg = new Image();
         testImg.onload = function() {
             // WebP loaded successfully - replace the original PNG with WebP
-            console.log(`✅ Replacing ${fileName}.png with optimized WebP`);
+            console.log(`✅ Replacing ${fileName}.png with optimized ${webpFileName}`);
             imgElement.src = webpSrc;
             imgElement.dataset.optimized = 'webp';
+            imgElement.dataset.version = isMobile ? 'mobile' : 'desktop';
         };
         testImg.onerror = function() {
             // WebP failed to load - keep original PNG as fallback
-            console.log(`⚠️ WebP failed for ${fileName}, keeping PNG fallback`);
+            console.log(`⚠️ WebP failed for ${webpFileName}, keeping PNG fallback`);
             imgElement.dataset.optimized = 'png-fallback';
         };
         testImg.src = webpSrc;
@@ -346,6 +352,16 @@ function logOptimizationResults() {
         }
         
     }, 3000); // Check after 3 seconds to allow all images to process
+}
+
+// Mobile device detection for optimized image selection
+function isMobileDevice() {
+    // Check viewport width and user agent for mobile detection
+    const isMobileViewport = window.innerWidth <= 768;
+    const isMobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    return isMobileViewport || isMobileUserAgent || isTouchDevice;
 }
 
 // Export functions for global access
