@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize performance optimizations
     initPerformanceOptimizations();
     
+    // Initialize mobile menu
+    initMobileMenu();
+    
     console.log('✅ Landing page initialization complete');
 });
 
@@ -363,5 +366,49 @@ function isMobileDevice() {
     return isMobileViewport || isMobileUserAgent || isTouchDevice;
 }
 
-// Export functions for global access
-window.selectService = selectService;
+// Mobile Menu functionality
+function initMobileMenu() {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const closeBtn = document.getElementById('closeBtn');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    
+    if (!hamburgerBtn || !mobileMenuOverlay || !closeBtn) {
+        console.log('📱 Mobile menu elements not found');
+        return;
+    }
+    
+    console.log('📱 Initializing mobile menu...');
+    
+    // Open mobile menu
+    function openMobileMenu() {
+        mobileMenuOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+        console.log('📱 Mobile menu opened');
+    }
+    
+    // Close mobile menu
+    function closeMobileMenu() {
+        mobileMenuOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scroll
+        console.log('📱 Mobile menu closed');
+    }
+    
+    // Event listeners
+    hamburgerBtn.addEventListener('click', openMobileMenu);
+    closeBtn.addEventListener('click', closeMobileMenu);
+    
+    // Close menu when clicking on nav links
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+    
+    // Close menu when pressing Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+    
+    console.log('✅ Mobile menu initialized successfully');
+}
