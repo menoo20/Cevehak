@@ -15,25 +15,44 @@
     <link rel="preload" as="image" href="images/1.png" type="image/png">
 </head>
 
-<body>
-    <!-- Header/Navigation -->
+<body>    <!-- Header/Navigation -->
     <header class="header">
         <div class="container">
             <div class="nav">
+                <div class="logo">
+                    <a href="#top" class="logo-link">
+                        <h1>Cevehak</h1>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
                 <nav class="nav-menu">
                     <a href="#services" class="nav-link">الخدمات</a>
                     <a href="#process" class="nav-link">كيف نعمل</a>
                     <a href="#pricing" class="nav-link">الأسعار</a>
                     <a href="#contact" class="nav-link">تواصل معنا</a>
                 </nav>
-                <div class="logo">
-                    <a href="#top" class="logo-link">
-                        <h1>Cevehak</h1>
-                    </a>
-                </div>
+                
+                <!-- Mobile Hamburger Button -->
+                <button class="hamburger-btn" id="hamburgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <button class="close-btn" id="closeBtn">&times;</button>
+        <nav class="mobile-nav">
+            <a href="#services" class="mobile-nav-link">الخدمات</a>
+            <a href="#process" class="mobile-nav-link">كيف نعمل</a>
+            <a href="#pricing" class="mobile-nav-link">الأسعار</a>
+            <a href="#contact" class="mobile-nav-link">تواصل معنا</a>
+        </nav>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
