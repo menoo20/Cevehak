@@ -1195,45 +1195,44 @@ body {
         justify-content: center;
         flex-wrap: wrap;    }    
     
-    /* Hero Section - Mobile Optimized */
-    .hero-content {
+    /* Hero Section - Mobile Optimized with larger image space */    .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 1rem; /* Reduced gap for mobile */
-        padding: 1rem 0; /* Add vertical padding */
+        gap: 2rem; /* Increased gap for better spacing with larger images */
+        padding: 2rem 0; /* Increased vertical padding */
         width: 100%;
         max-width: 100%;
         overflow: hidden; /* Prevent content overflow */
+        min-height: 95vh; /* Increased height to accommodate much larger images */
     }
     
     .hero-text {
         width: 100%;
         max-width: 100%;
         padding: 0 1rem;
+        margin-bottom: 1rem; /* Add bottom margin to prevent overlap */
     }
     
     .hero-image {
         width: 100%;
         max-width: 100%;
         overflow: hidden;
-    }/* CV Preview Mobile Adjustments - Fixed Layout */
+        margin-top: 1rem; /* Add top margin for separation */
+    }    /* CV Preview Mobile Adjustments - Larger size with proper spacing */
     .cv-preview {
-        max-width: 90%; /* Use percentage for better responsiveness */
+        max-width: 95%; /* Increased for larger images */
         width: 100%;
-        margin: 1rem auto 0; /* Reduced margins */
-        padding: 0 1rem; /* Add horizontal padding */
-    }
-
-    .cv-display {
-        min-height: 250px; /* Further reduced height */
-        max-height: 300px; /* Strict height limit */
+        margin: 1.5rem auto 0; /* Increased top margin */
+        padding: 0 1rem; /* Add horizontal padding */    }    .cv-display {
+        min-height: 450px; /* Much larger height for bigger images */
+        max-height: 550px; /* Increased max height significantly */
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden; /* Prevent overflow */
-        padding: 0.5rem; /* Add padding to prevent edge touching */
-    }    /* Mobile: Properly constrained images - Higher specificity to override desktop */
+        padding: 1rem; /* Good padding for spacing */
+    }/* Mobile: Much larger images with proper constraints */
     .cv-image.cv-fade-image {
         position: relative !important;
         top: auto !important;
@@ -1242,12 +1241,13 @@ body {
         display: block !important;
         margin: 0 auto !important;
         width: auto !important; /* Let width adjust automatically */
-        max-width: 75vw !important; /* Reduced to 75% of viewport width */
+        max-width: 95vw !important; /* Increased to 95% of viewport width */
         height: auto !important; /* Maintain aspect ratio */
-        max-height: 250px !important; /* Fixed maximum height */
+        max-height: 500px !important; /* Much larger maximum height */
         border-radius: 12px !important;
         box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important;
-        object-fit: contain !important; /* Ensure full image is visible */    }
+        object-fit: contain !important; /* Ensure full image is visible */
+    }
 
     .cv-image.cv-fade-image:not(.active) {
         display: none !important; /* Hide non-active images on mobile */
@@ -1764,4 +1764,38 @@ body {
 /* Hero Image Section */
 .hero-image {
     position: relative; /* Enable absolute positioning for badge */
+}
+
+@media (max-width: 768px) {
+    /* Override desktop CV preview constraints completely */
+    .cv-preview {
+        max-width: none !important;
+        width: 100% !important;
+        margin: 1rem 0 !important;
+        padding: 0 10px !important;
+    }
+    
+    .cv-display {
+        min-height: 500px !important;
+        max-height: 600px !important;
+        width: 100% !important;
+        padding: 10px !important;
+        overflow: visible !important;
+    }
+    
+    /* Make images much larger and override ALL constraints */
+    .cv-image.cv-fade-image {
+        position: relative !important;
+        display: block !important;
+        margin: 0 auto !important;
+        width: auto !important;
+        max-width: 98vw !important; /* Almost full viewport width */
+        height: auto !important;
+        max-height: 70vh !important; /* 70% of viewport height */
+        min-width: 300px !important; /* Ensure minimum size */
+        min-height: 400px !important; /* Ensure minimum height */
+        border-radius: 12px !important;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important;
+        object-fit: contain !important;
+    }
 }
