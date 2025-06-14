@@ -967,6 +967,10 @@ body {
         gap: 2rem;
         padding: 0 1rem;
     }
+    .process .container
+    { 
+        overflow-x: visible;
+    }
 }
 
 /* Connecting line for desktop */
