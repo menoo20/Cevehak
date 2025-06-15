@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- EmailJS Integration -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -141,9 +139,10 @@
         <!-- Success/Error Messages -->
         <div id="messageContainer" class="message-container" style="display: none;">
             <div class="message" id="message"></div>
-        </div>
-    </div>
-
+        </div>    </div>    <!-- EmailJS v4 - Official Documentation -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Upload Configuration for Frontend-Only Solutions -->
+    <script src="../public/js/upload-config.js"></script>
     <script src="../public/js/script.js"></script>
 </body>
 </html>
