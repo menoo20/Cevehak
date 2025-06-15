@@ -27,12 +27,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Service selection functions
 function selectService(serviceType) {
-    console.log('🎯 Service selected:', serviceType);
-      // Define service routes (direct file paths for frontend-only)
+    console.log('🎯 Service selected:', serviceType);      // Define service routes (clean URLs without .html extensions)
     const serviceRoutes = {
-        'cv-to-website': './upload-cv.html',        // Simple upload form (75 SAR)
-        'full-package': './create-from-scratch.html', // Full detailed form (100 SAR)  
-        'cv-only': './create-cv-only.html'          // CV-only form (25 SAR)
+        'cv-to-website': './upload-cv',        // Simple upload form (75 SAR)
+        'full-package': './create-from-scratch', // Full detailed form (100 SAR)  
+        'cv-only': './create-cv-only'          // CV-only form (25 SAR)
     };
     
     // Get the route for the selected service

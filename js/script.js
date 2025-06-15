@@ -590,10 +590,9 @@ async function handleFormSubmit(e) {
             if (window.cevehakStats) {
                 window.cevehakStats.trackFormSubmission();
             }
-            
-            // Redirect to success page
+              // Redirect to success page
             console.log('🚀 Redirecting to success page...');
-            window.location.href = './success.html';
+            window.location.href = './success';
             
         } else {
             throw new Error('EmailJS failed with status: ' + emailResult.status);

@@ -1,0 +1,47 @@
+# GitHub Pages Jekyll Configuration for Cevehak
+# This enables clean URLs without .html extensions
+
+# Site settings
+title: "Cevehak - خدمات السير الذاتية والمواقع المهنية"
+description: "نحول خبراتك إلى موقع ويب احترافي يميزك عن الآخرين"
+baseurl: ""
+url: "https://menoo20.github.io"
+
+# Clean URLs - removes .html extensions
+permalink: pretty
+
+# GitHub Pages settings
+plugins:
+  - jekyll-relative-links
+
+# Relative links settings
+relative_links:
+  enabled: true
+  collections: false
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - .gitignore
+  - *.bat
+  - *.sh
+  - *.js
+  - *.py
+  - start-server.*
+  - update-github-pages.*
+
+# Include files that start with underscore
+include:
+  - _config.yml
+
+# Markdown processor
+markdown: kramdown
+
+# Syntax highlighting
+highlighter: rouge
+
+# Enable GitHub Pages features
+github: [metadata]
