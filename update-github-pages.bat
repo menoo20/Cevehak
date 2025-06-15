@@ -14,6 +14,10 @@ echo 📄 Updating HTML files...
 copy "views\index.html" "gh-pages\index.html" /Y
 copy "views\*.html" "gh-pages\" /Y
 
+REM Copy Jekyll configuration
+echo ⚙️ Updating Jekyll config...
+copy "_config.yml" "gh-pages\_config.yml" /Y
+
 REM Copy CSS files
 echo 🎨 Updating CSS files...
 copy "public\css\landing.css" "gh-pages\css\landing.css" /Y
