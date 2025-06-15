@@ -285,3 +285,219 @@ function initMobileMenu() {
     
     console.log('✅ Mobile menu initialized successfully');
 }
+
+// 📊 Client-Side Stats Tracking System
+class CevehakStats {
+    constructor() {
+        this.storagePrefix = 'cevehak_stats_';
+        this.visitSessionKey = 'cevehak_session_';
+        
+        // Base numbers to start with (realistic starting point)
+        this.baseStats = {
+            visitors: 1247,
+            submissions: 156,
+            projects: 203,
+            satisfaction: 98
+        };
+        
+        this.init();
+    }
+
+    init() {
+        console.log('📊 Initializing Cevehak Stats System...');
+        this.trackVisitor();
+        this.loadStats();
+        this.displayStats();
+        this.animateCounters();
+        console.log('✅ Stats system initialized');
+    }
+
+    // Generate a unique session ID for the browser session
+    getSessionId() {
+        let sessionId = sessionStorage.getItem('cevehak_session_id');
+        if (!sessionId) {
+            sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            sessionStorage.setItem('cevehak_session_id', sessionId);
+        }
+        return sessionId;
+    }
+
+    // Track unique visitors (one per session)
+    trackVisitor() {
+        const sessionId = this.getSessionId();
+        const visitedKey = this.visitSessionKey + sessionId;
+        
+        // Check if this session has already been counted
+        if (!localStorage.getItem(visitedKey)) {
+            // New session - increment visitor count
+            this.incrementStat('visitors');
+            localStorage.setItem(visitedKey, Date.now());
+            console.log('👋 New visitor session tracked');
+        } else {
+            console.log('🔄 Returning visitor in same session');
+        }
+    }
+
+    // Get current stat value
+    getStat(statName) {
+        const key = this.storagePrefix + statName;
+        const stored = localStorage.getItem(key);
+        
+        if (stored) {
+            return parseInt(stored);
+        } else {
+            // First time - initialize with base value
+            const baseValue = this.baseStats[statName] || 0;
+            this.setStat(statName, baseValue);
+            return baseValue;
+        }
+    }
+
+    // Set stat value
+    setStat(statName, value) {
+        const key = this.storagePrefix + statName;
+        localStorage.setItem(key, value.toString());
+    }
+
+    // Increment a specific stat
+    incrementStat(statName, amount = 1) {
+        const currentValue = this.getStat(statName);
+        const newValue = currentValue + amount;
+        this.setStat(statName, newValue);
+        return newValue;
+    }
+
+    // Load all current stats
+    loadStats() {
+        this.currentStats = {
+            visitors: this.getStat('visitors'),
+            submissions: this.getStat('submissions'),
+            projects: this.getStat('projects'),
+            satisfaction: this.baseStats.satisfaction // This stays static
+        };
+        
+        console.log('📈 Current Stats:', this.currentStats);
+    }
+
+    // Display stats in the DOM
+    displayStats() {
+        const visitorsEl = document.getElementById('visitorsCount');
+        const submissionsEl = document.getElementById('submissionsCount');
+        const satisfactionEl = document.getElementById('satisfactionRate');
+        const projectsEl = document.getElementById('projectsCount');
+
+        if (visitorsEl) visitorsEl.textContent = this.formatNumber(this.currentStats.visitors);
+        if (submissionsEl) submissionsEl.textContent = this.formatNumber(this.currentStats.submissions);
+        if (satisfactionEl) satisfactionEl.textContent = this.currentStats.satisfaction + '%';
+        if (projectsEl) projectsEl.textContent = this.formatNumber(this.currentStats.projects);
+    }
+
+    // Format numbers (add commas, k notation, etc.)
+    formatNumber(num) {
+        if (num >= 10000) {
+            return (num / 1000).toFixed(1) + 'k';
+        } else if (num >= 1000) {
+            return num.toLocaleString();
+        }
+        return num.toString();
+    }
+
+    // Animate counters with smooth counting effect
+    animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+        
+        const animateCounter = (element, finalValue) => {
+            const isPercentage = element.textContent.includes('%');
+            const numericValue = parseInt(finalValue.toString().replace(/[^\d]/g, ''));
+            
+            let startValue = Math.max(0, numericValue - Math.min(50, numericValue * 0.1));
+            const duration = 2000; // 2 seconds
+            const stepTime = 16; // ~60fps
+            const steps = duration / stepTime;
+            const increment = (numericValue - startValue) / steps;
+            
+            let currentValue = startValue;
+            
+            const timer = setInterval(() => {
+                currentValue += increment;
+                
+                if (currentValue >= numericValue) {
+                    currentValue = numericValue;
+                    clearInterval(timer);
+                }
+                
+                if (isPercentage) {
+                    element.textContent = Math.floor(currentValue) + '%';
+                } else {
+                    element.textContent = this.formatNumber(Math.floor(currentValue));
+                }
+            }, stepTime);
+        };
+
+        // Use Intersection Observer to trigger animation when visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const finalValue = element.textContent;
+                    animateCounter(element, finalValue);
+                    observer.unobserve(element);
+                }
+            });
+        }, { 
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        counters.forEach(counter => {
+            observer.observe(counter);
+        });
+    }
+
+    // Public method to track form submissions
+    trackFormSubmission() {
+        const newCount = this.incrementStat('submissions');
+        // Also increment projects (submissions + some buffer)
+        this.incrementStat('projects');
+        
+        console.log('📋 Form submission tracked! New count:', newCount);
+        return newCount;
+    }
+
+    // Public method to get current stats (for debugging)
+    getCurrentStats() {
+        return this.currentStats;
+    }
+
+    // Reset stats (for testing)
+    resetStats() {
+        Object.keys(this.baseStats).forEach(statName => {
+            localStorage.removeItem(this.storagePrefix + statName);
+        });
+        
+        // Clear session data
+        const keys = Object.keys(localStorage);
+        keys.forEach(key => {
+            if (key.startsWith(this.visitSessionKey)) {
+                localStorage.removeItem(key);
+            }
+        });
+        
+        sessionStorage.removeItem('cevehak_session_id');
+        console.log('🔄 Stats reset to base values');
+        
+        // Reload to show reset values
+        location.reload();
+    }
+}
+
+// Initialize stats system when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Only initialize on landing page (where stats section exists)
+    if (document.querySelector('.stats-section')) {
+        window.cevehakStats = new CevehakStats();
+    }
+});
+
+// Make it globally accessible for form submission tracking
+window.CevehakStats = CevehakStats;
