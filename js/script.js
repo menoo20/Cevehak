@@ -581,14 +581,18 @@ async function handleFormSubmit(e) {
         console.log('📧 EmailJS sendForm response:', emailResult);
         
         // Check if email was sent successfully
-        if (emailResult.status === 200) {
-            console.log('🎉 Email sent successfully!');
+        if (emailResult.status === 200) {            console.log('🎉 Email sent successfully!');
             console.log(`📋 Service: ${serviceType}`);
             console.log(`💰 Price: ${getServicePrice(serviceType)} SAR`);
             console.log(`🆔 Submission ID: CV${Date.now()}`);
             
+            // Track form submission in stats
+            if (window.cevehakStats) {
+                window.cevehakStats.trackFormSubmission();
+            }
+            
             // Redirect to success page
-            console.log('� Redirecting to success page...');
+            console.log('🚀 Redirecting to success page...');
             window.location.href = './success.html';
             
         } else {
