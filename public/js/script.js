@@ -1,15 +1,14 @@
-// EmailJS Configuration - Updated with correct IDs
+// EmailJS Configuration
 const EMAILJS_CONFIG = {
     serviceID: 'service_sh1mrgx',
-    templateID: 'template_4s4z3jj',  // ✅ Correct template ID
-    publicKey: 'tZEOrhhlhX5r1mLK8'   // ✅ Correct API key
+    templateID: 'template_nmewe9i',  // ⚠️ Verify this template ID is correct in your EmailJS dashboard
+    publicKey: 'tZEOrhhlhX5r1mLK8'
 };
 
 // Initialize EmailJS when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     // Wait a bit for EmailJS to load
-    setTimeout(function() {
-        if (typeof emailjs !== 'undefined') {
+    setTimeout(function() {        if (typeof emailjs !== 'undefined') {
             emailjs.init({
                 publicKey: EMAILJS_CONFIG.publicKey
             });
@@ -511,93 +510,57 @@ async function handleFormSubmit(e) {
         formData.delete('other_goal_text');
         websiteGoals.forEach(goal => {
             formData.append('website_goals', goal);
-        });        // Enhanced file processing for frontend-only upload
-        const clientInfo = {
-            full_name: formData.get('full_name') || 'Anonymous',
-            service_type: serviceType,
-            email: formData.get('email') || '',
-            phone: formData.get('phone') || ''
-        };
+        });
         
-        // Process files using frontend-only solutions
-        const fileProcessingResult = await processFilesForFrontendUpload(formData, clientInfo);
-        console.log(`📎 File processing result:`, fileProcessingResult);// Submit form using EmailJS - Handle files separately to avoid size limits
-        console.log('📧 Preparing form data for EmailJS...');
+        // Log file uploads
+        const fileFields = ['profile_image', 'cv_file', 'portfolio_files', 'testimonial_files', 'additional_files'];
+        let totalFiles = 0;
+        fileFields.forEach(fieldName => {
+            const files = formData.getAll(fieldName);
+            if (files.length > 0 && files[0].name) {
+                totalFiles += files.length;
+                console.log(`📁 ${fieldName}: ${files.length} file(s)`);
+            }        });
+        console.log(`📎 Total files being uploaded: ${totalFiles}`);        // Submit form using EmailJS sendForm (better for forms with files)
+        console.log('📧 Sending form via EmailJS sendForm...');
         console.log('🔧 EmailJS Config:', {
             serviceID: EMAILJS_CONFIG.serviceID,
             templateID: EMAILJS_CONFIG.templateID,
             publicKey: EMAILJS_CONFIG.publicKey ? 'Set' : 'Missing'
         });
         
-        // Create a new FormData object without file contents to stay under 50KB limit
-        const emailFormData = new FormData();        // Copy all non-file form fields
-        for (let [key, value] of formData.entries()) {
-            if (!(value instanceof File)) {
-                emailFormData.append(key, value);
-            }
-        }
-        
-        // Add file information based on processing result
-        if (fileProcessingResult.hasFiles) {
-            // If files were uploaded to cloud storage
-            if (fileProcessingResult.uploadResults.length > 0) {
-                const uploadedFilesList = fileProcessingResult.uploadResults.map((file, index) => 
-                    `${index + 1}. ${file.originalName} (${file.fieldName})\n   📎 رابط التحميل: ${file.uploadUrl}`
-                ).join('\n\n');
-                
-                emailFormData.append('files_info', `✅ تم رفع الملفات بنجاح:\n\n${uploadedFilesList}`);
-            } else {
-                // If manual upload instructions are provided
-                const filesList = fileProcessingResult.fileDetails.map((file, index) => 
-                    `${index + 1}. ${file.name} (${file.size}) - ${file.type}`
-                ).join('\n');
-                
-                emailFormData.append('files_info', `📁 إجمالي الملفات: ${fileProcessingResult.totalFiles} ملف\n\nقائمة الملفات:\n${filesList}\n\n${fileProcessingResult.uploadInstructions.uploadInstructions}`);
-            }
-        } else {
-            emailFormData.append('files_info', 'لا توجد ملفات مرفقة');
-        }
-        
-        // Create a temporary form element for EmailJS
-        const tempForm = document.createElement('form');
-        for (let [key, value] of emailFormData.entries()) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = value;
-            tempForm.appendChild(input);
-        }
-        
-        // Use emailjs.sendForm with the temporary form (no actual files)
+        // Use emailjs.sendForm for direct form submission with file support
         const emailResult = await emailjs.sendForm(
             EMAILJS_CONFIG.serviceID,
             EMAILJS_CONFIG.templateID,
-            tempForm
+            form  // Pass the form element directly
         );
         
-        console.log('📧 EmailJS sendForm response:', emailResult);        // Check if email was sent successfully
+        console.log('📧 EmailJS sendForm response:', emailResult);
+        
+        // Check if email was sent successfully
         if (emailResult.status === 200) {
             console.log('🎉 Email sent successfully!');
             console.log(`📋 Service: ${serviceType}`);
             console.log(`💰 Price: ${getServicePrice(serviceType)} SAR`);
-            console.log(`📁 Files: ${fileProcessingResult.hasFiles ? fileProcessingResult.totalFiles : 0} files processed`);
             console.log(`🆔 Submission ID: CV${Date.now()}`);
             
             // Redirect to success page
-            console.log('🔄 Redirecting to success page...');
+            console.log('� Redirecting to success page...');
             window.location.href = './success.html';
             
         } else {
             throw new Error('EmailJS failed with status: ' + emailResult.status);
-        }} catch (error) {
+        }        } catch (error) {
         console.error('💥 Network/Submit error:', error);
         
         // Get error message safely
         const errorMessage = error?.message || error?.toString() || 'Unknown error';
         console.error('📋 Error message:', errorMessage);
-          // Handle specific HTTP status codes
-        if (errorMessage.includes('413') || errorMessage.includes('Request Entity Too Large') || errorMessage.includes('Variables size limit')) {
-            showMessage('حجم البيانات المرسلة كبير جداً. يرجى تقليل حجم الملفات والنصوص المدخلة.', 'error');
+        
+        // Handle specific HTTP status codes
+        if (errorMessage.includes('413') || errorMessage.includes('Request Entity Too Large')) {
+            showMessage('حجم الملفات كبير جداً. يرجى تقليل حجم الملفات إلى أقل من 1.5 ميجابايت لكل ملف.', 'error');
         } else if (errorMessage.includes('Request failed') || errorMessage.includes('Failed to fetch')) {
             showMessage('فشل في الاتصال بالخادم. يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى.', 'error');
         } else if (errorMessage.includes('400') || errorMessage.includes('Template ID')) {
@@ -609,95 +572,6 @@ async function handleFormSubmit(e) {
         setSubmitButtonLoading(false);
         console.log('🔓 Submit button loading state cleared');
     }
-}
-
-// Cloud Storage Upload Handler (Alternative to EmailJS file limitation)
-async function uploadFilesToCloud(files, clientInfo) {
-    console.log('☁️ Uploading files to cloud storage...');
-    
-    const uploadedFiles = [];
-    
-    // You can integrate with services like:
-    // - Firebase Storage (Google)
-    // - Supabase Storage 
-    // - Cloudinary
-    // - AWS S3
-    
-    // For now, we'll prepare the structure for future integration
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        
-        // Generate unique filename
-        const timestamp = Date.now();
-        const uniqueFilename = `${clientInfo.full_name}_${timestamp}_${file.name}`;
-        
-        uploadedFiles.push({
-            originalName: file.name,
-            uniqueName: uniqueFilename,
-            size: file.size,
-            type: file.type,
-            // In real implementation, this would be the actual upload URL
-            downloadUrl: `https://your-storage.com/files/${uniqueFilename}`
-        });
-        
-        console.log(`📤 Prepared for upload: ${file.name} (${(file.size/1024).toFixed(1)} KB)`);
-    }
-    
-    return uploadedFiles;
-}
-
-// Enhanced file handling for EmailJS integration
-async function handleFilesForEmail(formData, clientInfo) {
-    console.log('📁 Processing files for email notification...');
-    
-    const fileFields = ['profile_image', 'cv_file', 'portfolio_files', 'testimonial_files', 'additional_files'];
-    const fileDetails = [];
-    let totalFiles = 0;
-    
-    for (const fieldName of fileFields) {
-        const files = formData.getAll(fieldName);
-        if (files.length > 0 && files[0].name) {
-            for (const file of files) {
-                if (file.name) {
-                    fileDetails.push({
-                        field: fieldName,
-                        name: file.name,
-                        size: (file.size / 1024).toFixed(1) + ' KB',
-                        type: file.type || 'Unknown'
-                    });
-                    totalFiles++;
-                }
-            }
-        }
-    }
-    
-    // Create detailed file summary for email
-    let fileSummary = '';
-    if (fileDetails.length > 0) {
-        fileSummary = fileDetails.map((file, index) => 
-            `${index + 1}. ${file.name} (${file.size}) - ${getFieldDisplayName(file.field)}`
-        ).join('\n');
-        
-        fileSummary = `إجمالي الملفات: ${totalFiles} ملف\n\nتفاصيل الملفات:\n${fileSummary}\n\n📲 ملاحظة: سيتم طلب إرسال الملفات عبر الواتساب لاستكمال الطلب.`;
-    }
-    
-    return {
-        fileDetails,
-        fileSummary,
-        totalFiles
-    };
-}
-
-// Get display name for file fields in Arabic
-function getFieldDisplayName(fieldName) {
-    const fieldNames = {
-        'profile_image': 'صورة شخصية',
-        'cv_file': 'ملف السيرة الذاتية',
-        'portfolio_files': 'ملفات أعمال سابقة',
-        'testimonial_files': 'ملفات توصيات',
-        'additional_files': 'ملفات إضافية'
-    };
-    return fieldNames[fieldName] || fieldName;
 }
 
 // Get service price based on service type
@@ -1064,149 +938,3 @@ document.querySelectorAll('textarea').forEach(textarea => {
         updateCounter();
     }
 });
-
-// Frontend-only file upload solutions for GitHub Pages
-// These work without any backend server!
-
-// Option 1: Upload to Cloudinary (Frontend-only, no server needed)
-async function uploadToCloudinary(file, clientName) {
-    try {
-        console.log(`☁️ Uploading ${file.name} to Cloudinary...`);
-        
-        // Check file size (Cloudinary free tier: 100MB max per file)
-        const maxSize = 100 * 1024 * 1024; // 100MB in bytes
-        if (file.size > maxSize) {
-            throw new Error(`File too large: ${(file.size / (1024 * 1024)).toFixed(1)}MB. Maximum allowed: 100MB`);
-        }
-        
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', window.CLOUDINARY_CONFIG?.uploadPreset || 'cv_uploads');
-        formData.append('public_id', `${clientName}_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9]/g, '_')}`);
-        formData.append('folder', window.CLOUDINARY_CONFIG?.folder || 'cv-submissions');
-        
-        const cloudName = window.CLOUDINARY_CONFIG?.cloudName;
-        if (!cloudName || cloudName === 'your-cloud-name') {
-            throw new Error('Cloudinary cloud name not configured');
-        }
-        
-        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Cloudinary upload failed: ${errorData.error?.message || response.statusText}`);
-        }
-        
-        const data = await response.json();
-        console.log(`✅ Uploaded: ${data.secure_url}`);
-        
-        return {
-            originalName: file.name,
-            uploadUrl: data.secure_url,
-            publicId: data.public_id,
-            size: file.size,
-            format: data.format,
-            bytes: data.bytes
-        };
-    } catch (error) {
-        console.error('❌ Cloudinary upload failed:', error);
-        return null;
-    }
-}
-
-// Option 2: Create shareable file links for manual upload
-function generateFileUploadInstructions(files, clientInfo) {
-    console.log('📋 Generating file upload instructions...');
-    
-    const instructions = files.map((file, index) => {
-        return `${index + 1}. ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
-    }).join('\n');
-    
-    // Use configured Google Drive folder or fallback
-    const uploadLink = window.GOOGLE_DRIVE_CONFIG?.folderUrl || 
-                      `https://drive.google.com/drive/folders/${window.GOOGLE_DRIVE_CONFIG?.sharedFolderId}` ||
-                      'https://drive.google.com/drive/folders/YOUR_SHARED_FOLDER_ID';
-    
-    const clientFolder = `${clientInfo.full_name}_${new Date().toISOString().split('T')[0]}`;
-      return {
-        fileList: instructions,
-        uploadInstructions: `
-� طريقة إرسال الملفات - الواتساب:
-
-الملفات المطلوبة:
-${instructions}
-
-طريقة الإرسال:
-سنتواصل معك عبر الواتساب خلال 24 ساعة لاستلام الملفات المذكورة أعلاه.
-
-📧 البديل - البريد الإلكتروني:
-يمكنك أيضاً إرسال الملفات كمرفقات إلى: cevehak@gmail.com
-
-⚠️ ملاحظة مهمة:
-احتفظ بالملفات جاهزة على جهازك حتى نتواصل معك.
-        `
-    };
-}
-
-// Enhanced file processing for frontend-only solutions
-async function processFilesForFrontendUpload(formData, clientInfo) {
-    console.log('🔄 Processing files for frontend upload...');
-    
-    const fileFields = ['profile_image', 'cv_file', 'portfolio_files', 'testimonial_files', 'additional_files'];
-    const allFiles = [];
-    const uploadResults = [];
-    
-    // Collect all files
-    for (const fieldName of fileFields) {
-        const files = formData.getAll(fieldName);
-        for (const file of files) {
-            if (file && file.name) {
-                allFiles.push({
-                    file: file,
-                    fieldName: fieldName,
-                    fieldDisplayName: getFieldDisplayName(fieldName)
-                });
-            }
-        }
-    }
-    
-    if (allFiles.length === 0) {
-        return { hasFiles: false };
-    }
-    
-    console.log(`📁 Found ${allFiles.length} files to process`);
-    
-    // Option A: Try to upload to cloud service (if configured)
-    if (window.CLOUDINARY_ENABLED) {
-        for (const fileInfo of allFiles) {
-            const result = await uploadToCloudinary(fileInfo.file, clientInfo.full_name);
-            if (result) {
-                uploadResults.push({
-                    ...result,
-                    fieldName: fileInfo.fieldDisplayName
-                });
-            }
-        }
-    }
-    
-    // Option B: Generate upload instructions for manual upload
-    const uploadInstructions = generateFileUploadInstructions(
-        allFiles.map(f => f.file), 
-        clientInfo
-    );
-    
-    return {
-        hasFiles: true,
-        totalFiles: allFiles.length,
-        uploadResults: uploadResults,
-        uploadInstructions: uploadInstructions,
-        fileDetails: allFiles.map(f => ({
-            name: f.file.name,
-            size: (f.file.size / 1024).toFixed(1) + ' KB',
-            type: f.fieldDisplayName
-        }))
-    };
-}
