@@ -8,10 +8,9 @@ const EMAILJS_CONFIG = {
 // Initialize EmailJS when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     // Wait a bit for EmailJS to load
-    setTimeout(function() {        if (typeof emailjs !== 'undefined') {
-            emailjs.init({
-                publicKey: EMAILJS_CONFIG.publicKey
-            });
+    setTimeout(function() {
+        if (typeof emailjs !== 'undefined') {
+            emailjs.init(EMAILJS_CONFIG.publicKey);
             console.log('📧 EmailJS v4 initialized successfully');
         } else {
             console.error('❌ EmailJS library not loaded');
@@ -528,12 +527,12 @@ async function handleFormSubmit(e) {
             templateID: EMAILJS_CONFIG.templateID,
             publicKey: EMAILJS_CONFIG.publicKey ? 'Set' : 'Missing'
         });
-        
-        // Use emailjs.sendForm for direct form submission with file support
+          // Use emailjs.sendForm for direct form submission with file support
         const emailResult = await emailjs.sendForm(
             EMAILJS_CONFIG.serviceID,
             EMAILJS_CONFIG.templateID,
-            form  // Pass the form element directly
+            form,  // Pass the form element directly
+            EMAILJS_CONFIG.publicKey  // Explicitly pass the public key
         );
         
         console.log('📧 EmailJS sendForm response:', emailResult);
