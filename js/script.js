@@ -1,19 +1,24 @@
 // EmailJS Configuration
 const EMAILJS_CONFIG = {
     serviceID: 'service_sh1mrgx',
-    templateID: 'template_nmewe9i',
+    templateID: 'template_nmewe9i',  // ⚠️ Verify this template ID is correct in your EmailJS dashboard
     publicKey: 'KngXkuhG9sy88UDAQ'
 };
 
-// Initialize EmailJS
-(function() {
-    if (typeof emailjs !== 'undefined') {
-        emailjs.init(EMAILJS_CONFIG.publicKey);
-        console.log('📧 EmailJS initialized successfully');
-    } else {
-        console.error('❌ EmailJS library not loaded');
-    }
-})();
+// Initialize EmailJS when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for EmailJS to load
+    setTimeout(function() {
+        if (typeof emailjs !== 'undefined') {
+            emailjs.init({
+                publicKey: EMAILJS_CONFIG.publicKey
+            });
+            console.log('📧 EmailJS v4 initialized successfully');
+        } else {
+            console.error('❌ EmailJS library not loaded');
+        }
+    }, 100);
+});
 
 // DOM Elements - Handle different form IDs
 const form = document.getElementById('cvForm') || 
@@ -517,37 +522,22 @@ async function handleFormSubmit(e) {
                 totalFiles += files.length;
                 console.log(`📁 ${fieldName}: ${files.length} file(s)`);
             }        });
-        console.log(`📎 Total files being uploaded: ${totalFiles}`);
+        console.log(`📎 Total files being uploaded: ${totalFiles}`);        // Submit form using EmailJS sendForm (better for forms with files)
+        console.log('📧 Sending form via EmailJS sendForm...');
+        console.log('🔧 EmailJS Config:', {
+            serviceID: EMAILJS_CONFIG.serviceID,
+            templateID: EMAILJS_CONFIG.templateID,
+            publicKey: EMAILJS_CONFIG.publicKey ? 'Set' : 'Missing'
+        });
         
-        // Submit form using EmailJS
-        console.log('📧 Sending email via EmailJS...');
-        
-        // Prepare template parameters for EmailJS
-        const templateParams = {
-            full_name: formData.get('full_name') || '',
-            profession: formData.get('profession') || '',
-            email: formData.get('email') || '',
-            phone: formData.get('phone') || '',
-            service_type: getServiceTypeDisplay(serviceType),
-            domain_preference: formData.get('domain_preference') || 'غير محدد',
-            website_style: formData.get('website_style') || 'غير محدد',
-            special_requests: formData.get('special_requests') || 'لا توجد طلبات خاصة',
-            website_goals: websiteGoals.join(', ') || 'غير محدد',
-            profile_image: totalFiles > 0 ? 'نعم' : 'لا',
-            cv_file: formData.get('cv_file')?.name ? 'نعم' : 'لا',
-            date: new Date().toLocaleString('ar-SA')
-        };
-        
-        console.log('📋 Sending email with data:', templateParams);
-        
-        // Send email using EmailJS
-        const emailResult = await emailjs.send(
+        // Use emailjs.sendForm for direct form submission with file support
+        const emailResult = await emailjs.sendForm(
             EMAILJS_CONFIG.serviceID,
             EMAILJS_CONFIG.templateID,
-            templateParams
+            form  // Pass the form element directly
         );
         
-        console.log('📧 EmailJS response:', emailResult);
+        console.log('📧 EmailJS sendForm response:', emailResult);
         
         // Check if email was sent successfully
         if (emailResult.status === 200) {
@@ -562,13 +552,20 @@ async function handleFormSubmit(e) {
             
         } else {
             throw new Error('EmailJS failed with status: ' + emailResult.status);
-        }} catch (error) {
+        }        } catch (error) {
         console.error('💥 Network/Submit error:', error);
-          // Handle specific HTTP status codes
-        if (error.message.includes('413') || error.message.includes('Request Entity Too Large')) {
+        
+        // Get error message safely
+        const errorMessage = error?.message || error?.toString() || 'Unknown error';
+        console.error('📋 Error message:', errorMessage);
+        
+        // Handle specific HTTP status codes
+        if (errorMessage.includes('413') || errorMessage.includes('Request Entity Too Large')) {
             showMessage('حجم الملفات كبير جداً. يرجى تقليل حجم الملفات إلى أقل من 1.5 ميجابايت لكل ملف.', 'error');
-        } else if (error.message.includes('Request failed') || error.message.includes('Failed to fetch')) {
+        } else if (errorMessage.includes('Request failed') || errorMessage.includes('Failed to fetch')) {
             showMessage('فشل في الاتصال بالخادم. يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى.', 'error');
+        } else if (errorMessage.includes('400') || errorMessage.includes('Template ID')) {
+            showMessage('خطأ في إعدادات النظام. يرجى المحاولة مرة أخرى أو التواصل مع الدعم الفني.', 'error');
         } else {
             showMessage('حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'error');
         }
