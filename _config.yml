@@ -44,4 +44,5 @@ markdown: kramdown
 highlighter: rouge
 
 # Enable GitHub Pages features
-github: [metadata]
+github:
+  - metadata
