@@ -501,16 +501,26 @@ async function handleFormSubmit(e) {
                 websiteGoals.push(checkbox.value);
             }
         });
-        
-        console.log(`🎯 Website goals processed: ${websiteGoals.length} goals selected`);
+          console.log(`🎯 Website goals processed: ${websiteGoals.length} goals selected`);
         
         // Update form data with processed goals
         formData.delete('website_goals');
         formData.delete('other_goal_text');
         websiteGoals.forEach(goal => {
             formData.append('website_goals', goal);
-        });
-          // Handle file information (don't send actual files - only file info)
+        });        // Handle CV preferences (dropdown)
+        console.log('📄 Processing CV preferences...');
+        const cvPreferencesSelect = form.querySelector('select[name="cv_preferences"]');
+        const selectedCvPreference = cvPreferencesSelect ? cvPreferencesSelect.value : '';
+        
+        if (selectedCvPreference) {
+            console.log(`📄 CV preference selected: ${selectedCvPreference}`);
+            formData.set('cv_preferences', selectedCvPreference);
+        } else {
+            console.log('📄 No CV preference selected');
+            formData.delete('cv_preferences');
+        }
+        // Handle file information (don't send actual files - only file info)
         console.log('📁 Processing file information...');
         const fileFields = ['profile_image', 'cv_file', 'portfolio_files', 'testimonial_files', 'additional_files'];
         let totalFiles = 0;
