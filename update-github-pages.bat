@@ -17,6 +17,7 @@ copy "views\*.html" "gh-pages\" /Y
 REM Copy Jekyll configuration
 echo ⚙️ Updating Jekyll config...
 copy "_config.yml" "gh-pages\_config.yml" /Y
+copy "CNAME" "gh-pages\CNAME" /Y
 
 REM Copy CSS files
 echo 🎨 Updating CSS files...
