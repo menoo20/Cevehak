@@ -510,29 +510,62 @@ async function handleFormSubmit(e) {
         websiteGoals.forEach(goal => {
             formData.append('website_goals', goal);
         });
-        
-        // Log file uploads
+          // Handle file information (don't send actual files - only file info)
+        console.log('📁 Processing file information...');
         const fileFields = ['profile_image', 'cv_file', 'portfolio_files', 'testimonial_files', 'additional_files'];
         let totalFiles = 0;
+        let fileInfoText = '';
+        
         fileFields.forEach(fieldName => {
-            const files = formData.getAll(fieldName);
-            if (files.length > 0 && files[0].name) {
+            const input = form.querySelector(`[name="${fieldName}"]`);
+            if (input && input.files && input.files.length > 0) {
+                const files = Array.from(input.files);
                 totalFiles += files.length;
                 console.log(`📁 ${fieldName}: ${files.length} file(s)`);
-            }        });
+                
+                // Create file info text
+                const fileNames = files.map(file => `${file.name} (${(file.size / 1024).toFixed(1)}KB)`).join(', ');
+                fileInfoText += `${fieldName}: ${fileNames}\n`;
+                
+                // Remove file inputs from form data and replace with file info
+                formData.delete(fieldName);
+                formData.append(`${fieldName}_info`, fileNames);
+            }
+        });
+        
+        console.log(`📎 Total files: ${totalFiles}`);
+        if (fileInfoText.trim()) {
+            formData.append('files_summary', fileInfoText.trim());
+            console.log('📋 File info summary created');
+        }
+
         console.log(`📎 Total files being uploaded: ${totalFiles}`);        // Submit form using EmailJS sendForm (better for forms with files)
         console.log('📧 Sending form via EmailJS sendForm...');
         console.log('🔧 EmailJS Config:', {
             serviceID: EMAILJS_CONFIG.serviceID,
             templateID: EMAILJS_CONFIG.templateID,
             publicKey: EMAILJS_CONFIG.publicKey ? 'Set' : 'Missing'
-        });
-          // Use emailjs.sendForm for direct form submission with file support
-        const emailResult = await emailjs.sendForm(
+        });          // Convert FormData to plain object for EmailJS.send (no file data)
+        const emailData = {};
+        for (let [key, value] of formData.entries()) {
+            if (emailData[key]) {
+                // Handle multiple values (like website_goals)
+                if (Array.isArray(emailData[key])) {
+                    emailData[key].push(value);
+                } else {
+                    emailData[key] = [emailData[key], value];
+                }
+            } else {
+                emailData[key] = value;
+            }
+        }
+        
+        // Use emailjs.send for processed data without files
+        const emailResult = await emailjs.send(
             EMAILJS_CONFIG.serviceID,
             EMAILJS_CONFIG.templateID,
-            form,  // Pass the form element directly
-            EMAILJS_CONFIG.publicKey  // Explicitly pass the public key
+            emailData,
+            EMAILJS_CONFIG.publicKey
         );
         
         console.log('📧 EmailJS sendForm response:', emailResult);
