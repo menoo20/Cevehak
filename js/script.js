@@ -2,7 +2,7 @@
 const EMAILJS_CONFIG = {
     serviceID: 'service_sh1mrgx',
     templateID: 'template_nmewe9i',  // ⚠️ Verify this template ID is correct in your EmailJS dashboard
-    publicKey: 'tZEOrhhlhX5r1mLK8'
+    publicKey: 'template_4s4z3jj'
 };
 
 // Initialize EmailJS when DOM is ready
