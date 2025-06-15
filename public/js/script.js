@@ -1,3 +1,20 @@
+// EmailJS Configuration
+const EMAILJS_CONFIG = {
+    serviceID: 'service_sh1mrgx',
+    templateID: 'template_nmewe9i',
+    publicKey: 'KngXkuhG9sy88UDAQ'
+};
+
+// Initialize EmailJS
+(function() {
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+        console.log('📧 EmailJS initialized successfully');
+    } else {
+        console.error('❌ EmailJS library not loaded');
+    }
+})();
+
 // DOM Elements - Handle different form IDs
 const form = document.getElementById('cvForm') || 
              document.getElementById('uploadCvForm') || 
@@ -499,51 +516,53 @@ async function handleFormSubmit(e) {
             if (files.length > 0 && files[0].name) {
                 totalFiles += files.length;
                 console.log(`📁 ${fieldName}: ${files.length} file(s)`);
-            }
-        });
-        console.log(`📎 Total files being uploaded: ${totalFiles}`);        // Submit form (Mock submission for frontend-only mode)
-        console.log('🌐 Simulating server submission (frontend-only mode)...');
+            }        });
+        console.log(`📎 Total files being uploaded: ${totalFiles}`);
         
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Submit form using EmailJS
+        console.log('📧 Sending email via EmailJS...');
         
-        // Mock successful response
-        const result = {
-            success: true,
-            message: `🎉 تم إرسال طلبك بنجاح!\n\n📲 سنتواصل معك عبر الواتساب خلال دقائق لاستكمال التفاصيل والمستندات المطلوبة.\n\n✅ رقم الطلب: CV${Date.now()}\n💰 المبلغ: ${getServicePrice(serviceType)} ريال\n⏰ مدة التنفيذ: 3-5 أيام عمل`,
-            service_type: serviceType,
-            price: getServicePrice(serviceType),
-            submissionId: `CV${Date.now()}`
+        // Prepare template parameters for EmailJS
+        const templateParams = {
+            full_name: formData.get('full_name') || '',
+            profession: formData.get('profession') || '',
+            email: formData.get('email') || '',
+            phone: formData.get('phone') || '',
+            service_type: getServiceTypeDisplay(serviceType),
+            domain_preference: formData.get('domain_preference') || 'غير محدد',
+            website_style: formData.get('website_style') || 'غير محدد',
+            special_requests: formData.get('special_requests') || 'لا توجد طلبات خاصة',
+            website_goals: websiteGoals.join(', ') || 'غير محدد',
+            profile_image: totalFiles > 0 ? 'نعم' : 'لا',
+            cv_file: formData.get('cv_file')?.name ? 'نعم' : 'لا',
+            date: new Date().toLocaleString('ar-SA')
         };
-          if (result.success) {
-            console.log('🎉 Form submitted successfully!');
-            console.log(`📋 Service: ${result.service_type}`);
-            console.log(`💰 Price: ${result.price} SAR`);
-            console.log(`🆔 Submission ID: ${result.submissionId}`);
+        
+        console.log('📋 Sending email with data:', templateParams);
+        
+        // Send email using EmailJS
+        const emailResult = await emailjs.send(
+            EMAILJS_CONFIG.serviceID,
+            EMAILJS_CONFIG.templateID,
+            templateParams
+        );
+        
+        console.log('📧 EmailJS response:', emailResult);
+        
+        // Check if email was sent successfully
+        if (emailResult.status === 200) {
+            console.log('🎉 Email sent successfully!');
+            console.log(`📋 Service: ${serviceType}`);
+            console.log(`💰 Price: ${getServicePrice(serviceType)} SAR`);
+            console.log(`🆔 Submission ID: CV${Date.now()}`);
             
-            showMessage(result.message, 'success');
-            
-            // Reset form after successful submission
-            console.log('🔄 Resetting form...');
-            form.reset();
-            clearAllPreviews();
-            scrollToTop();
-            console.log('✅ Form reset complete');
+            // Redirect to success page
+            console.log('� Redirecting to success page...');
+            window.location.href = './success.html';
             
         } else {
-            console.error('❌ Server responded with error:', response.status);
-            console.error('Error details:', result);
-            
-            showMessage(result.message || 'حدث خطأ أثناء الإرسال', 'error');
-            
-            // Show field-specific errors if available
-            if (result.errors) {
-                console.error('📋 Validation errors:');
-                result.errors.forEach((error, index) => {
-                    console.error(`  ${index + 1}. ${error}`);
-                });
-            }
-        }    } catch (error) {
+            throw new Error('EmailJS failed with status: ' + emailResult.status);
+        }} catch (error) {
         console.error('💥 Network/Submit error:', error);
           // Handle specific HTTP status codes
         if (error.message.includes('413') || error.message.includes('Request Entity Too Large')) {
@@ -567,6 +586,16 @@ function getServicePrice(serviceType) {
         'cv-only': 25          // إنشاء سيرة ذاتية فقط
     };
     return prices[serviceType] || 100;
+}
+
+// Get service type display name in Arabic
+function getServiceTypeDisplay(serviceType) {
+    const serviceNames = {
+        'cv-to-website': 'تحويل السيرة الذاتية إلى موقع ويب',
+        'full-package': 'إنشاء سيرة ذاتية + موقع ويب (الباقة الكاملة)',
+        'cv-only': 'إنشاء سيرة ذاتية فقط'
+    };
+    return serviceNames[serviceType] || serviceType;
 }
 
 // NEW USER-FRIENDLY VALIDATION SYSTEM
