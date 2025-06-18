@@ -1,285 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl" data-i18n-lang="ar" data-i18n-dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="uploadCv.title">رفع السيرة الذاتية - Cevehak</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/i18n.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container"><!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="back-link">
-                    <a href="/" class="back-btn" data-i18n="common.backToHome">← العودة للرئيسية</a>
-                </div>
-                <h1 data-i18n="uploadCv.mainTitle">تحويل السيرة الذاتية إلى موقع ويب احترافي</h1>
-                <p class="subtitle" data-i18n="uploadCv.subtitle">ارفع سيرتك الذاتية الحالية وسنحولها إلى موقع ويب احترافي</p>
-                <div class="service-info">
-                    <span class="timeline" data-i18n="uploadCv.timeline">التسليم خلال 3-5 أيام</span>
-                </div>
-                <div class="whatsapp-notice">
-                    <p data-i18n="uploadCv.whatsappNotice">📲 <strong>ملاحظة مهمة:</strong> بعد إرسال الطلب، سنتواصل معك عبر الواتساب لاستكمال المستندات والصور المطلوبة</p>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Form -->
-        <main class="main-content">
-            <form id="uploadCvForm" class="cv-form" enctype="multipart/form-data">
-                <!-- Service Type Hidden Field -->
-                <input type="hidden" name="service_type" value="cv-to-website">
-                  <!-- Personal Information Section -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">👤</span>
-                        <span data-i18n="uploadCv.personalData">البيانات الأساسية</span>
-                    </h2>
-                      <div class="form-group required">
-                        <label for="full_name" data-i18n="uploadCv.fullName">الاسم الكامل</label>
-                        <input type="text" id="full_name" name="full_name" required>
-                        <span class="error-message" id="full_name_error"></span>
-                    </div>                    <div class="form-group required">
-                        <label for="profession" data-i18n="uploadCv.profession">المسمى الوظيفي</label>
-                        <input type="text" id="profession" name="profession" required>
-                        <span class="error-message" id="profession_error"></span>
-                    </div>
-
-                    <div class="form-group required">
-                        <label for="email" data-i18n="uploadCv.email">البريد الإلكتروني</label>
-                        <input type="email" id="email" name="email" required>
-                        <span class="error-message" id="email_error"></span>
-                    </div>
-
-                    <div class="form-group required">
-                        <label for="phone" data-i18n="uploadCv.whatsappNumber">رقم الواتساب</label>
-                        <input type="tel" id="phone" name="phone" required data-i18n-placeholder="uploadCv.phonePlaceholder" placeholder="05xxxxxxxx">
-                        <span class="error-message" id="phone_error"></span>
-                    </div>
-                </section>                <!-- Profile Image Section (Optional) -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">🖼️</span>
-                        <span data-i18n="uploadCv.profilePhoto">الصورة الشخصية (اختياري)</span>
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label for="profile_image" data-i18n="uploadCv.uploadProfessionalPhoto">ارفع صورة احترافية</label>
-                        <div class="file-upload">
-                            <input type="file" id="profile_image" name="profile_image" accept="image/*">
-                            <div class="file-upload-area">
-                                <div class="upload-icon">📷</div>
-                                <p data-i18n="uploadCv.clickToUploadPhoto">اضغط هنا لرفع صورتك الشخصية (اختياري)</p>
-                                <small data-i18n="uploadCv.photoLimits">الحد الأقصى: 2 ميجابايت | الأنواع المدعومة: JPEG, PNG, WebP</small>
-                            </div>
-                            <div class="file-preview" id="profile_preview"></div>
-                        </div>
-                        <span class="error-message" id="profile_image_error"></span>
-                    </div>
-                </section>                <!-- CV Upload Section (Optional) -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">📄</span>
-                        <span data-i18n="uploadCv.uploadCvFile">ارفع سيرتك الذاتية (اختياري)</span>
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label for="cv_file" data-i18n="uploadCv.cvFile">ملف السيرة الذاتية</label>
-                        <div class="file-upload">
-                            <input type="file" id="cv_file" name="cv_file" accept=".pdf,.doc,.docx,image/*">
-                            <div class="file-upload-area">
-                                <div class="upload-icon">📎</div>
-                                <p data-i18n="uploadCv.clickToUploadCv">اضغط هنا لرفع ملف السيرة الذاتية (اختياري)</p>
-                                <small data-i18n="uploadCv.cvLimits">الحد الأقصى: 4 ميجابايت | الأنواع المدعومة: PDF, DOC, DOCX, صور</small>
-                            </div>
-                            <div class="file-preview" id="cv_preview"></div>
-                        </div>
-                        <span class="error-message" id="cv_file_error"></span>
-                    </div>
-                </section>                <!-- Website Preferences Section (Optional) -->
-                <section class="form-section">
-                    <h2 class="section-title">
-                        <span class="section-icon">🎨</span>
-                        <span data-i18n="uploadCv.websitePreferences">تفضيلات الموقع (اختياري)</span>
-                    </h2>
-                    
-                    <div class="form-group">
-                        <label for="domain_preference" data-i18n="uploadCv.domainPreference">هل ترغب بحجز نطاق (Domain) باسمك؟</label>
-                        <select id="domain_preference" name="domain_preference">
-                            <option value="" data-i18n="uploadCv.chooseOption">اختر...</option>
-                            <option value="نعم" data-i18n="uploadCv.yes">نعم</option>
-                            <option value="لا" data-i18n="uploadCv.no">لا</option>
-                            <option value="غير متأكد" data-i18n="uploadCv.notSure">غير متأكد</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="website_style" data-i18n="uploadCv.websiteStyle">أسلوب التصميم المفضل</label>
-                        <select id="website_style" name="website_style">
-                            <option value="" data-i18n="uploadCv.chooseStyle">اختر الأسلوب...</option>
-                            <option value="modern" data-i18n="uploadCv.modern">عصري ومبسط</option>
-                            <option value="professional" data-i18n="uploadCv.professional">مهني وكلاسيكي</option>
-                            <option value="creative" data-i18n="uploadCv.creative">إبداعي وملون</option>
-                            <option value="minimal" data-i18n="uploadCv.minimal">بسيط جداً</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="special_requests" data-i18n="uploadCv.specialRequests">طلبات خاصة أو ملاحظات</label>
-                        <textarea id="special_requests" name="special_requests" rows="3" data-i18n-placeholder="uploadCv.specialRequestsPlaceholder" placeholder="أي طلبات خاصة أو ملاحظات تود إضافتها..."></textarea>                    </div>
-                </section>                <!-- WhatsApp Follow-up Info -->
-                <section class="form-section whatsapp-info">
-                    <h2 class="section-title">
-                        <span class="section-icon">💬</span>
-                        <span data-i18n="uploadCv.afterSubmission">ما يحدث بعد الإرسال</span>
-                    </h2>
-                    <div class="info-steps">
-                        <div class="step">
-                            <span class="step-number">1️⃣</span>
-                            <p data-i18n="uploadCv.step1"><strong>تأكيد فوري:</strong> ستصلك رسالة تأكيد على بريدك الإلكتروني</p>
-                        </div>
-                        <div class="step">
-                            <span class="step-number">2️⃣</span>
-                            <p data-i18n="uploadCv.step2"><strong>اتصال واتساب:</strong> سنتواصل معك خلال 24 ساعة</p>
-                        </div>
-                        <div class="step">
-                            <span class="step-number">3️⃣</span>
-                            <p data-i18n="uploadCv.step3"><strong>بدء العمل:</strong> نبدأ في تنفيذ موقعك الاحترافي</p>
-                        </div>
-                    </div>
-                </section>                <!-- Submit Button -->
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <span class="btn-text" data-i18n="uploadCv.submitButton">إرسال الطلب والمتابعة عبر الواتساب</span>
-                        <span class="btn-loading" style="display: none;" data-i18n="common.loading">جاري الإرسال...</span>
-                    </button>
-                    <p class="form-note">سنتواصل معك خلال 24 ساعة لتأكيد الطلب وترتيب الدفع</p>
-                </div>
-            </form>
-        </main>        <!-- Success/Error Messages -->
-        <div id="messageContainer" class="message-container" style="display: none;">
-            <div class="message" id="message"></div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <p data-i18n="footer.tagline">تسليم سريع • جودة عالية • أسعار منافسة</p>
-                </div>
-                <div class="footer-brand">
-                    <h3>Cevehak</h3>
-                </div>                <!-- Language & Currency Switcher in Footer -->
-                <div class="footer-switchers">                    <div class="language-selector">
-                        <button class="lang-btn active" data-lang="ar" title="العربية">
-                            <img src="icons/sa.png" alt="Arabic" class="flag-icon">
-                            <span>العربية</span>
-                        </button>
-                        <button class="lang-btn" data-lang="en" title="English">
-                            <img src="icons/us.png" alt="English" class="flag-icon">
-                            <span>English</span>
-                        </button>
-                    </div>
-                    <div class="currency-selector">
-                        <button class="currency-btn" data-currency="USD" title="US Dollar">
-                            <img src="icons/us.png" alt="USD" class="flag-icon">
-                            <span>USD</span>
-                        </button>
-                        <button class="currency-btn active" data-currency="SAR" title="Saudi Riyal">
-                            <img src="icons/sa.png" alt="SAR" class="flag-icon">
-                            <span>SAR</span>
-                        </button>
-                        <button class="currency-btn" data-currency="EGP" title="Egyptian Pound">
-                            <img src="icons/eg.png" alt="EGP" class="flag-icon">
-                            <span>EGP</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer><!-- EmailJS v4 - Official Documentation -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <!-- Upload Configuration for Frontend-Only Solutions -->
-    <script src="js/upload-config.js"></script>
-    <script src="js/i18n.js"></script>
-    <script src="js/script.js"></script>
-    
-    <script>
-        // Integration with i18n system
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🌍 Setting up i18n integration for upload-cv page...');
-            
-            // Wait for i18n to initialize with retry mechanism
-            let attempts = 0;
-            const maxAttempts = 50; // 5 seconds max
-            
-            const waitForI18n = () => {
-                if (window.cevehakI18n) {
-                    console.log('✅ i18n system found, setting up integration...');
-                    setupI18nIntegration();
-                } else if (attempts < maxAttempts) {
-                    attempts++;
-                    console.log(`⏳ Waiting for i18n... (${attempts}/${maxAttempts})`);
-                    setTimeout(waitForI18n, 100);
-                } else {
-                    console.error('❌ i18n system not available after waiting');
-                }
-            };
-            
-            setTimeout(waitForI18n, 200);
-        });
-
-        function setupI18nIntegration() {
-            const i18n = window.cevehakI18n;
-            if (!i18n) {
-                console.warn('⚠️ i18n system not available');
-                return;
-            }
-
-            console.log('✅ i18n system found, setting up integration...');
-
-            // Listen for language changes
-            window.addEventListener('languageChanged', function(e) {
-                console.log('🔄 Language changed, updating content...');
-                updateDynamicContent();
-            });
-
-            // Listen for currency changes
-            window.addEventListener('currencyChanged', function(e) {
-                console.log('💰 Currency changed, updating prices...');
-                updatePrices();
-            });
-
-            // Initial setup
-            updateDynamicContent();
-            updatePrices();
-        }
-
-        function updatePrices() {
-            const i18n = window.cevehakI18n;
-            if (!i18n) return;
-
-            const currency = i18n.getCurrentCurrency();
-            const pricing = i18n.getPricing();
-            
-            // Update pricing displays if any exist on this page
-            console.log('💰 Prices updated for currency:', currency);
-        }
-
-        function updateDynamicContent() {
-            const i18n = window.cevehakI18n;
-            if (!i18n) return;
-
-            // Update document title
-            document.title = i18n.translate('uploadCv.title');
-            
-            console.log('🔤 Dynamic content updated for language:', i18n.getCurrentLanguage());
-        }
-    </script>
-</body>
-</html>

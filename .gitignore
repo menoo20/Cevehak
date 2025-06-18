@@ -25,15 +25,33 @@ pids
 *.seed
 *.pid.lock
 
+# Local gh-pages deployment folder (not needed in main repo)
+gh-pages/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Test files
+test-i18n.html
+simple-test.html
+
 # Coverage directory used by tools like istanbul
 coverage/
 
 # nyc test coverage
 .nyc_output
-
-# Dependency directories
-node_modules/
-jspm_packages/
 
 # Optional npm cache directory
 .npm
@@ -46,38 +64,3 @@ jspm_packages/
 
 # Yarn Integrity file
 .yarn-integrity
-
-# dotenv environment variables file
-.env
-
-# next.js build output
-.next
-
-# Database
-*.db
-*.sqlite
-
-# IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Windows
-Desktop.ini
-$RECYCLE.BIN/
-
-# Temporary files
-*.tmp
-*.temp
-.vercel
