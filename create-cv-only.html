@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>إنشاء سيرة ذاتية احترافية - Cevehak</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/i18n.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="back-link">
+                    <a href="/" class="back-btn">← العودة للرئيسية</a>
+                </div>                <h1>إنشاء سيرة ذاتية احترافية 📄✨</h1>
+                <p class="subtitle">املأ البيانات الأساسية وسنتواصل معك عبر الواتساب لاستكمال باقي التفاصيل 💬</p>                <div class="service-info">
+                    <span class="timeline">التسليم خلال 3 أيام</span>
+                </div>
+                <div class="whatsapp-notice">
+                    <p>📲 <strong>ملاحظة مهمة:</strong> بعد إرسال الطلب، سنتواصل معك عبر الواتساب لاستكمال المستندات والصور المطلوبة</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Form -->
+        <main class="main-content">
+            <form id="cvOnlyForm" class="cv-form" enctype="multipart/form-data">
+                <!-- Service Type Hidden Field -->
+                <input type="hidden" name="service_type" value="cv-only">
+                
+                <!-- Personal Information Section -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">👤</span>
+                        البيانات الشخصية
+                    </h2>
+                      <div class="form-group required">
+                        <label for="full_name">الاسم الكامل</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                        <span class="error-message" id="full_name_error"></span>
+                    </div>                    <div class="form-group required">
+                        <label for="profession">المسمى الوظيفي</label>
+                        <input type="text" id="profession" name="profession" required>
+                        <span class="error-message" id="profession_error"></span>
+                    </div><div class="form-group required">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" name="email" required>
+                        <span class="error-message" id="email_error"></span>
+                    </div>                    <div class="form-group required">
+                        <label for="phone">رقم الواتساب</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="05xxxxxxxx">
+                        <span class="error-message" id="phone_error"></span>
+                        <small class="form-hint">📱 سنستخدم هذا الرقم للتواصل معك عبر الواتساب</small>
+                    </div>
+                </section>
+
+                <!-- Optional Profile Image Section -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">�</span>
+                        الصورة الشخصية (اختياري)
+                    </h2>
+                      <div class="form-group">
+                        <label for="profile_image">ارفع صورة شخصية احترافية</label>
+                        <div class="file-upload">
+                            <input type="file" id="profile_image" name="profile_image" accept="image/*">
+                            <div class="file-upload-area">
+                                <div class="upload-icon">📸</div>
+                                <p>اضغط هنا لرفع صورتك الشخصية (اختياري)</p>
+                                <small>الحد الأقصى: 2 ميجابايت | الأنواع المدعومة: JPEG, PNG, WebP</small>
+                            </div>
+                            <div class="file-preview" id="profile_preview"></div>
+                        </div>
+                        <span class="error-message" id="profile_image_error"></span>
+                    </div>
+                </section>                <!-- CV Preferences Section (Optional) -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🎨</span>
+                        تفضيلات السيرة الذاتية (اختياري)
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="cv_preferences">ما هو الأسلوب المفضل لسيرتك الذاتية؟</label>
+                        <select id="cv_preferences" name="cv_preferences" class="form-control">
+                            <option value="">اختر نوع التصميم...</option>
+                            <option value="تصميم عصري ومتطور">تصميم عصري ومتطور</option>
+                            <option value="تصميم مهني وكلاسيكي">تصميم مهني وكلاسيكي</option>
+                            <option value="تصميم إبداعي ومميز">تصميم إبداعي ومميز</option>
+                            <option value="تنسيق ATS متوافق مع أنظمة التوظيف">تنسيق ATS متوافق مع أنظمة التوظيف</option>
+                        </select>
+                    </div>
+                </section>
+
+                <!-- Raw CV/Documents Section -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📄</span>
+                        هل لديك سيرة ذاتية أو وثيقة قديمة؟ (اختياري)
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="additional_files">ارفع سيرتك الذاتية القديمة أو أي وثيقة تحتوي على معلوماتك</label>
+                        <div class="file-upload">
+                            <input type="file" id="additional_files" name="additional_files" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt">
+                            <div class="file-upload-area">
+                                <div class="upload-icon">📎</div>
+                                <p>اضغط هنا لرفع سيرتك الذاتية أو وثيقة قديمة (اختياري)</p>
+                                <small>الحد الأقصى: 4 ميجابايت | الأنواع المدعومة: PDF, Word, صور, ملفات نصية</small>
+                            </div>
+                            <div class="file-preview" id="additional_preview"></div>
+                        </div>
+                        <span class="error-message" id="additional_files_error"></span>
+                        <p class="form-help">💡 يمكنك رفع سيرتك الذاتية القديمة، أو أي معلومات مفيدة. أو إرسالها لاحقاً عبر الواتساب.</p>
+                    </div>
+                </section>
+
+                <!-- WhatsApp Follow-up Info -->
+                <section class="form-section whatsapp-info">
+                    <h2 class="section-title">
+                        <span class="section-icon">💬</span>
+                        ما يحدث بعد الإرسال
+                    </h2>
+                      <div class="info-steps">
+                        <div class="step">
+                            <span class="step-number">1️⃣</span>
+                            <p><strong>تأكيد فوري:</strong> ستصلك رسالة تأكيد على بريدك الإلكتروني</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2️⃣</span>
+                            <p><strong>متابعة واتساب:</strong> سنتواصل معك خلال ساعات قليلة عبر الواتساب</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3️⃣</span>
+                            <p><strong>جمع المعلومات:</strong> سنطلب منك المؤهلات والخبرات والمهارات عبر الواتساب</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">4️⃣</span>
+                            <p><strong>التسليم:</strong> ستحصل على سيرتك الذاتية الاحترافية خلال 3 أيام! 🎉</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-text">إرسال الطلب 🚀</span>
+                        <span class="btn-loading" style="display: none;">جاري الإرسال... ⏳</span>
+                    </button>
+                    <p class="form-note">ستصلك رسالة تأكيد فورية، ثم سنتواصل معك عبر الواتساب خلال ساعات قليلة</p>
+                </div>
+            </form>
+        </main>        <!-- Success/Error Messages -->
+        <div id="messageContainer" class="message-container" style="display: none;">
+            <div class="message" id="message"></div>
+        </div>    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p data-i18n="footer.tagline">تسليم سريع • جودة عالية • أسعار منافسة</p>
+                </div>
+                <div class="footer-brand">
+                    <h3>Cevehak</h3>
+                </div>
+                <!-- Language & Currency Switcher in Footer -->
+                <div class="footer-switchers">
+                    <div class="language-selector">
+                        <button class="lang-btn active" data-lang="ar" title="العربية">
+                            <img src="icons/sa.png" alt="Arabic" class="flag-icon">
+                            <span>العربية</span>
+                        </button>
+                        <button class="lang-btn" data-lang="en" title="English">
+                            <img src="icons/us.png" alt="English" class="flag-icon">
+                            <span>English</span>
+                        </button>
+                    </div>
+                    <div class="currency-selector">
+                        <button class="currency-btn" data-currency="USD" title="US Dollar">
+                            <img src="icons/us.png" alt="USD" class="flag-icon">
+                            <span>USD</span>
+                        </button>
+                        <button class="currency-btn active" data-currency="SAR" title="Saudi Riyal">
+                            <img src="icons/sa.png" alt="SAR" class="flag-icon">
+                            <span>SAR</span>
+                        </button>
+                        <button class="currency-btn" data-currency="EGP" title="Egyptian Pound">
+                            <img src="icons/eg.png" alt="EGP" class="flag-icon">
+                            <span>EGP</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- EmailJS v4 - Official Documentation -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Upload Configuration for Frontend-Only Solutions -->
+    <script src="js/upload-config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
