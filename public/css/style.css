@@ -624,6 +624,10 @@ select {
     margin-top: 2rem;
 }
 
+.footer .container{
+    max-width: 1200px;
+}
+
 .footer-content {
     display: flex;
     justify-content: space-between;
