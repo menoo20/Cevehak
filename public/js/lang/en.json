@@ -12,29 +12,28 @@
     "about": "About",
     "contact": "Contact",
     "backToHome": "← Back to Home"
-  },
-  "hero": {
-    "title": "Transform Your Experience into a Professional Website",
-    "subtitle": "Get a distinctive personal website that showcases your skills and professional experience in an attractive and innovative way that helps you stand out from the competition",
+  },  "hero": {
+    "title": "Transform Your Experience into a Professional Website That Sets You Apart",
+    "subtitle": "Comprehensive services for creating professional CVs and transforming them into outstanding websites",
     "cta": "Get Started"
   },  "services": {
     "title": "Our Services",
-    "subtitle": "Choose the service that suits you",
+    "subtitle": "We offer three different services to suit your needs",
     "cvToWebsite": {
       "title": "CV to Website Conversion",
-      "description": "Transform your existing CV into a professional website",
+      "description": "Have a ready CV? We'll transform it into a professional and responsive website",
       "basePrice": 75,
       "features": ["Quick conversion", "Attractive design", "Free hosting"]
     },
     "fullPackage": {
       "title": "Complete Package",
-      "description": "Complete website with all features",
+      "description": "Comprehensive service: Create CV from scratch + professional website",
       "basePrice": 100,
       "features": ["Custom design", "Interactive forms", "Technical support"]
     },
     "cvOnly": {
       "title": "CV Only",
-      "description": "Create a professional CV in PDF format",
+      "description": "Need a professional CV only? We'll create it for you with the highest quality",
       "basePrice": 25,
       "features": ["Professional design", "Various templates", "Quick delivery"]
     }
