@@ -297,6 +297,128 @@ class CevehakI18n {
         });
     }
 
+    async detectUserLocation() {
+        try {
+            // Try to get user's location via IP geolocation (fallback approach)
+            console.log('🌍 Detecting user location...');
+            
+            // For now, we'll use a simple approach - you can enhance this later
+            // with actual geolocation APIs like ipapi.co or similar
+            this.userLocation = {
+                country: 'SA', // Default to Saudi Arabia
+                currency: 'SAR'
+            };
+            
+            console.log('📍 Location detected:', this.userLocation);
+        } catch (error) {
+            console.warn('⚠️ Could not detect location, using defaults:', error);
+            this.userLocation = {
+                country: 'SA',
+                currency: 'SAR'
+            };
+        }
+    }
+
+    detectCurrency() {
+        // Check localStorage first
+        const savedCurrency = localStorage.getItem('cevehak-currency');
+        if (savedCurrency && this.currencies.hasOwnProperty(savedCurrency)) {
+            this.currentCurrency = savedCurrency;
+            return;
+        }
+
+        // Based on detected location or defaults
+        if (this.userLocation) {
+            switch (this.userLocation.country) {
+                case 'SA':
+                    this.currentCurrency = 'SAR';
+                    break;
+                case 'EG':
+                    this.currentCurrency = 'EGP';
+                    break;
+                default:
+                    this.currentCurrency = 'USD';
+            }
+        } else {
+            // Default to USD if no location detected
+            this.currentCurrency = 'USD';
+        }
+
+        console.log('💰 Currency detected:', this.currentCurrency);
+    }
+
+    setupCurrencySwitcher() {
+        const currencyButtons = document.querySelectorAll('.currency-btn');
+        
+        currencyButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const currency = btn.dataset.currency;
+                if (currency && currency !== this.currentCurrency) {
+                    this.switchCurrency(currency);
+                }
+            });
+        });
+
+        // Update initial UI
+        this.updateCurrencySwitcherUI();
+    }
+
+    switchCurrency(currency) {
+        if (!this.currencies.hasOwnProperty(currency)) {
+            console.warn('⚠️ Invalid currency:', currency);
+            return;
+        }
+
+        this.currentCurrency = currency;
+        localStorage.setItem('cevehak-currency', currency);
+        
+        console.log('💰 Currency switched to:', currency);
+        
+        // Update UI
+        this.updateCurrencySwitcherUI();
+        
+        // Trigger custom event
+        window.dispatchEvent(new CustomEvent('currencyChanged', {
+            detail: { currency: currency }
+        }));
+    }
+
+    updateCurrencySwitcherUI() {
+        const currencyButtons = document.querySelectorAll('.currency-btn');
+        
+        currencyButtons.forEach(btn => {
+            if (btn.dataset.currency === this.currentCurrency) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    formatPrice(basePrice) {
+        const currency = this.currencies[this.currentCurrency];
+        if (!currency) {
+            console.warn('⚠️ Invalid currency for formatting:', this.currentCurrency);
+            return `${basePrice} USD`;
+        }
+
+        const convertedPrice = Math.round(basePrice * currency.rate);
+        return `${convertedPrice} ${currency.symbol}`;
+    }
+
+    getCurrentCurrency() {
+        return this.currentCurrency;
+    }
+
+    getPricing() {
+        return {
+            cvToWebsite: this.formatPrice(75),
+            fullPackage: this.formatPrice(100),
+            cvOnly: this.formatPrice(25)
+        };
+    }
+
     // Utility methods
     getCurrentLanguage() {
         return this.currentLanguage;
