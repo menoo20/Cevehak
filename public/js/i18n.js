@@ -165,7 +165,7 @@ class CevehakI18n {    constructor() {
 
         try {
             console.log(`📥 Loading language: ${langCode}`);
-            const response = await fetch(`/js/lang/${langCode}.json`);
+            const response = await fetch(`public/js/lang/${langCode}.json`);
             
             if (!response.ok) {
                 throw new Error(`Failed to load language ${langCode}: ${response.status}`);
@@ -575,16 +575,13 @@ class CevehakI18n {    constructor() {
     // Currency utility methods
     getCurrentCurrencyInfo() {
         return this.currencies[this.currentCurrency];
-    }
-
-    getAllCurrencies() {
+    }    getAllCurrencies() {
         return this.currencies;
     }
 
     getLocationInfo() {
         return this.userLocation;
     }
-}
 }
 
 // Initialize i18n system when DOM is ready
