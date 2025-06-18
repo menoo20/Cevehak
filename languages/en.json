@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "title": "Cevehak - Professional CV & Website Services",
+    "description": "Transform your experience into a professional website that sets you apart from others"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Transform Your Experience Into a Professional Website",
+    "subtitle": "We help you convert your CV into an interactive website that highlights your skills and attracts employers",
+    "cta": "Get Started"
+  },
+  "stats": {
+    "title": "Our Statistics",
+    "visitors": "Visitors",
+    "submissions": "Submissions",
+    "satisfaction": "Satisfaction Rate",
+    "projects": "Completed Projects"
+  },
+  "services": {
+    "title": "Our Services",
+    "cv_to_website": {
+      "title": "CV to Website Conversion",
+      "description": "Convert your existing CV into a professional website",
+      "price": "75 SAR",
+      "features": [
+        "Professional Design",
+        "Mobile Optimized",
+        "Fast Loading",
+        "SEO Optimized"
+      ]
+    },
+    "full_package": {
+      "title": "Complete Package",
+      "description": "Create a complete website from scratch with all features",
+      "price": "100 SAR",
+      "features": [
+        "Custom Design",
+        "Multiple Pages",
+        "Contact Forms",
+        "Portfolio Gallery",
+        "Personal Blog"
+      ]
+    },
+    "cv_only": {
+      "title": "CV Design Only",
+      "description": "Design a professional CV in PDF format",
+      "price": "25 SAR",
+      "features": [
+        "Professional Design",
+        "Modern Layout",
+        "High-Quality PDF",
+        "Free Revisions"
+      ]
+    }
+  },
+  "forms": {
+    "upload_cv": "Upload CV",
+    "create_from_scratch": "Create from Scratch",
+    "create_cv_only": "CV Design Only",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "message": "Additional Message",
+    "upload_files": "Upload Files",
+    "submit": "Submit Request",
+    "back_home": "Back to Home"
+  },
+  "success": {
+    "title": "Your Request Has Been Sent Successfully!",
+    "message": "Thank you for submitting your request. We will contact you soon to discuss the details and start working on your project.",
+    "whatsapp_message": "Your request has been sent successfully! We will contact you via WhatsApp soon.",
+    "contact_whatsapp": "Contact via WhatsApp"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "phone": "Phone",
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "location": "Location"
+  },
+  "footer": {
+    "copyright": "All rights reserved to Cevehak",
+    "year": "2025"
+  },
+  "errors": {
+    "required_field": "This field is required",
+    "invalid_email": "Invalid email address",
+    "submit_error": "An error occurred while submitting. Please try again.",
+    "file_too_large": "File size is too large",
+    "invalid_file_type": "File type not supported"
+  }
+}

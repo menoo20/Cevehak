@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "name": "English",
+    "nativeName": "English",
+    "code": "en",
+    "dir": "ltr",
+    "flag": "🇺🇸"
+  },
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "backToHome": "← Back to Home"
+  },
+  "hero": {
+    "title": "Transform Your Experience into a Professional Website",
+    "subtitle": "Get a distinctive personal website that showcases your skills and professional experience in an attractive and innovative way that helps you stand out from the competition",
+    "cta": "Get Started"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Choose the service that suits you",
+    "cvToWebsite": {
+      "title": "CV to Website Conversion",
+      "description": "Transform your existing CV into a professional website",
+      "price": "75 SAR",
+      "features": ["Quick conversion", "Attractive design", "Free hosting"]
+    },
+    "fullPackage": {
+      "title": "Complete Package",
+      "description": "Complete website with all features",
+      "price": "100 SAR",
+      "features": ["Custom design", "Interactive forms", "Technical support"]
+    },
+    "cvOnly": {
+      "title": "CV Only",
+      "description": "Create a professional CV in PDF format",
+      "price": "25 SAR",
+      "features": ["Professional design", "Various templates", "Quick delivery"]
+    }
+  },
+  "forms": {
+    "personalInfo": "Personal Information",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "service": "Service Type",
+    "uploadCV": "Upload CV",
+    "uploadPhoto": "Upload Photo",
+    "submit": "Submit Request",
+    "required": "Required",
+    "optional": "Optional"
+  },
+  "messages": {
+    "success": "Your request has been sent successfully!",
+    "error": "An error occurred, please try again",
+    "uploading": "Uploading...",
+    "fileTooLarge": "File size is too large",
+    "invalidFileType": "File type not supported"
+  },
+  "stats": {
+    "visitors": "Visitors",
+    "submissions": "Completed Requests",
+    "satisfaction": "Client Satisfaction",
+    "projects": "Completed Projects"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "location": "Location"
+  },
+  "footer": {
+    "copyright": "All rights reserved © 2025 Cevehak",
+    "services": "Services",
+    "contact": "Contact",
+    "privacy": "Privacy Policy"
+  }
+}

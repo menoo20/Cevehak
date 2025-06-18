@@ -1,0 +1,221 @@
+/* Language Switcher Styles */
+.language-switcher {
+    position: relative;
+    display: inline-block;
+    z-index: 1000;
+    font-family: 'Cairo', sans-serif;
+}
+
+.lang-dropdown {
+    position: relative;
+}
+
+.lang-current {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    min-width: 100px;
+    backdrop-filter: blur(10px);
+}
+
+.lang-current:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.lang-flag {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.lang-name {
+    flex: 1;
+    text-align: left;
+    font-weight: 500;
+}
+
+.lang-arrow {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.lang-dropdown.show .lang-arrow {
+    transform: rotate(180deg);
+}
+
+.lang-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.lang-options.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    background: white;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    text-align: left;
+}
+
+.lang-option:hover {
+    background: #f8f9fa;
+    color: var(--primary-color, #4A90E2);
+}
+
+.lang-option.active {
+    background: var(--primary-color, #4A90E2);
+    color: white;
+}
+
+.lang-option.active:hover {
+    background: var(--primary-color-dark, #357ABD);
+}
+
+/* RTL Support */
+[dir="rtl"] .lang-name {
+    text-align: right;
+}
+
+[dir="rtl"] .lang-option {
+    text-align: right;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .language-switcher {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1001;
+    }
+    
+    [dir="rtl"] .language-switcher {
+        right: auto;
+        left: 20px;
+    }
+    
+    .lang-current {
+        padding: 6px 10px;
+        font-size: 13px;
+        min-width: 80px;
+    }
+    
+    .lang-options {
+        min-width: 120px;
+    }
+}
+
+/* Animation for language switching */
+.lang-switch-fade {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lang-switch-fade.active {
+    opacity: 1;
+}
+
+/* Smooth transitions for content changes */
+[data-i18n] {
+    transition: opacity 0.2s ease;
+}
+
+/* Language-specific styles */
+.lang-ar-SA .lang-current,
+.lang-ar .lang-current {
+    font-family: 'Cairo', sans-serif;
+}
+
+.lang-en .lang-current {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* Integration with existing header */
+header .language-switcher {
+    margin-left: auto;
+}
+
+[dir="rtl"] header .language-switcher {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* Hero section integration */
+.hero .language-switcher {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+[dir="rtl"] .hero .language-switcher {
+    right: auto;
+    left: 20px;
+}
+
+/* Accessibility */
+.lang-option:focus {
+    outline: 2px solid var(--primary-color, #4A90E2);
+    outline-offset: 2px;
+}
+
+.lang-current:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* Loading state */
+.language-switcher.loading .lang-current {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.language-switcher.loading .lang-current::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@keyframes spin {
+    to { transform: translateY(-50%) rotate(360deg); }
+}
