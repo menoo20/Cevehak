@@ -5,14 +5,23 @@
     "code": "en",
     "dir": "ltr",
     "flag": "🇺🇸"
-  },
-  "navigation": {
+  },  "navigation": {
     "home": "Home",
     "services": "Services",
     "about": "About",
     "contact": "Contact",
     "backToHome": "← Back to Home"
-  },  "hero": {
+  },
+  "common": {
+    "backToHome": "← Back to Home"
+  },
+  "uploadCv": {
+    "title": "Upload CV - Cevehak",
+    "mainTitle": "Transform Your CV into a Professional Website",
+    "subtitle": "Upload your existing CV and we'll transform it into a professional website",
+    "timeline": "Delivery within 3-5 days",
+    "whatsappNotice": "📲 <strong>Important Note:</strong> After submitting the request, we will contact you via WhatsApp to complete the required documents and images"
+  },"hero": {
     "title": "Transform Your Experience into a Professional Website That Sets You Apart",
     "subtitle": "Comprehensive services for creating professional CVs and transforming them into outstanding websites",
     "cta": "Get Started"

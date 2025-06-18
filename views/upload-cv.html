@@ -1,26 +1,57 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-i18n-lang="ar" data-i18n-dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رفع السيرة الذاتية - Cevehak</title>
-    <link rel="stylesheet" href="../public/css/style.css">    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title data-i18n="uploadCv.title">رفع السيرة الذاتية - Cevehak</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../public/css/i18n.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
+    <!-- Language & Currency Switcher -->
+    <div class="language-switcher">
+        <div class="switcher-container">
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="ar" title="العربية">
+                    🇸🇦 العربية
+                </button>
+                <button class="lang-btn" data-lang="ar-SA" title="الخليجية">
+                    🇸🇦 خليجي
+                </button>
+                <button class="lang-btn" data-lang="en" title="English">
+                    🇺🇸 English
+                </button>
+            </div>
+            <div class="currency-selector">
+                <button class="currency-btn active" data-currency="USD" title="US Dollar">
+                    💵 USD
+                </button>
+                <button class="currency-btn" data-currency="SAR" title="Saudi Riyal">
+                    🇸🇦 SAR
+                </button>
+                <button class="currency-btn" data-currency="EGP" title="Egyptian Pound">
+                    🇪🇬 EGP
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">        <!-- Header -->
         <header class="header">
             <div class="header-content">
                 <div class="back-link">
-                    <a href="/" class="back-btn">← العودة للرئيسية</a>
+                    <a href="/" class="back-btn" data-i18n="common.backToHome">← العودة للرئيسية</a>
                 </div>
-                <h1>تحويل السيرة الذاتية إلى موقع ويب احترافي</h1>
-                <p class="subtitle">ارفع سيرتك الذاتية الحالية وسنحولها إلى موقع ويب احترافي</p>                <div class="service-info">
-                    <span class="timeline">التسليم خلال 3-5 أيام</span>
+                <h1 data-i18n="uploadCv.mainTitle">تحويل السيرة الذاتية إلى موقع ويب احترافي</h1>
+                <p class="subtitle" data-i18n="uploadCv.subtitle">ارفع سيرتك الذاتية الحالية وسنحولها إلى موقع ويب احترافي</p>
+                <div class="service-info">
+                    <span class="timeline" data-i18n="uploadCv.timeline">التسليم خلال 3-5 أيام</span>
                 </div>
                 <div class="whatsapp-notice">
-                    <p>📲 <strong>ملاحظة مهمة:</strong> بعد إرسال الطلب، سنتواصل معك عبر الواتساب لاستكمال المستندات والصور المطلوبة</p>
+                    <p data-i18n="uploadCv.whatsappNotice">📲 <strong>ملاحظة مهمة:</strong> بعد إرسال الطلب، سنتواصل معك عبر الواتساب لاستكمال المستندات والصور المطلوبة</p>
                 </div>
             </div>
         </header>
@@ -177,6 +208,80 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <!-- Upload Configuration for Frontend-Only Solutions -->
     <script src="../public/js/upload-config.js"></script>
+    <script src="../public/js/i18n.js"></script>
     <script src="../public/js/script.js"></script>
+    
+    <script>
+        // Integration with i18n system
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🌍 Setting up i18n integration for upload-cv page...');
+            
+            // Wait for i18n to initialize with retry mechanism
+            let attempts = 0;
+            const maxAttempts = 50; // 5 seconds max
+            
+            const waitForI18n = () => {
+                if (window.cevehakI18n) {
+                    console.log('✅ i18n system found, setting up integration...');
+                    setupI18nIntegration();
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    console.log(`⏳ Waiting for i18n... (${attempts}/${maxAttempts})`);
+                    setTimeout(waitForI18n, 100);
+                } else {
+                    console.error('❌ i18n system not available after waiting');
+                }
+            };
+            
+            setTimeout(waitForI18n, 200);
+        });
+
+        function setupI18nIntegration() {
+            const i18n = window.cevehakI18n;
+            if (!i18n) {
+                console.warn('⚠️ i18n system not available');
+                return;
+            }
+
+            console.log('✅ i18n system found, setting up integration...');
+
+            // Listen for language changes
+            window.addEventListener('languageChanged', function(e) {
+                console.log('🔄 Language changed, updating content...');
+                updateDynamicContent();
+            });
+
+            // Listen for currency changes
+            window.addEventListener('currencyChanged', function(e) {
+                console.log('💰 Currency changed, updating prices...');
+                updatePrices();
+            });
+
+            // Initial setup
+            updateDynamicContent();
+            updatePrices();
+        }
+
+        function updatePrices() {
+            const i18n = window.cevehakI18n;
+            if (!i18n) return;
+
+            const currency = i18n.getCurrentCurrency();
+            const pricing = i18n.getPricing();
+            
+            // Update pricing displays if any exist on this page
+            console.log('💰 Prices updated for currency:', currency);
+        }
+
+        function updateDynamicContent() {
+            const i18n = window.cevehakI18n;
+            if (!i18n) return;
+
+            // Update document title
+            document.title = i18n.translate('uploadCv.title');
+            
+            console.log('🔤 Dynamic content updated for language:', i18n.getCurrentLanguage());
+        }
+    </script>
 </body>
 </html>
