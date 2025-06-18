@@ -71,7 +71,8 @@
     "email": "Email",
     "location": "Location"
   },
-  "footer": {
+  "footer": {  "footer": {
+    "tagline": "Fast delivery • High quality • Competitive prices",
     "copyright": "All rights reserved © 2025 Cevehak",
     "services": "Services",
     "contact": "Contact",

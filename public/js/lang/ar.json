@@ -71,7 +71,8 @@
     "email": "البريد الإلكتروني",
     "location": "الموقع"
   },
-  "footer": {
+  "footer": {  "footer": {
+    "tagline": "تسليم سريع • جودة عالية • أسعار منافسة",
     "copyright": "جميع الحقوق محفوظة © 2025 Cevehak",
     "services": "الخدمات",
     "contact": "التواصل",
