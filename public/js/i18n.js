@@ -14,11 +14,22 @@ class CevehakI18n {
         this.languages = {
             'ar': null,    // Arabic (formal)
             'en': null     // English
-        };
-        this.currencies = {
-            'SAR': { symbol: 'ريال', name: 'Saudi Riyal', rate: 1 },
-            'USD': { symbol: '$', name: 'US Dollar', rate: 0.27 },
-            'EGP': { symbol: 'ج.م', name: 'Egyptian Pound', rate: 8.25 }
+        };        this.currencies = {
+            'SAR': { 
+                symbol: { ar: 'SAR', en: 'SAR' }, 
+                name: 'Saudi Riyal', 
+                rate: 1 
+            },
+            'USD': { 
+                symbol: { ar: '$', en: '$' }, 
+                name: 'US Dollar', 
+                rate: 0.27 
+            },
+            'EGP': { 
+                symbol: { ar: 'LE', en: 'LE' }, 
+                name: 'Egyptian Pound', 
+                rate: 8.25 
+            }
         };
         this.isLoading = false;
         
@@ -357,9 +368,7 @@ class CevehakI18n {
                 btn.classList.remove('active');
             }
         });
-    }
-
-    formatPrice(basePrice) {
+    }    formatPrice(basePrice) {
         const currency = this.currencies[this.currentCurrency];
         if (!currency) {
             console.warn('⚠️ Invalid currency for formatting:', this.currentCurrency);
@@ -367,7 +376,18 @@ class CevehakI18n {
         }
 
         const convertedPrice = Math.round(basePrice * currency.rate);
-        return `${convertedPrice} ${currency.symbol}`;
+        
+        // Get the appropriate symbol based on current language
+        let symbol;
+        if (typeof currency.symbol === 'object') {
+            // Use current language, default to Arabic if language not found
+            symbol = currency.symbol[this.currentLanguage] || currency.symbol['ar'];
+        } else {
+            symbol = currency.symbol;
+        }
+        
+        console.log(`💰 Formatting price: ${basePrice} -> ${convertedPrice} ${symbol} (lang: ${this.currentLanguage})`);
+        return `${convertedPrice} ${symbol}`;
     }
 
     getCurrentCurrency() {
