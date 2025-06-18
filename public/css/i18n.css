@@ -1,17 +1,16 @@
-/* Language & Currency Switcher Styles */
-.language-switcher, .currency-switcher {
+/* Language Switcher Styles */
+.language-switcher {
     position: relative;
     display: inline-block;
     z-index: 1000;
     font-family: 'Cairo', sans-serif;
-    margin: 0 8px;
 }
 
-.lang-dropdown, .currency-dropdown {
+.lang-dropdown {
     position: relative;
 }
 
-.lang-current, .currency-current {
+.lang-current {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -27,39 +26,33 @@
     backdrop-filter: blur(10px);
 }
 
-.lang-current:hover, .currency-current:hover {
+.lang-current:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
 }
 
-.lang-flag, .currency-flag {
+.lang-flag {
     font-size: 16px;
     line-height: 1;
 }
 
-.lang-name, .currency-symbol {
+.lang-name {
     flex: 1;
     text-align: left;
     font-weight: 500;
 }
 
-.currency-name {
-    font-size: 13px;
-    opacity: 0.8;
-}
-
-.lang-arrow, .currency-arrow {
+.lang-arrow {
     font-size: 12px;
     transition: transform 0.3s ease;
 }
 
-.lang-dropdown.show .lang-arrow,
-.currency-dropdown.show .currency-arrow {
+.lang-dropdown.show .lang-arrow {
     transform: rotate(180deg);
 }
 
-.lang-options, .currency-options {
+.lang-options {
     position: absolute;
     top: 100%;
     left: 0;
@@ -74,16 +67,15 @@
     transition: all 0.3s ease;
     overflow: hidden;
     margin-top: 4px;
-    min-width: 150px;
 }
 
-.lang-options.show, .currency-options.show {
+.lang-options.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.lang-option, .currency-option {
+.lang-option {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -98,50 +90,36 @@
     text-align: left;
 }
 
-.lang-option:hover, .currency-option:hover {
+.lang-option:hover {
     background: #f8f9fa;
     color: var(--primary-color, #4A90E2);
 }
 
-.lang-option.active, .currency-option.active {
+.lang-option.active {
     background: var(--primary-color, #4A90E2);
     color: white;
 }
 
-.lang-option.active:hover, .currency-option.active:hover {
+.lang-option.active:hover {
     background: var(--primary-color-dark, #357ABD);
 }
 
 /* RTL Support */
-[dir="rtl"] .lang-name, [dir="rtl"] .currency-symbol {
+[dir="rtl"] .lang-name {
     text-align: right;
 }
 
-[dir="rtl"] .lang-option, [dir="rtl"] .currency-option {
+[dir="rtl"] .lang-option {
     text-align: right;
-}
-
-/* Switcher Container */
-.switcher-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
 }
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    .language-switcher, .currency-switcher {
+    .language-switcher {
         position: fixed;
         top: 20px;
-        z-index: 1001;
-    }
-    
-    .language-switcher {
         right: 20px;
-    }
-    
-    .currency-switcher {
-        right: 140px;
+        z-index: 1001;
     }
     
     [dir="rtl"] .language-switcher {
@@ -149,18 +127,13 @@
         left: 20px;
     }
     
-    [dir="rtl"] .currency-switcher {
-        right: auto;
-        left: 140px;
-    }
-    
-    .lang-current, .currency-current {
+    .lang-current {
         padding: 6px 10px;
         font-size: 13px;
         min-width: 80px;
     }
     
-    .lang-options, .currency-options {
+    .lang-options {
         min-width: 120px;
     }
 }
