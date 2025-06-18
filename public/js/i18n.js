@@ -8,12 +8,11 @@
 
 class CevehakI18n {
     constructor() {
-        this.currentLanguage = 'ar-SA'; // Default to Khaleeji/Saudi
+        this.currentLanguage = 'ar'; // Default to Arabic (formal)
         this.currentCurrency = 'SAR'; // Default to Saudi Riyal
         this.userLocation = null;
         this.languages = {
-            'ar-SA': null, // Khaleeji/Saudi Arabic
-            'ar': null,    // Standard Arabic  
+            'ar': null,    // Arabic (formal)
             'en': null     // English
         };
         this.currencies = {
@@ -25,7 +24,7 @@ class CevehakI18n {
         
         // Initialize language system
         this.init();
-    }    async init() {
+    }async init() {
         console.log('🌍 Initializing Cevehak i18n system...');
         
         // Detect user's location first
@@ -47,9 +46,7 @@ class CevehakI18n {
         this.setupCurrencySwitcher();
         
         console.log(`✅ i18n initialized with language: ${this.currentLanguage}, currency: ${this.currentCurrency}`);
-    }
-
-    detectLanguage() {
+    }    detectLanguage() {
         // Check localStorage first
         const savedLang = localStorage.getItem('cevehak-language');
         if (savedLang && this.languages.hasOwnProperty(savedLang)) {
@@ -61,14 +58,16 @@ class CevehakI18n {
         const browserLang = navigator.language || navigator.userLanguage;
         
         if (browserLang.startsWith('ar')) {
-            // Arabic browser - default to Khaleeji/Saudi
-            this.currentLanguage = 'ar-SA';
+            // Arabic browser - use Arabic
+            this.currentLanguage = 'ar';
         } else if (browserLang.startsWith('en')) {
             this.currentLanguage = 'en';
         } else {
-            // Default to Khaleeji/Saudi for any other language
-            this.currentLanguage = 'ar-SA';
+            // Default to Arabic for any other language
+            this.currentLanguage = 'ar';
         }
+
+        console.log('🌐 Language detected:', this.currentLanguage);
     }
 
     async loadLanguage(langCode) {
