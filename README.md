@@ -37,17 +37,19 @@ This directory contains the GitHub Pages compatible version of the Cevehak CV we
 ```
 /
 ├── index.html              # Main landing page
-├── upload-cv.html         # CV upload form  
-├── create-from-scratch.html # Full CV creation form
-├── create-cv-only.html    # CV-only creation form
-├── admin.html             # Admin panel
-├── css/
-│   ├── landing.css        # Main styles (minified)
-│   ├── style.css          # Additional styles (minified)
-│   └── mobile-enhancements.css # Mobile UX improvements
-├── js/
-│   ├── landing.js         # Main functionality + optimizations
-│   └── script.js          # Additional scripts
+├── views/
+│   ├── upload-cv.html     # CV upload form  
+│   ├── create-from-scratch.html # Full CV creation form
+│   ├── create-cv-only.html # CV-only creation form
+│   └── success.html       # Success page
+├── public/
+│   ├── css/               # Stylesheets with i18n support
+│   ├── js/                # JavaScript with i18n system
+│   ├── images/optimized/  # WebP optimized images
+│   └── icons/             # Flag and UI icons
+├── _config.yml            # Jekyll configuration
+├── CNAME                  # Custom domain
+└── .htaccess              # Apache configuration
 ├── images/
 │   ├── 1.png - 9.png      # Original CV preview images
 │   └── optimized/
