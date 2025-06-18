@@ -156,16 +156,20 @@ class CevehakI18n {    constructor() {
         // Default to USD for unknown locations
         this.currentCurrency = 'USD';
         console.log('💵 Unknown location, defaulting to USD');
-    }
-
-    async loadLanguage(langCode) {
+    }    async loadLanguage(langCode) {
         if (this.languages[langCode]) {
             return this.languages[langCode]; // Already cached
         }
 
         try {
             console.log(`📥 Loading language: ${langCode}`);
-            const response = await fetch(`public/js/lang/${langCode}.json`);
+            
+            // Determine the correct path based on current page location
+            const basePath = this.getBasePath();
+            const langPath = `${basePath}public/js/lang/${langCode}.json`;
+            console.log(`🔗 Fetching from: ${langPath}`);
+            
+            const response = await fetch(langPath);
             
             if (!response.ok) {
                 throw new Error(`Failed to load language ${langCode}: ${response.status}`);
@@ -344,20 +348,29 @@ class CevehakI18n {    constructor() {
                 element.innerHTML = formattedPrice;
             }
         });
-    }
-
-    setupLanguageSwitcher() {
+    }    setupLanguageSwitcher() {
+        console.log('🎛️ Setting up language switcher...');
         // Create language switcher if it doesn't exist
         let switcher = document.getElementById('language-switcher');
         
         if (!switcher) {
+            console.log('🔨 Creating new language switcher...');
             switcher = this.createLanguageSwitcher();
             
             // Add to header or appropriate location
             const header = document.querySelector('header') || document.querySelector('.hero');
+            console.log('📍 Header element found:', header);
             if (header) {
                 header.appendChild(switcher);
+                console.log('✅ Language switcher added to header');
+            } else {
+                console.error('❌ No header or hero element found to attach language switcher');
+                // Fallback: add to body
+                document.body.appendChild(switcher);
+                console.log('📌 Language switcher added to body as fallback');
             }
+        } else {
+            console.log('♻️ Language switcher already exists');
         }
     }
 
@@ -395,23 +408,36 @@ class CevehakI18n {    constructor() {
         this.addSwitcherEventListeners(switcher);
         
         return switcher;
-    }
-
-    addSwitcherEventListeners(switcher) {
+    }    addSwitcherEventListeners(switcher) {
+        console.log('🎛️ Setting up language switcher event listeners...');
         const currentLang = switcher.querySelector('#current-lang');
         const langOptions = switcher.querySelector('#lang-options');
         
+        console.log('📍 Current lang element:', currentLang);
+        console.log('📍 Lang options element:', langOptions);
+        
+        if (!currentLang || !langOptions) {
+            console.error('❌ Language switcher elements not found!');
+            return;
+        }
+        
         // Toggle dropdown
         currentLang.addEventListener('click', (e) => {
+            console.log('🖱️ Language button clicked!');
             e.stopPropagation();
             langOptions.classList.toggle('show');
+            console.log('📋 Dropdown toggled, show class:', langOptions.classList.contains('show'));
         });
 
         // Language selection
         switcher.addEventListener('click', (e) => {
+            console.log('🎯 Switcher clicked, target:', e.target);
             if (e.target.closest('.lang-option')) {
-                const langCode = e.target.closest('.lang-option').dataset.lang;
+                const langOption = e.target.closest('.lang-option');
+                const langCode = langOption.dataset.lang;
+                console.log('🌍 Language option selected:', langCode);
                 if (langCode !== this.currentLanguage) {
+                    console.log('🔄 Switching language from', this.currentLanguage, 'to', langCode);
                     this.switchLanguage(langCode);
                 }
                 langOptions.classList.remove('show');
@@ -419,10 +445,14 @@ class CevehakI18n {    constructor() {
         });
 
         // Close dropdown when clicking outside
-        document.addEventListener('click', () => {
-            langOptions.classList.remove('show');
+        document.addEventListener('click', (e) => {
+            if (!switcher.contains(e.target)) {
+                langOptions.classList.remove('show');
+            }
         });
-    }    updateLanguageSwitcherUI() {
+        
+        console.log('✅ Language switcher event listeners set up successfully');
+    }updateLanguageSwitcherUI() {
         const currentLang = document.querySelector('#current-lang');
         const langOptions = document.querySelectorAll('.lang-option');
         
@@ -561,6 +591,17 @@ class CevehakI18n {    constructor() {
         return this.currentCurrency;
     }
 
+    getBasePath() {
+        // Determine the correct relative path based on current page location
+        const path = window.location.pathname;
+        
+        if (path.includes('/views/')) {
+            return '../'; // We're in a subfolder, go up one level
+        } else {
+            return ''; // We're at root level
+        }
+    }
+
     isRTL() {
         return this.currentLanguage.startsWith('ar');
     }
@@ -586,7 +627,17 @@ class CevehakI18n {    constructor() {
 
 // Initialize i18n system when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    window.cevehakI18n = new CevehakI18n();
+    console.log('🚀 DOM Content Loaded - Initializing i18n system...');
+    
+    // Add a small delay to ensure all other scripts are loaded
+    setTimeout(() => {
+        try {
+            window.cevehakI18n = new CevehakI18n();
+            console.log('✅ i18n system initialized successfully');
+        } catch (error) {
+            console.error('❌ Error initializing i18n system:', error);
+        }
+    }, 100);
 });
 
 // Export for use in other modules
