@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "name": "English",
+    "nativeName": "English",
+    "code": "en",
+    "dir": "ltr",
+    "flag": "🇺🇸"
+  },  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "process": "How We Work",
+    "pricing": "Pricing",
+    "backToHome": "← Back to Home"
+  },"hero": {
+    "title": "Transform Your Experience into a Professional Website That Sets You Apart",
+    "subtitle": "Comprehensive services for creating professional CVs and converting them into distinctive websites",
+    "cta": "Get Started",
+    "features": {
+      "fastDelivery": "Fast delivery (3-5 days)",
+      "professionalDesign": "Professional and responsive design",
+      "responsive": "Works on all devices"
+    },
+    "guarantees": {
+      "satisfaction": "100% Satisfaction Guarantee",
+      "satisfactionDesc": "Your satisfaction is guaranteed or we refund your money",
+      "freeRevisions": "Free Revisions",
+      "freeRevisionsDesc": "Unlimited revisions until complete satisfaction"
+    }
+  },  "services": {
+    "title": "Our Services",
+    "subtitle": "We offer three different services to suit your needs",
+    "cvToWebsite": {
+      "title": "CV to Website Conversion",
+      "description": "Have a ready CV? We'll convert it into a professional and responsive website",
+      "price": "75 SAR",
+      "features": ["Quick conversion", "Attractive design", "Free hosting"]
+    },
+    "fullPackage": {
+      "title": "Complete Package",
+      "description": "Comprehensive service: Create CV from scratch + professional website",
+      "price": "100 SAR",
+      "features": ["Custom design", "Interactive forms", "Technical support"]
+    },
+    "cvOnly": {
+      "title": "CV Creation Only",
+      "description": "Need just a professional CV? We'll create it for you with the highest quality",
+      "price": "25 SAR",
+      "features": ["Professional design", "Various templates", "Quick delivery"]
+    }
+  },  "forms": {
+    "personalInfo": "Personal Information",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "service": "Service Type",
+    "uploadCV": "Upload CV",
+    "uploadPhoto": "Upload Photo",
+    "submit": "Submit Request",
+    "required": "Required",
+    "optional": "Optional"
+  },
+  "uploadCv": {
+    "title": "Upload CV - Cevehak",
+    "mainTitle": "Convert CV to Professional Website",
+    "subtitle": "Upload your existing CV and we'll convert it into a professional website",
+    "timeline": "Delivery within 3-5 days",
+    "whatsappNotice": "📲 Important Note: After submitting the request, we will contact you via WhatsApp to complete the required documents and photos",
+    "personalData": "Basic Information",
+    "fullName": "Full Name",
+    "profession": "Job Title",
+    "email": "Email Address",
+    "whatsappNumber": "WhatsApp Number",
+    "phonePlaceholder": "05xxxxxxxx",
+    "profilePhoto": "Profile Photo (Optional)",
+    "uploadProfessionalPhoto": "Upload professional photo",
+    "clickToUploadPhoto": "Click here to upload your profile photo (optional)",
+    "photoLimits": "Max size: 2MB | Supported formats: JPEG, PNG, WebP",
+    "uploadCvFile": "Upload Your CV (Optional)",
+    "cvFile": "CV File",
+    "clickToUploadCv": "Click here to upload your CV file (optional)",
+    "cvLimits": "Max size: 4MB | Supported formats: PDF, DOC, DOCX, Images",
+    "websitePreferences": "Website Preferences (Optional)",
+    "domainPreference": "Would you like to reserve a domain in your name?",
+    "chooseOption": "Choose...",
+    "yes": "Yes",
+    "no": "No",
+    "notSure": "Not sure",
+    "websiteStyle": "Preferred Design Style",
+    "chooseStyle": "Choose style...",
+    "modern": "Modern and Simple",
+    "professional": "Professional and Classic",
+    "creative": "Creative and Colorful",
+    "minimal": "Very Simple",
+    "specialRequests": "Special Requests or Notes",
+    "specialRequestsPlaceholder": "Any special requests or notes you'd like to add...",
+    "afterSubmission": "What Happens After Submission",
+    "step1": "Instant Confirmation: You'll receive a confirmation email",
+    "step2": "WhatsApp Contact: We'll contact you within 24 hours",
+    "step3": "Work Begins: We start creating your professional website",
+    "submitButton": "Submit Request and Continue via WhatsApp"
+  },  "common": {
+    "backToHome": "← Back to Home",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error occurred"
+  },  "cvOnly": {
+    "title": "Create Professional CV - Cevehak",
+    "mainTitle": "Create Professional CV 📄✨",
+    "subtitle": "Fill in the basic information and we'll contact you via WhatsApp to complete the remaining details 💬",
+    "timeline": "Delivery within 3 days",
+    "whatsappNotice": "📲 Important Note: After submitting the request, we will contact you via WhatsApp to complete the required documents and photos",
+    "personalInfo": "Personal Information",
+    "fullName": "Full Name",
+    "profession": "Job Title",
+    "email": "Email Address",
+    "whatsappNumber": "WhatsApp Number",
+    "phonePlaceholder": "05xxxxxxxx",
+    "submitButton": "Submit Request - Create CV",
+    "formNote": "We will contact you within 24 hours to complete the information and get a CV designed specifically for you"
+  },
+  "success": {
+    "title": "Request Sent Successfully - Cevehak",
+    "mainTitle": "Your request has been sent successfully!",
+    "message": "Thank you! We have received your request and will contact you soon to confirm the details and start working on your project.",
+    "nextSteps": "🚀 Next Steps:",
+    "step1": "📧 You will receive a confirmation email within minutes",
+    "step2": "📱 We will contact you via WhatsApp within 24 hours to receive the files",
+    "step3": "📂 Keep the files ready on your device (photos, CV, etc.)",
+    "step4": "🎉 You will get your professional website within 3-5 days",
+    "backButton": "← Back to Home",
+    "needHelp": "Need help? Contact us directly",
+    "contactInfo": "📞 WhatsApp | 📧 cevehak@gmail.com"
+  },
+  "messages": {
+    "success": "Your request has been sent successfully!",
+    "error": "An error occurred, please try again",
+    "uploading": "Uploading...",
+    "fileTooLarge": "File size is too large",
+    "invalidFileType": "File type not supported"
+  },  "stats": {
+    "title": "Our Achievements in Numbers",
+    "subtitle": "We take pride in our clients' trust and our continued success in delivering high-quality services",
+    "visitors": "Website Visitors",
+    "submissions": "Completed Service Requests",
+    "satisfaction": "Client Satisfaction Rate",
+    "projects": "Completed Projects"
+  },  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have questions? We're here to help you",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "location": "Location",
+    "form": {
+      "title": "Send us a message",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send Message"
+    }
+  },
+  "process": {
+    "title": "How We Work?",
+    "subtitle": "A simple and fast process to get your professional website",
+    "steps": {
+      "step1": {
+        "title": "Choose Service",
+        "description": "Select the service that suits your needs"
+      },
+      "step2": {
+        "title": "Submit Your Data",
+        "description": "Fill out the form or upload your CV"
+      },
+      "step3": {
+        "title": "We Start Working",
+        "description": "Our team works professionally to fulfill your request"
+      },
+      "step4": {
+        "title": "Receive Results",
+        "description": "Get your professional website within 3-5 days"
+      }
+    }
+  },  "pricing": {
+    "title": "Our Pricing",
+    "subtitle": "Choose the package that suits your needs and budget",
+    "mostPopular": "Most Popular",
+    "fullPackage": "Complete Package",
+    "orderNow": "Order Now",
+    "features": {
+      "uploadCurrentCV": "Upload current CV",
+      "professionalWebsite": "Professional website design",
+      "contentOptimization": "Content optimization and formatting",
+      "deliveryTime": "Delivery within 3-5 days",
+      "createProfessionalCV": "Create professional CV",
+      "contentWriting": "Content writing and text composition",
+      "integratedWebsite": "Comprehensive website design",
+      "freeConsultation": "Free professional consultation",
+      "professionalCVOnly": "Professional CV",
+      "professionalContent": "Professional content writing",
+      "elegantDesign": "Elegant and attractive design",
+      "quickDelivery": "Delivery within 3 days"
+    }
+  },
+  "cta": {
+    "title": "Ready to Build Your Professional Website?",
+    "subtitle": "Join hundreds of satisfied customers with our services",
+    "button": "Start Your Project Now"
+  },
+  "mission": {
+    "text": "We transform your experience into a professional website that sets you apart from others"
+  },
+  "footer": {
+    "tagline": "Fast delivery • High quality • Competitive prices",
+    "copyright": "All rights reserved © 2025 Cevehak",
+    "services": "Services",
+    "contact": "Contact",
+    "privacy": "Privacy Policy"
+  }
+}

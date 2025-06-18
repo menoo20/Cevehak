@@ -2,9 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إنشاء سيرة ذاتية احترافية - Cevehak</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>إنشاء سيرة ذاتية احترافية - Cevehak</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/i18n.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -153,15 +153,57 @@
                     <p class="form-note">ستصلك رسالة تأكيد فورية، ثم سنتواصل معك عبر الواتساب خلال ساعات قليلة</p>
                 </div>
             </form>
-        </main>
-
-        <!-- Success/Error Messages -->
+        </main>        <!-- Success/Error Messages -->
         <div id="messageContainer" class="message-container" style="display: none;">
             <div class="message" id="message"></div>
-        </div>    </div>    <!-- EmailJS v4 - Official Documentation -->
+        </div>    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p data-i18n="footer.tagline">تسليم سريع • جودة عالية • أسعار منافسة</p>
+                </div>
+                <div class="footer-brand">
+                    <h3>Cevehak</h3>
+                </div>
+                <!-- Language & Currency Switcher in Footer -->
+                <div class="footer-switchers">
+                    <div class="language-selector">
+                        <button class="lang-btn active" data-lang="ar" title="العربية">
+                            <img src="icons/sa.png" alt="Arabic" class="flag-icon">
+                            <span>العربية</span>
+                        </button>
+                        <button class="lang-btn" data-lang="en" title="English">
+                            <img src="icons/us.png" alt="English" class="flag-icon">
+                            <span>English</span>
+                        </button>
+                    </div>
+                    <div class="currency-selector">
+                        <button class="currency-btn" data-currency="USD" title="US Dollar">
+                            <img src="icons/us.png" alt="USD" class="flag-icon">
+                            <span>USD</span>
+                        </button>
+                        <button class="currency-btn active" data-currency="SAR" title="Saudi Riyal">
+                            <img src="icons/sa.png" alt="SAR" class="flag-icon">
+                            <span>SAR</span>
+                        </button>
+                        <button class="currency-btn" data-currency="EGP" title="Egyptian Pound">
+                            <img src="icons/eg.png" alt="EGP" class="flag-icon">
+                            <span>EGP</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- EmailJS v4 - Official Documentation -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <!-- Upload Configuration for Frontend-Only Solutions -->
     <script src="js/upload-config.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
