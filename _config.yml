@@ -10,7 +10,7 @@ url: "https://cevehak.online"
 # Clean URLs - removes .html extensions
 permalink: pretty
 
-# GitHub Pages settings
+# GitHub Pages safe plugins only
 plugins:
   - jekyll-relative-links
 
@@ -23,26 +23,20 @@ relative_links:
 exclude:
   - README.md
   - node_modules/
-  - package.json
-  - package-lock.json
   - .gitignore
-  - *.bat
-  - *.sh
-  - *.js
-  - *.py
-  - start-server.*
-  - update-github-pages.*
+  - gh-pages/
 
-# Include files that start with underscore
-include:
-  - _config.yml
-
-# Markdown processor
+# Markdown processor (GitHub Pages default)
 markdown: kramdown
 
-# Syntax highlighting
+# Syntax highlighting (GitHub Pages default)
 highlighter: rouge
 
-# Enable GitHub Pages features
-github:
-  - metadata
+# Safe mode for GitHub Pages
+safe: true
+
+# Kramdown settings
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
