@@ -161,9 +161,7 @@ class CevehakI18n {
             const siteName = 'Cevehak';
             titleElement.textContent = `${langData.hero.title} - ${siteName}`;
         }
-    }
-
-    translateContent(langData) {
+    }    translateContent(langData) {
         console.log('🔤 Translating page content...');
         
         // Translate elements with data-i18n attributes
@@ -177,6 +175,16 @@ class CevehakI18n {
                 } else {
                     element.textContent = translation;
                 }
+            }
+        });
+
+        // Translate placeholder attributes
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-i18n-placeholder');
+            const translation = this.getNestedTranslation(langData, key);
+            
+            if (translation) {
+                element.placeholder = translation;
             }
         });
 

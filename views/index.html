@@ -21,13 +21,12 @@
                     <a href="#top" class="logo-link">
                         <h1>Cevehak</h1>
                     </a>
-                </div>
-                  <!-- Desktop Navigation -->
+                </div>                  <!-- Desktop Navigation -->
                 <nav class="nav-menu">
                     <a href="#services" class="nav-link" data-i18n="navigation.services">الخدمات</a>
-                    <a href="#process" class="nav-link">كيف نعمل</a>
-                    <a href="#pricing" class="nav-link">الأسعار</a>
-                    <a href="#contact" class="nav-link">تواصل معنا</a>
+                    <a href="#process" class="nav-link" data-i18n="navigation.process">كيف نعمل</a>
+                    <a href="#pricing" class="nav-link" data-i18n="navigation.pricing">الأسعار</a>
+                    <a href="#contact" class="nav-link" data-i18n="navigation.contact">تواصل معنا</a>
                 </nav>
                 
                 <!-- Mobile Hamburger Button -->
@@ -42,12 +41,11 @@
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-        <button class="close-btn" id="closeBtn">&times;</button>
-        <nav class="mobile-nav">
-            <a href="#services" class="mobile-nav-link">الخدمات</a>
-            <a href="#process" class="mobile-nav-link">كيف نعمل</a>
-            <a href="#pricing" class="mobile-nav-link">الأسعار</a>
-            <a href="#contact" class="mobile-nav-link">تواصل معنا</a>
+        <button class="close-btn" id="closeBtn">&times;</button>        <nav class="mobile-nav">
+            <a href="#services" class="mobile-nav-link" data-i18n="navigation.services">الخدمات</a>
+            <a href="#process" class="mobile-nav-link" data-i18n="navigation.process">كيف نعمل</a>
+            <a href="#pricing" class="mobile-nav-link" data-i18n="navigation.pricing">الأسعار</a>
+            <a href="#contact" class="mobile-nav-link" data-i18n="navigation.contact">تواصل معنا</a>
         </nav>
     </div>
 
@@ -57,35 +55,34 @@
                 <div class="hero-text">
                     <h1 class="hero-title" data-i18n="hero.title">نحول خبراتك إلى موقع ويب احترافي يميزك عن الآخرين</h1>
                     <p class="hero-subtitle" data-i18n="hero.subtitle">خدمات متكاملة لإنشاء السير الذاتية الاحترافية وتحويلها إلى مواقع ويب متميزة
-                    </p>
-                    <div class="hero-features">
+                    </p>                    <div class="hero-features">
                         <div class="feature">
                             <span class="feature-icon">⚡</span>
-                            <span>تسليم سريع (3-5 أيام)</span>
+                            <span data-i18n="hero.features.fastDelivery">تسليم سريع (3-5 أيام)</span>
                         </div>
                         <div class="feature">
                             <span class="feature-icon">🎨</span>
-                            <span>تصميم احترافي ومتجاوب</span>
+                            <span data-i18n="hero.features.professionalDesign">تصميم احترافي ومتجاوب</span>
                         </div>
                         <div class="feature">
                             <span class="feature-icon">📱</span>
-                            <span>يعمل على جميع الأجهزة</span>
+                            <span data-i18n="hero.features.responsive">يعمل على جميع الأجهزة</span>
                         </div>
-                    </div> <!-- Guarantee Badges -->
+                    </div>                    <!-- Guarantee Badges -->
                     <div class="guarantee-badges">
                         <div class="guarantee-badge">
                             <div class="badge-icon">✅</div>
                             <div class="badge-content">
-                                <span class="badge-title">ضمان الرضا %100</span>
-                                <span class="badge-subtitle">رضاك مضمون أو نعيد أموالك</span>
+                                <span class="badge-title" data-i18n="hero.guarantees.satisfaction">ضمان الرضا %100</span>
+                                <span class="badge-subtitle" data-i18n="hero.guarantees.satisfactionDesc">رضاك مضمون أو نعيد أموالك</span>
                             </div>
                             <img src="../public/icons/quality-badge.webp" alt="Quality Badge" class="quality-badge-img">
                         </div>
                         <div class="guarantee-badge">
                             <div class="badge-icon">🔄</div>
                             <div class="badge-content">
-                                <span class="badge-title">تعديلات مجانية</span>
-                                <span class="badge-subtitle">تعديلات غير محدودة حتى الرضا التام</span>
+                                <span class="badge-title" data-i18n="hero.guarantees.freeRevisions">تعديلات مجانية</span>
+                                <span class="badge-subtitle" data-i18n="hero.guarantees.freeRevisionsDesc">تعديلات غير محدودة حتى الرضا التام</span>
                             </div>
                         </div>
                     </div>
@@ -118,29 +115,29 @@
     <section class="stats-section">
         <div class="container">
             <div class="stats-header">
-                <h2>إنجازاتنا بالأرقام</h2>
-                <p>نفخر بثقة عملائنا ونجاحنا المستمر في تقديم خدمات عالية الجودة</p>
+                <h2 data-i18n="stats.title">إنجازاتنا بالأرقام</h2>
+                <p data-i18n="stats.subtitle">نفخر بثقة عملائنا ونجاحنا المستمر في تقديم خدمات عالية الجودة</p>
             </div>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon">👥</div>
                     <div class="stat-number" id="visitorsCount">0</div>
-                    <div class="stat-label">زائر للموقع</div>
+                    <div class="stat-label" data-i18n="stats.visitors">زائر للموقع</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">📋</div>
                     <div class="stat-number" id="submissionsCount">0</div>
-                    <div class="stat-label">طلب خدمة مكتمل</div>
+                    <div class="stat-label" data-i18n="stats.submissions">طلب خدمة مكتمل</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">⭐</div>
                     <div class="stat-number" id="satisfactionRate">98%</div>
-                    <div class="stat-label">معدل رضا العملاء</div>
+                    <div class="stat-label" data-i18n="stats.satisfaction">معدل رضا العملاء</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">🚀</div>
                     <div class="stat-number" id="projectsCount">0</div>
-                    <div class="stat-label">مشروع مكتمل</div>
+                    <div class="stat-label" data-i18n="stats.projects">مشروع مكتمل</div>
                 </div>
             </div>
         </div>
@@ -177,58 +174,56 @@
     <section id="process" class="process">
         <div class="container">
             <div class="section-header">
-                <h2>كيف نعمل؟</h2>
-                <p>عملية بسيطة وسريعة للحصول على موقعك الاحترافي</p>
+                <h2 data-i18n="process.title">كيف نعمل؟</h2>
+                <p data-i18n="process.subtitle">عملية بسيطة وسريعة للحصول على موقعك الاحترافي</p>
             </div>
 
             <div class="process-steps">
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h3>اختر الخدمة</h3>
-                        <p>حدد الخدمة المناسبة لاحتياجاتك</p>
+                        <h3 data-i18n="process.steps.step1.title">اختر الخدمة</h3>
+                        <p data-i18n="process.steps.step1.description">حدد الخدمة المناسبة لاحتياجاتك</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>أرسل بياناتك</h3>
-                        <p>املأ الاستمارة أو ارفع سيرتك الذاتية</p>
+                        <h3 data-i18n="process.steps.step2.title">أرسل بياناتك</h3>
+                        <p data-i18n="process.steps.step2.description">املأ الاستمارة أو ارفع سيرتك الذاتية</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h3>نبدأ العمل</h3>
-                        <p>فريقنا يعمل على تنفيذ طلبك باحترافية</p>
+                        <h3 data-i18n="process.steps.step3.title">نبدأ العمل</h3>
+                        <p data-i18n="process.steps.step3.description">فريقنا يعمل على تنفيذ طلبك باحترافية</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
                     <div class="step-content">
-                        <h3>استلم النتيجة</h3>
-                        <p>احصل على موقعك الاحترافي خلال 3-5 أيام</p>
+                        <h3 data-i18n="process.steps.step4.title">استلم النتيجة</h3>
+                        <p data-i18n="process.steps.step4.description">احصل على موقعك الاحترافي خلال 3-5 أيام</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Pricing Section -->
+    </section>    <!-- Pricing Section -->
     <section id="pricing" class="pricing">
         <div class="container">
             <div class="section-header">
-                <h2>أسعارنا</h2>
-                <p>اختر الباقة المناسبة لاحتياجاتك وميزانيتك</p>
+                <h2 data-i18n="pricing.title">أسعارنا</h2>
+                <p data-i18n="pricing.subtitle">اختر الباقة المناسبة لاحتياجاتك وميزانيتك</p>
             </div>
 
             <div class="pricing-grid">
                 <!-- Pricing 1: CV to Website -->
                 <div class="pricing-card popular">
-                    <div class="pricing-badge">الأكثر طلباً</div>
+                    <div class="pricing-badge" data-i18n="pricing.mostPopular">الأكثر طلباً</div>
                     <div class="pricing-icon">🌐</div>
-                    <h3 class="pricing-title">تحويل السيرة الذاتية إلى موقع ويب</h3>
-                    <p class="pricing-description">لديك سيرة ذاتية جاهزة؟ سنحولها إلى موقع ويب احترافي</p>
+                    <h3 class="pricing-title" data-i18n="services.cvToWebsite.title">تحويل السيرة الذاتية إلى موقع ويب</h3>
+                    <p class="pricing-description" data-i18n="services.cvToWebsite.description">لديك سيرة ذاتية جاهزة؟ سنحولها إلى موقع ويب احترافي</p>
 
                     <div class="pricing-features">
                         <div class="feature">✅ رفع السيرة الذاتية الحالية</div>
@@ -237,20 +232,18 @@
                         <div class="feature">✅ تسليم خلال 3-5 أيام</div>
                     </div>                    <div class="pricing-price">
                         <span class="price" data-price="75" data-service="cvToWebsite">75 ريال</span>
-                        <span class="price-period">فقط</span>
+                        <span class="price-period" data-i18n="pricing.only">فقط</span>
                     </div>
 
-                    <button class="pricing-btn" onclick="selectService('cv-to-website')">
+                    <button class="pricing-btn" onclick="selectService('cv-to-website')" data-i18n="pricing.orderNow">
                         اطلب الآن
                     </button>
-                </div>
-
-                <!-- Pricing 2: Full Package -->
+                </div>                <!-- Pricing 2: Full Package -->
                 <div class="pricing-card premium">
-                    <div class="pricing-badge premium-badge">الباقة الكاملة</div>
+                    <div class="pricing-badge premium-badge" data-i18n="pricing.fullPackage">الباقة الكاملة</div>
                     <div class="pricing-icon">🚀</div>
-                    <h3 class="pricing-title">إنشاء سيرة ذاتية + موقع ويب</h3>
-                    <p class="pricing-description">خدمة شاملة من الصفر حتى الإطلاق</p>
+                    <h3 class="pricing-title" data-i18n="services.fullPackage.title">إنشاء سيرة ذاتية + موقع ويب</h3>
+                    <p class="pricing-description" data-i18n="services.fullPackage.description">خدمة شاملة من الصفر حتى الإطلاق</p>
 
                     <div class="pricing-features">
                         <div class="feature">✅ إنشاء سيرة ذاتية احترافية</div>
@@ -260,10 +253,10 @@
                         <div class="feature">✅ تسليم خلال 3-5 أيام</div>
                     </div>                    <div class="pricing-price">
                         <span class="price" data-price="100" data-service="fullPackage">100 ريال</span>
-                        <span class="price-period">فقط</span>
+                        <span class="price-period" data-i18n="pricing.only">فقط</span>
                     </div>
 
-                    <button class="pricing-btn premium-btn" onclick="selectService('full-package')">
+                    <button class="pricing-btn premium-btn" onclick="selectService('full-package')" data-i18n="pricing.orderNow">
                         اطلب الآن
                     </button>
                 </div>
@@ -271,8 +264,8 @@
                 <!-- Pricing 3: CV Only -->
                 <div class="pricing-card">
                     <div class="pricing-icon">📄</div>
-                    <h3 class="pricing-title">إنشاء سيرة ذاتية فقط</h3>
-                    <p class="pricing-description">سيرة ذاتية احترافية بأعلى جودة</p>
+                    <h3 class="pricing-title" data-i18n="services.cvOnly.title">إنشاء سيرة ذاتية فقط</h3>
+                    <p class="pricing-description" data-i18n="services.cvOnly.description">سيرة ذاتية احترافية بأعلى جودة</p>
 
                     <div class="pricing-features">
                         <div class="feature">✅ سيرة ذاتية احترافية</div>
@@ -281,74 +274,68 @@
                         <div class="feature">✅ تسليم خلال 3 أيام</div>
                     </div>                    <div class="pricing-price">
                         <span class="price" data-price="25" data-service="cvOnly">25 ريال</span>
-                        <span class="price-period">فقط</span>
+                        <span class="price-period" data-i18n="pricing.only">فقط</span>
                     </div>
 
-                    <button class="pricing-btn" onclick="selectService('cv-only')">
+                    <button class="pricing-btn" onclick="selectService('cv-only')" data-i18n="pricing.orderNow">
                         اطلب الآن
                     </button>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- CTA Section -->
+    </section>    <!-- CTA Section -->
     <section class="cta">
         <div class="container">
             <div class="cta-content">
-                <h2>جاهز لبناء موقعك الاحترافي؟</h2>
-                <p>انضم إلى مئات العملاء الراضين عن خدماتنا</p>
-                <button class="cta-btn" onclick="selectService('full-package')">
+                <h2 data-i18n="cta.title">جاهز لبناء موقعك الاحترافي؟</h2>
+                <p data-i18n="cta.subtitle">انضم إلى مئات العملاء الراضين عن خدماتنا</p>
+                <button class="cta-btn" onclick="selectService('full-package')" data-i18n="cta.button">
                     ابدأ مشروعك الآن
                 </button>
             </div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
+    </section>    <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
             <div class="section-header">
-                <h2>تواصل معنا</h2>
-                <p>هل لديك أسئلة؟ نحن هنا لمساعدتك</p>
+                <h2 data-i18n="contact.title">تواصل معنا</h2>
+                <p data-i18n="contact.subtitle">هل لديك أسئلة؟ نحن هنا لمساعدتك</p>
             </div>
             <div class="contact-content">
                 <div class="contact-info">
                     <a href="mailto:menooteaching@gmail.com" class="contact-item email-contact">
                         <span class="contact-icon">📧</span>
                         <div>
-                            <h4>البريد الإلكتروني</h4>
+                            <h4 data-i18n="contact.email">البريد الإلكتروني</h4>
                             <p>menooteaching@gmail.com</p>
                         </div>
                     </a> <a href="https://wa.me/966575172805" target="_blank" class="contact-item whatsapp-contact">
                         <span class="contact-icon">📱</span>
                         <div>
-                            <h4>واتساب</h4>
+                            <h4 data-i18n="contact.whatsapp">واتساب</h4>
                             <p dir="ltr">+966575172805</p>
                         </div>
                     </a>
                 </div>
                 <div class="contact-form">
-                    <h3>أرسل لنا رسالة</h3>
+                    <h3 data-i18n="contact.form.title">أرسل لنا رسالة</h3>
                     <form>
-                        <input type="text" placeholder="الاسم" required>
-                        <input type="email" placeholder="البريد الإلكتروني" required>
-                        <textarea placeholder="الرسالة" rows="5" required></textarea>
-                        <button type="submit" class="contact-btn">إرسال الرسالة</button>
+                        <input type="text" placeholder="الاسم" data-i18n-placeholder="contact.form.name" required>
+                        <input type="email" placeholder="البريد الإلكتروني" data-i18n-placeholder="contact.form.email" required>
+                        <textarea placeholder="الرسالة" data-i18n-placeholder="contact.form.message" rows="5" required></textarea>
+                        <button type="submit" class="contact-btn" data-i18n="contact.form.send">إرسال الرسالة</button>
                     </form>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Artistic Mission Statement -->
+    </section>    <!-- Artistic Mission Statement -->
     <section class="mission-statement">
         <div class="container">
             <div class="mission-content">
-                <p class="mission-text">نحول خبراتك إلى موقع ويب احترافي يميزك عن الآخرين</p>
+                <p class="mission-text" data-i18n="mission.text">نحول خبراتك إلى موقع ويب احترافي يميزك عن الآخرين</p>
             </div>
         </div>
-    </section>    <!-- Footer -->
+    </section><!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
