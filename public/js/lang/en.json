@@ -100,12 +100,26 @@
     "step2": "WhatsApp Contact: We'll contact you within 24 hours",
     "step3": "Work Begins: We start creating your professional website",
     "submitButton": "Submit Request and Continue via WhatsApp"
-  },
-  "common": {
+  },  "common": {
     "backToHome": "← Back to Home",
     "loading": "Loading...",
     "success": "Success",
     "error": "Error occurred"
+  },
+  "cvOnly": {
+    "title": "Create Professional CV - Cevehak",
+    "mainTitle": "Create Professional CV 📄✨",
+    "subtitle": "Fill in the basic information and we'll contact you via WhatsApp to complete the remaining details 💬",
+    "timeline": "Delivery within 3 days",
+    "whatsappNotice": "📲 Important Note: After submitting the request, we will contact you via WhatsApp to complete the required documents and photos",
+    "personalInfo": "Personal Information",
+    "fullName": "Full Name",
+    "profession": "Job Title",
+    "email": "Email Address",
+    "whatsappNumber": "WhatsApp Number",
+    "phonePlaceholder": "05xxxxxxxx",
+    "submitButton": "Submit Request - Create CV",
+    "formNote": "We will contact you within 24 hours to complete the information and get a CV designed specifically for you"
   },
   "messages": {
     "success": "Your request has been sent successfully!",
