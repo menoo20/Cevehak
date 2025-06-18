@@ -66,12 +66,11 @@
     "projects": "Completed Projects"
   },
   "contact": {
-    "title": "Contact Us",
-    "whatsapp": "WhatsApp",
+    "title": "Contact Us",    "whatsapp": "WhatsApp",
     "email": "Email",
     "location": "Location"
   },
-  "footer": {  "footer": {
+  "footer": {
     "tagline": "Fast delivery • High quality • Competitive prices",
     "copyright": "All rights reserved © 2025 Cevehak",
     "services": "Services",
