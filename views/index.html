@@ -364,16 +364,29 @@
         </div>
     </footer>    <script src="../public/js/i18n.js"></script>
     <script src="../public/js/landing.js"></script>
-    
-    <script>
+      <script>
         // Integration with i18n system
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🌍 Setting up i18n integration for landing page...');
             
-            // Wait for i18n to initialize
-            setTimeout(() => {
-                setupI18nIntegration();
-            }, 1000);
+            // Wait for i18n to initialize with retry mechanism
+            let attempts = 0;
+            const maxAttempts = 50; // 5 seconds max
+            
+            const waitForI18n = () => {
+                if (window.cevehakI18n) {
+                    console.log('✅ i18n system found, setting up integration...');
+                    setupI18nIntegration();
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    console.log(`⏳ Waiting for i18n... (${attempts}/${maxAttempts})`);
+                    setTimeout(waitForI18n, 100);
+                } else {
+                    console.error('❌ i18n system not available after waiting');
+                }
+            };
+            
+            setTimeout(waitForI18n, 200);
         });
 
         function setupI18nIntegration() {
