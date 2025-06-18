@@ -74,11 +74,15 @@ class CevehakI18n {
     async loadLanguage(langCode) {
         if (this.languages[langCode]) {
             return this.languages[langCode]; // Already cached
-        }
-
-        try {
+        }        try {
             console.log(`📥 Loading language: ${langCode}`);
-            const response = await fetch(`/js/lang/${langCode}.json`);
+            
+            // Dynamic path resolution for language files
+            const basePath = window.location.pathname.includes('/views/') 
+                ? '../public/js/lang/' 
+                : 'public/js/lang/';
+            
+            const response = await fetch(`${basePath}${langCode}.json`);
             
             if (!response.ok) {
                 throw new Error(`Failed to load language ${langCode}: ${response.status}`);
@@ -196,17 +200,31 @@ class CevehakI18n {
         // Only set up event listeners for existing footer language buttons
         const languageButtons = document.querySelectorAll('.lang-btn');
         
-        languageButtons.forEach(btn => {
+        console.log(`🔗 Setting up language switcher - found ${languageButtons.length} buttons`);
+        
+        if (languageButtons.length === 0) {
+            console.warn('⚠️ No language buttons found, retrying in 500ms...');
+            setTimeout(() => this.setupLanguageSwitcher(), 500);
+            return;
+        }
+        
+        languageButtons.forEach((btn, index) => {
+            console.log(`🔘 Setting up button ${index + 1}: ${btn.dataset.lang}`);
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const lang = btn.dataset.lang;
+                console.log(`🖱️ Language button clicked: ${lang}`);
                 if (lang && lang !== this.currentLanguage) {
+                    console.log(`🔄 Switching from ${this.currentLanguage} to ${lang}`);
                     this.switchLanguage(lang);
+                } else {
+                    console.log(`ℹ️ Already using language: ${lang}`);
                 }
             });
         });
 
-        // Update initial UI        this.updateLanguageSwitcherUI();
+        // Update initial UI
+        this.updateLanguageSwitcherUI();
     }
 
     // Removed createLanguageSwitcher method - now using footer buttons only    // Removed addSwitcherEventListeners method - now using footer buttons only
@@ -272,17 +290,28 @@ class CevehakI18n {
         }
 
         console.log('💰 Currency detected:', this.currentCurrency);
-    }
-
-    setupCurrencySwitcher() {
+    }    setupCurrencySwitcher() {
         const currencyButtons = document.querySelectorAll('.currency-btn');
         
-        currencyButtons.forEach(btn => {
+        console.log(`💰 Setting up currency switcher - found ${currencyButtons.length} buttons`);
+        
+        if (currencyButtons.length === 0) {
+            console.warn('⚠️ No currency buttons found, retrying in 500ms...');
+            setTimeout(() => this.setupCurrencySwitcher(), 500);
+            return;
+        }
+        
+        currencyButtons.forEach((btn, index) => {
+            console.log(`💵 Setting up currency button ${index + 1}: ${btn.dataset.currency}`);
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const currency = btn.dataset.currency;
+                console.log(`🖱️ Currency button clicked: ${currency}`);
                 if (currency && currency !== this.currentCurrency) {
+                    console.log(`💱 Switching from ${this.currentCurrency} to ${currency}`);
                     this.switchCurrency(currency);
+                } else {
+                    console.log(`ℹ️ Already using currency: ${currency}`);
                 }
             });
         });
