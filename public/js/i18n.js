@@ -192,108 +192,35 @@ class CevehakI18n {
 
     getNestedTranslation(data, key) {
         return key.split('.').reduce((obj, k) => obj && obj[k], data);
-    }
-
-    setupLanguageSwitcher() {
-        // Create language switcher if it doesn't exist
-        let switcher = document.getElementById('language-switcher');
+    }    setupLanguageSwitcher() {
+        // Only set up event listeners for existing footer language buttons
+        const languageButtons = document.querySelectorAll('.lang-btn');
         
-        if (!switcher) {
-            switcher = this.createLanguageSwitcher();
-            
-            // Add to header or appropriate location
-            const header = document.querySelector('header') || document.querySelector('.hero');
-            if (header) {
-                header.appendChild(switcher);
-            }
-        }
-    }
-
-    createLanguageSwitcher() {
-        const switcher = document.createElement('div');
-        switcher.id = 'language-switcher';
-        switcher.className = 'language-switcher';
-        
-        const langOptions = [
-            { code: 'ar-SA', name: 'خليجي', flag: '🇸🇦' },
-            { code: 'ar', name: 'عربي', flag: '🔤' },
-            { code: 'en', name: 'English', flag: '🇺🇸' }
-        ];
-
-        switcher.innerHTML = `
-            <div class="lang-dropdown">
-                <button class="lang-current" id="current-lang">
-                    <span class="lang-flag">${langOptions.find(l => l.code === this.currentLanguage)?.flag || '🇸🇦'}</span>
-                    <span class="lang-name">${langOptions.find(l => l.code === this.currentLanguage)?.name || 'خليجي'}</span>
-                    <span class="lang-arrow">▼</span>
-                </button>
-                <div class="lang-options" id="lang-options">
-                    ${langOptions.map(lang => `
-                        <button class="lang-option ${lang.code === this.currentLanguage ? 'active' : ''}" 
-                                data-lang="${lang.code}">
-                            <span class="lang-flag">${lang.flag}</span>
-                            <span class="lang-name">${lang.name}</span>
-                        </button>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-
-        // Add event listeners
-        this.addSwitcherEventListeners(switcher);
-        
-        return switcher;
-    }
-
-    addSwitcherEventListeners(switcher) {
-        const currentLang = switcher.querySelector('#current-lang');
-        const langOptions = switcher.querySelector('#lang-options');
-        
-        // Toggle dropdown
-        currentLang.addEventListener('click', (e) => {
-            e.stopPropagation();
-            langOptions.classList.toggle('show');
-        });
-
-        // Language selection
-        switcher.addEventListener('click', (e) => {
-            if (e.target.closest('.lang-option')) {
-                const langCode = e.target.closest('.lang-option').dataset.lang;
-                if (langCode !== this.currentLanguage) {
-                    this.switchLanguage(langCode);
+        languageButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = btn.dataset.lang;
+                if (lang && lang !== this.currentLanguage) {
+                    this.switchLanguage(lang);
                 }
-                langOptions.classList.remove('show');
-            }
+            });
         });
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', () => {
-            langOptions.classList.remove('show');
-        });
+        // Update initial UI        this.updateLanguageSwitcherUI();
     }
+
+    // Removed createLanguageSwitcher method - now using footer buttons only    // Removed addSwitcherEventListeners method - now using footer buttons only
 
     updateLanguageSwitcherUI() {
-        const currentLang = document.querySelector('#current-lang');
-        const langOptions = document.querySelectorAll('.lang-option');
+        // Update active state for footer language buttons
+        const languageButtons = document.querySelectorAll('.lang-btn');
         
-        if (currentLang) {
-            const langData = {
-                'ar-SA': { name: 'خليجي', flag: '🇸🇦' },
-                'ar': { name: 'عربي', flag: '🔤' },
-                'en': { name: 'English', flag: '🇺🇸' }
-            };
-            
-            const current = langData[this.currentLanguage];
-            currentLang.innerHTML = `
-                <span class="lang-flag">${current.flag}</span>
-                <span class="lang-name">${current.name}</span>
-                <span class="lang-arrow">▼</span>
-            `;
-        }
-
-        // Update active state
-        langOptions.forEach(option => {
-            option.classList.toggle('active', option.dataset.lang === this.currentLanguage);
+        languageButtons.forEach(btn => {
+            if (btn.dataset.lang === this.currentLanguage) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
         });
     }
 
