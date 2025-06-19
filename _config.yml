@@ -10,6 +10,18 @@ url: "https://cevehak.online"
 # Clean URLs - removes .html extensions
 permalink: pretty
 
+# Include views directory for processing
+include:
+  - "views"
+
+# Process all HTML files in views directory
+defaults:
+  - scope:
+      path: "views"
+      type: "pages"
+    values:
+      layout: none
+
 # GitHub Pages safe plugins only
 plugins:
   - jekyll-relative-links

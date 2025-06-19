@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Test - Cevehak</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-link { display: block; margin: 10px 0; padding: 10px; background: #f0f0f0; text-decoration: none; color: #333; border-radius: 5px; }
+        .test-link:hover { background: #e0e0e0; }
+    </style>
+</head>
+<body>
+    <h1>URL Testing Page</h1>
+    <p>Test these links to verify clean URLs work:</p>
+    
+    <a href="/upload-cv" class="test-link">Upload CV Page (should go to /upload-cv/)</a>
+    <a href="/create-from-scratch" class="test-link">Create from Scratch (should go to /create-from-scratch/)</a>
+    <a href="/create-cv-only" class="test-link">Create CV Only (should go to /create-cv-only/)</a>
+    
+    <h2>Direct File Tests:</h2>
+    <a href="/views/upload-cv.html" class="test-link">Direct Upload CV HTML</a>
+    <a href="/views/create-from-scratch.html" class="test-link">Direct Create from Scratch HTML</a>
+    <a href="/views/create-cv-only.html" class="test-link">Direct Create CV Only HTML</a>
+    
+    <h2>JavaScript Navigation Test:</h2>
+    <button onclick="testNavigation('cv-to-website')" class="test-link">Test CV to Website Service</button>
+    <button onclick="testNavigation('full-package')" class="test-link">Test Full Package Service</button>
+    <button onclick="testNavigation('cv-only')" class="test-link">Test CV Only Service</button>
+    
+    <script>
+        function testNavigation(serviceType) {
+            const serviceRoutes = {
+                'cv-to-website': './upload-cv',
+                'full-package': './create-from-scratch',
+                'cv-only': './create-cv-only'
+            };
+            
+            const route = serviceRoutes[serviceType];
+            if (route) {
+                console.log('Testing navigation to:', route);
+                window.location.href = route;
+            }
+        }
+    </script>
+</body>
+</html>

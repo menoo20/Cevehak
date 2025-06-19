@@ -1,16 +1,27 @@
 # Clean URL rewrite rules for GitHub Pages
-# This removes .html extensions from URLs
+# This removes .html extensions from URLs and handles routing
 
 RewriteEngine On
 
-# Remove .html extension from URLs
+# Handle specific routes first (for GitHub Pages Jekyll)
+RewriteRule ^upload-cv/?$ /upload-cv/ [L]
+RewriteRule ^create-from-scratch/?$ /create-from-scratch/ [L]
+RewriteRule ^create-cv-only/?$ /create-cv-only/ [L]
+
+# Fallback: Remove .html extension from URLs
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
-# Redirect .html URLs to clean URLs
+# Redirect .html URLs to clean URLs (prevent duplicate content)
 RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
 RewriteRule ^ /%1? [NC,L,R=301]
+
+# Handle views directory routing (fallback for direct access)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(upload-cv|create-from-scratch|create-cv-only)/?$ /views/$1.html [NC,L]
 
 # Force HTTPS (optional but recommended)
 RewriteCond %{HTTPS} off
