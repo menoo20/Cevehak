@@ -86,11 +86,8 @@ class CevehakI18n {
             return this.languages[langCode]; // Already cached
         }        try {
             console.log(`📥 Loading language: ${langCode}`);
-            
-            // Dynamic path resolution for language files
-            const basePath = window.location.pathname.includes('/views/') 
-                ? '../public/js/lang/' 
-                : 'public/js/lang/';
+              // Use absolute path for language files to work with clean URLs
+            const basePath = '/public/js/lang/';
             
             const response = await fetch(`${basePath}${langCode}.json`);
             
