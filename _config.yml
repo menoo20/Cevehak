@@ -13,6 +13,7 @@ permalink: pretty
 # Include views directory for processing
 include:
   - "views"
+  - "public"
 
 # Process all HTML files in views directory
 defaults:
@@ -30,6 +31,10 @@ plugins:
 relative_links:
   enabled: true
   collections: false
+
+# Keep important files during Jekyll build
+keep_files:
+  - "public"
 
 # Exclude files from processing
 exclude:

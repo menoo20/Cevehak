@@ -86,13 +86,34 @@ class CevehakI18n {
             return this.languages[langCode]; // Already cached
         }        try {
             console.log(`📥 Loading language: ${langCode}`);
-              // Use absolute path for language files to work with clean URLs
-            const basePath = '/public/js/lang/';
             
-            const response = await fetch(`${basePath}${langCode}.json`);
+            // Try multiple paths for GitHub Pages compatibility
+            const possiblePaths = [
+                `/public/js/lang/${langCode}.json`,        // Absolute path
+                `./public/js/lang/${langCode}.json`,       // Relative from root
+                `../public/js/lang/${langCode}.json`,      // Relative from views
+                `public/js/lang/${langCode}.json`          // Direct path
+            ];
             
-            if (!response.ok) {
-                throw new Error(`Failed to load language ${langCode}: ${response.status}`);
+            let response = null;
+            let error = null;
+            
+            for (const path of possiblePaths) {
+                try {
+                    console.log(`🔍 Trying path: ${path}`);
+                    response = await fetch(path);
+                    if (response.ok) {
+                        console.log(`✅ Successfully loaded from: ${path}`);
+                        break;
+                    }
+                } catch (e) {
+                    error = e;
+                    console.log(`❌ Failed path: ${path}`);
+                }
+            }
+            
+            if (!response || !response.ok) {
+                throw new Error(`Failed to load language ${langCode} from all paths: ${response?.status || 'no response'}`);
             }
             
             const langData = await response.json();

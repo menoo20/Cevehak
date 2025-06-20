@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language File Debug - Cevehak</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Language File Accessibility Test</h1>
+    <div id="results"></div>
+
+    <script>
+        async function testLanguageFiles() {
+            const results = document.getElementById('results');
+            
+            // Test paths
+            const testPaths = [
+                '/public/js/lang/ar.json',
+                './public/js/lang/ar.json',
+                '../public/js/lang/ar.json',
+                'public/js/lang/ar.json'
+            ];
+
+            results.innerHTML = '<div class="info">Testing language file accessibility...</div>';
+
+            for (const path of testPaths) {
+                try {
+                    const response = await fetch(path);
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'test-result';
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        resultDiv.className += ' success';
+                        resultDiv.innerHTML = `✅ SUCCESS: ${path} - Status: ${response.status}`;
+                    } else {
+                        resultDiv.className += ' error';
+                        resultDiv.innerHTML = `❌ FAILED: ${path} - Status: ${response.status}`;
+                    }
+                    
+                    results.appendChild(resultDiv);
+                } catch (error) {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'test-result error';
+                    resultDiv.innerHTML = `❌ ERROR: ${path} - ${error.message}`;
+                    results.appendChild(resultDiv);
+                }
+            }
+
+            // Test current URL structure
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'test-result info';
+            infoDiv.innerHTML = `
+                <strong>Current URL Info:</strong><br>
+                - Origin: ${window.location.origin}<br>
+                - Pathname: ${window.location.pathname}<br>
+                - Href: ${window.location.href}
+            `;
+            results.appendChild(infoDiv);
+        }
+
+        // Run test when page loads
+        document.addEventListener('DOMContentLoaded', testLanguageFiles);
+    </script>
+</body>
+</html>
