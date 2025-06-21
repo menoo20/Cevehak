@@ -184,6 +184,7 @@
   },  "pricing": {
     "title": "Our Pricing",
     "subtitle": "Choose the package that suits your needs and budget",
+    "startingAt": "Starting at",
     "mostPopular": "Most Popular",
     "fullPackage": "Complete Package",
     "orderNow": "Order Now",

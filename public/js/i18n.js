@@ -386,7 +386,7 @@ class CevehakI18n {
                 btn.classList.remove('active');
             }
         });
-    }    formatPrice(basePrice) {
+    }    formatPrice(basePrice, includeStartingAt = true) {
         const currency = this.currencies[this.currentCurrency];
         if (!currency) {
             console.warn('⚠️ Invalid currency for formatting:', this.currentCurrency);
@@ -404,8 +404,17 @@ class CevehakI18n {
             symbol = currency.symbol;
         }
         
-        console.log(`💰 Formatting price: ${basePrice} -> ${convertedPrice} ${symbol} (lang: ${this.currentLanguage})`);
-        return `${convertedPrice} ${symbol}`;
+        // Get "starting at" text in current language
+        let formattedPrice = `${convertedPrice} ${symbol}`;
+        
+        if (includeStartingAt) {
+            const currentLangData = this.languages[this.currentLanguage];
+            const startingAtText = currentLangData?.pricing?.startingAt || 'Starting at';
+            formattedPrice = `${startingAtText} ${convertedPrice} ${symbol}`;
+        }
+        
+        console.log(`💰 Formatting price: ${basePrice} -> ${formattedPrice} (lang: ${this.currentLanguage})`);
+        return formattedPrice;
     }
 
     getCurrentCurrency() {

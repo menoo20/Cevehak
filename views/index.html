@@ -233,7 +233,9 @@ layout: none
                         <div class="feature" data-i18n="pricing.features.contentOptimization">✅ تحسين المحتوى والتنسيق</div>
                         <div class="feature" data-i18n="pricing.features.deliveryTime">✅ تسليم خلال 3-5 أيام</div>
                     </div>                    <div class="pricing-price">
-                        <span class="price" data-price="75" data-service="cvToWebsite">75 ريال</span>
+                        <span class="price" data-price="75" data-service="cvToWebsite">
+                            <span data-i18n="pricing.startingAt">ابتداءً من</span> 75 ريال
+                        </span>
                     </div>
 
                     <button class="pricing-btn" onclick="selectService('cv-to-website')" data-i18n="pricing.orderNow">
@@ -251,7 +253,9 @@ layout: none
                         <div class="feature" data-i18n="pricing.features.freeConsultation">✅ استشارة مهنية مجانية</div>
                         <div class="feature" data-i18n="pricing.features.deliveryTime">✅ تسليم خلال 3-5 أيام</div>
                     </div>                    <div class="pricing-price">
-                        <span class="price" data-price="100" data-service="fullPackage">100 ريال</span>
+                        <span class="price" data-price="100" data-service="fullPackage">
+                            <span data-i18n="pricing.startingAt">ابتداءً من</span> 100 ريال
+                        </span>
                     </div>
 
                     <button class="pricing-btn premium-btn" onclick="selectService('full-package')" data-i18n="pricing.orderNow">
@@ -269,7 +273,9 @@ layout: none
                         <div class="feature" data-i18n="pricing.features.elegantDesign">✅ تصميم أنيق وجذاب</div>
                         <div class="feature" data-i18n="pricing.features.quickDelivery">✅ تسليم خلال 3 أيام</div>
                     </div>                    <div class="pricing-price">
-                        <span class="price" data-price="25" data-service="cvOnly">25 ريال</span>
+                        <span class="price" data-price="25" data-service="cvOnly">
+                            <span data-i18n="pricing.startingAt">ابتداءً من</span> 25 ريال
+                        </span>
                     </div>
 
                     <button class="pricing-btn" onclick="selectService('cv-only')" data-i18n="pricing.orderNow">
@@ -418,9 +424,7 @@ layout: none
             // Initial setup
             updateDynamicContent();
             updatePrices();
-        }
-
-        function updatePrices() {
+        }        function updatePrices() {
             const i18n = window.cevehakI18n;
             if (!i18n) return;
 
@@ -428,7 +432,21 @@ layout: none
             priceElements.forEach(element => {
                 const basePrice = parseInt(element.dataset.price);
                 const formattedPrice = i18n.formatPrice(basePrice);
-                element.textContent = formattedPrice;
+                
+                // Update the price while preserving the "starting at" structure
+                const startingAtSpan = element.querySelector('[data-i18n="pricing.startingAt"]');
+                if (startingAtSpan) {
+                    // If there's a "starting at" span, update the text after it
+                    const startingAtText = i18n.translate('pricing.startingAt');
+                    startingAtSpan.textContent = startingAtText;
+                    
+                    // Update the price part (remove "starting at" from formatted price)
+                    const priceOnly = i18n.formatPrice(basePrice, false);
+                    element.innerHTML = `<span data-i18n="pricing.startingAt">${startingAtText}</span> ${priceOnly}`;
+                } else {
+                    // Fallback: just update the text content
+                    element.textContent = formattedPrice;
+                }
             });
 
             console.log('💰 Prices updated for currency:', i18n.getCurrentCurrency());
